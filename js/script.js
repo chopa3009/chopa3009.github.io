@@ -15,7 +15,7 @@ function scrollToHash(hash) {
     const y = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
 
     // Видаляємо хеш, щоб браузер не робив власний скрол
-    history.replaceState(null, '', 'home.html');
+    history.replaceState(null, '', 'index.html');
 
     // Трохи чекаємо, щоб контент прогрузився
     setTimeout(() => {

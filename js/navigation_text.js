@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Тексти для української
       const pageTitlesUA = {
-        "home.html": "Головна",
+        "index.html": "Головна",
         "aboutus.html": "Про нас",
         "courses.html": "Курси",
         "cosmetics.html": "Косметика",
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Тексти для англійської
       const pageTitlesEN = {
-        "home.html": "Home",
+        "index.html": "Home",
         "aboutus.html": "About Us",
         "courses.html": "Courses",
         "cosmetics.html": "Cosmetics",
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       // Поточний файл сторінки
       const pathParts = window.location.pathname.split("/");
-      const fileName = pathParts.pop() || "home.html";
+      const fileName = pathParts.pop() || "index.html";
 
       // Визначаємо мову по html[lang]
       const htmlLang = document.documentElement.getAttribute("lang");

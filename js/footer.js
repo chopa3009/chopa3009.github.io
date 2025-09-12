@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const portfolioLink = document.querySelector('.footer a[href="#portfolio-desktop"]');
 
   if (currentPage !== "index.html") {
-    if (serviceLink) serviceLink.setAttribute("href", "home.html#services-desktop");
-    if (portfolioLink) portfolioLink.setAttribute("href", "home.html#portfolio-desktop");
+    if (serviceLink) serviceLink.setAttribute("href", "index.html#services-desktop");
+    if (portfolioLink) portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
   } else {
     if (serviceLink) serviceLink.setAttribute("href", "#services-desktop");
     if (portfolioLink) portfolioLink.setAttribute("href", "#portfolio-desktop");
