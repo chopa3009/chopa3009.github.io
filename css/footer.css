@@ -18,6 +18,7 @@
     background-color: var(--backgrounddefaultdark);
     padding-bottom: 15px;
     font-family: var(--font-family-raleway);
+    font-variant-numeric: lining-nums;
     
 }
 

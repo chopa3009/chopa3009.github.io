@@ -283,6 +283,7 @@ html[lang="en"] .s-action {
     align-self: stretch;
     color: var(--textsecondarydark);
     line-height: 1.875rem;
+    font-variant-numeric: lining-nums;
     /* 30px */
 }
 
