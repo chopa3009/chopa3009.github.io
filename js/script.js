@@ -44,5 +44,15 @@ window.addEventListener("load", () => {
     }
   });
 
-
+ const path = window.location.pathname;
+ // Normalize path: remove double slashes just in case
+ function normalize(url) {
+   return url.replace(/\/{2,}/g, '/');
+ }
+ // EN link: only add "/en" if it’s not already there
+ let enPath = path.startsWith("/en/") ? path : "/en" + path;
+ document.getElementById("en-link").href = normalize(enPath);
+ // UA link: remove the first "/en" if it exists
+ let uaPath = path.startsWith("/en/") ? path.replace(/^\/en/, "") : path;
+ document.getElementById("ua-link").href = normalize(uaPath);
 
