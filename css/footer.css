@@ -17,6 +17,7 @@
     z-index: 10001;
     background-color: var(--backgrounddefaultdark);
     padding-bottom: 15px;
+    font-family: var(--font-family-raleway);
     
 }
 
