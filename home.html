@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <style></style>
+    <link rel="stylesheet" type="text/css" href="css/styleguide.css" />
+   
+    <link rel="stylesheet" type="text/css" href="css/header.css" />
+    <link rel="stylesheet" type="text/css" href="css/burger.css" />
+    <link rel="stylesheet" type="text/css" href="css/modal_popup.css" />
+    <link rel="stylesheet" type="text/css" href="css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="css/home.css" />
+    <link rel="stylesheet" type="text/css" href="css/preloader.css" />
+     <link rel="stylesheet" type="text/css" href="css/globals.css" />
+</head>
+
+<body style="margin: 0; background: #ffffff">
+
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <header id="header-placeholder"></header>
+    <header id="burger-menu"></header>
+
+    <div class="bove-main-photo">
+        <div class="main-photo-container">
+        </div>
+        <div class="main_-logo-action">
+            <img class="bove_-big_logo" src="img/BOVE-big-LOGO.png" alt="BOVE_Big_LOGO" />
+            <div class="button-white" onclick="openModal()">
+                <div class="text-button-white mobtext16bove">Записатись</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="services scroll-services" id="services-desktop">
+        <div class="services-action">
+            <img class="photo-services" src="img/photo-cut.png" alt="PHOTO_Cut" />
+            <h1 class="text-services boveheading24regulardark">Стрижка</h1>
+            <a href="haircut.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Обрати</div>
+                </div>
+            </a>
+        </div>
+        <div class="services-action">
+            <img class="photo-services" src="img/photo-paint.png" alt="PHOTO_Paint" />
+            <div class="text-services boveheading24regulardark">Фарбування</div>
+            <a href="coloring.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Обрати</div>
+                </div>
+            </a>
+        </div>
+        <div class="services-action">
+            <img class="photo-services" src="img/photo-care.png" alt="PHOTO_Care" />
+            <div class="text-services boveheading24regulardark" id="service-text">Догляд та відновлення</div>
+            <a href="restoration.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Обрати</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="about-us">
+        <img class="photo_studio" src="img/photo-studio-1.png" alt="Photo_STUDIO" />
+        <div class="about-us-action">
+            <div class="about-us-text">
+                <div class="bove boveheading24regulardark">BOVÉ–індивідуальний простір для краси.</div>
+                <p class="text-aboutus bovebody20regularlight">
+                    Концептуальний простір преміум-класу, де естетика поєднується з комфортом, а краса з
+                    індивідуальністю.
+                    Тут кожен клієнт — це окрема історія, натхнення, образ.
+                </p>
+            </div>
+            <a href="aboutus.html">
+                <div class="button-white-aboutus">
+                    <div class="text-button-white mobtext16bove">Читати більше</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="courses">
+        <div class="s-action">
+            <div class="courses-text">
+                <p class="title boveheading24regulardark">
+                    Навчання у BOVÉ–це вхід у світ краси, де професія стає мистецтвом.
+                </p>
+                <p class="text-courses-summary bovebody20regularlight">
+                    Ми пропонуємо авторську програму, створену практикуючим майстром, що поєднує фундаментальні знання з
+                    сучасними трендами.
+                </p>
+            </div>
+            <a href="courses.html">
+                <div class="button-black">
+                    <div class=" mobtext16bove">Дізнатися більше</div>
+                </div>
+            </a>
+        </div>
+        <div class="areas-of-study">
+            <div class="start-of-study">
+                <div class="start"><img class="vector-6" src="img/start-study.svg" alt="Vector" /></div>
+                <div class="text_courses boveheading24regulardark">Курс колористики<br />для початківців.</div>
+                <p class="text-courses-summary bovebody20regularlight">
+                    Підходить для новачків.<br />Теорія + практика на моделях.<br />Сертифікат після завершення.
+                </p>
+            </div>
+            <div class="continuing-of-study">
+                <img class="continuing" src="img/continuing.svg" alt="Continuing" />
+                <div class="text_courses boveheading24regulardark">Курс підвищення кваліфікації.</div>
+                <p class="text-courses-summary bovebody20regularlight">
+                    Для практикуючих майстрів.<br />Один день — максимум користі.<br />Сертифікат про проходження.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cosmetics cosmetics-1">
+        <div class="photos-cosmetic">
+            <img class="photo_cosmetic_-left photo_cosmetic_" src="img/photo-cosmetic-left.png"
+                alt="Photo_COSMETIC_Left" />
+            <img class="photo_cosmetic_-right photo_cosmetic_" src="img/photo-cosmetic-right.png"
+                alt="Photo_COSMETIC_Right" />
+        </div>
+        <div class="s-action">
+            <div class="cosmetics-text cosmetics-1">
+                <p class="title boveheading24regulardark">Ми використовуємо лише якісні професійні засоби.</p>
+                <p class="text-courses-summary bovebody20regularlight">
+                    Наші технології забезпечують глибоке живлення, захист і відновлення.<br />Блиск, еластичність, об’єм
+                    —
+                    результат системного та свідомого підходу.
+                </p>
+            </div>
+            <a href="cosmetics.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Детальніше</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="masters">
+        <div class="masters-action">
+            <div class="masters-text">
+                <p class="title_master boveheading24regulardark">
+                    Майстер та сертифікований фахівець, арт-директор Валентина Боднарук.
+                </p>
+                <p class="text_master bovebody20regularlight">
+                    “Я спеціалізуюсь на створенні стильних, індивідуальних стрижок та фарбування волосся будь-якої
+                    складності, враховуючи природні особливості та бажання кожного клієнта. Також надаю професійні
+                    послуги з
+                    відновлення волосся, та лікування шкіри голови.”
+                </p>
+            </div>
+            <a href="masters.html">
+                <div class="button-white-aboutus">
+                    <div class="text-button-white mobtext16bove">Читати більше</div>
+                </div>
+            </a>
+        </div>
+        <img class="photo_master" src="img/photo-master-1.png" alt="Photo_MASTER" />
+    </div>
+
+    <div class="block_-our-portfolio" id="portfolio-desktop">
+        <img class="photo_after_1" id="photoAfter" src="img/photo-after-1.png" alt="Photo_AFTER" />
+        <div class="portfolio_1-action">
+            <div class="text-portfolio">
+                <div class="title boveheading24regulardark" id="portfolioTitle">
+                    Кожне фарбування – індивідуальний проєкт.
+                </div>
+                <p class="text-courses-summary bovebody20regularlight" id="portfolioText">
+                    Складна техніка фарбування, яка забезпечує плавний перехід від коріння до кінчиків волосся.
+                </p>
+            </div>
+            <div class="navigation-arrows">
+                <div class="left-arrow" onclick="prevSlide()">
+                    <img class="vector-left" src="img/left-arrow.svg" alt="Prev" />
+                </div>
+                <div class="right-arrow" onclick="nextSlide()">
+                    <img class="vector-right" src="img/right-arrow.svg" alt="Next" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="js/modal_popup.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/portfolio.js"></script>
+    <script src="js/burger_menu.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/footer.js"></script>
+    <script src="js/updateServiceTest.js"></script>
+
+</body>
+<div id="modal-popup"></div>
+
+</html>

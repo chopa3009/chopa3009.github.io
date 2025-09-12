@@ -1,0 +1,125 @@
+:root { 
+  --alto: #d9d9d926;
+  --backgrounddefaultbeige: #f6ecdd;
+  --backgrounddefaultdark: #212121;
+  --backgrounddefaultwhite: #ffffff;
+  --black: #000000;
+  --borderdefaultlight: #ffffffb2;
+  --borderdisabled: #21212166;
+  --dz1jwhite: #ffffff;
+  --textinversedisabled: #ffffff73;
+  --textprimarydark: #0a0a0a;
+  --textprimarylight: #ffffff;
+  --textsecondarydark: #0a0a0ae6;
+  --textsecondarylight: #ffffffcc;
+ 
+  --font-size-l: 24px;
+  --font-size-m: 20px;
+  --font-size-s: 16px;
+  --font-size-xl: 32px;
+  --font-size-xxl: 40px;
+ 
+  --font-family-prata: "Prata";
+  --font-family-raleway: "Raleway", Helvetica;
+}
+.mobh32bove {
+  font-family: var(--font-family-prata);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.mobtext16bove {
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.bovebody20regularlight {
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.boveheading24regulardark {
+  font-family: var(--font-family-prata);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.boveheading40regularlight {
+  font-family: var(--font-family-prata);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.bovecaption16mediumdark {
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+}
+
+.prata-normal-cod-gray-20px {
+  color: var(--textprimarydark);
+  font-family: var(--font-family-prata);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.bovetextmobileh2 {
+  font-family: var(--font-family-prata);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.bovetextmobileh1 {
+  font-family: var(--font-family-prata);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.bovetextmobilebodyregular {
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.raleway-normal-cod-gray-20px {
+  color: var(--textsecondarydark);
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.raleway-medium-cod-gray-20px {
+  color: var(--textsecondarydark);
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.bovebutton16regulardark {
+  font-family: var(--font-family-raleway);
+  font-size: var(--font-size-xs);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}

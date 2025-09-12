@@ -1,0 +1,325 @@
+/* screen - index */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  /* base size for rem */
+}
+
+a {
+  display: contents;
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.header {
+  align-items: center;
+  background-color: var(--backgrounddefaultwhite);
+  display: flex;
+  /* ✅ take full row */
+  justify-content: space-between;
+  /* spread logo, nav, actions */
+  gap: 7.25rem;
+  padding: 0.2rem 7rem 0.45rem;
+  position: relative;
+  width: 100%;
+  max-width: 90rem;
+  /* ~1440px */
+  margin: 0 auto;
+}
+
+.header-logo {
+  height: 2.5rem;
+  /* 40px */
+  width: 6.5rem;
+  /* 104px */
+  position: relative;
+}
+
+.navbar {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 1.9rem;
+  /* 30px */
+  position: relative;
+}
+
+.text-navbar {
+  color: var(--textprimarydark);
+  line-height: 1.2;
+  margin-top: -0.06rem;
+  /* -1px */
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  user-select: none;
+}
+
+.header-actions {
+  width: 13rem;
+  /* 208px */
+  height: 1.9rem;
+  /* 30px */
+  position: relative;
+  user-select: none;
+}
+
+.header-action-language {
+    display: flex;
+    overflow: hidden;
+    gap: 5px;
+    height: 30px; /* висота контейнера під текст */
+}
+
+.lang-link {
+    flex: 1;
+    display: flex;               /* робимо флексом */
+    align-items: center;         /* вертикальне центрування тексту */
+    justify-content: center;     /* горизонтальне центрування */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--textprimarydark);
+    background-color: #fff;
+    padding: 0;                  /* прибираємо внутрішні відступи */
+    line-height: normal;         /* ключове! щоб не зсував текст */
+}
+.lang-link.active {
+    background-color: #2b2b2b;
+    color: #fff;
+    font-weight: 600;
+}
+
+.ua {
+  color: var(--textprimarydark);
+  font-weight: 400;
+  line-height: 1.2;
+  min-height: 1.2rem;
+  /* 19px */
+  min-width: 1.45rem;
+  /* 23px */
+  text-align: center;
+  white-space: nowrap;
+}
+.en {
+  color: var(--textprimarydark);
+  font-weight: 400;
+  line-height: 1.2;
+  min-height: 1.2rem;
+  /* 19px */
+  min-width: 1.45rem;
+  /* 23px */
+  text-align: center;
+  white-space: nowrap;
+}
+
+.header-action-icon {
+  display: inline-flex;
+  gap: 0.5rem;
+  /* 8px */
+  position: absolute;
+  top: 0;
+  left: 4rem;
+  /* 64px */
+}
+
+.instagram-outline {
+  align-items: center;
+  aspect-ratio: 1;
+  display: flex;
+  gap: 0.6rem;
+  /* 10px */
+  width: 1.9rem;
+  /* 30px */
+  height: 1.9rem;
+  padding: 0.2rem;
+  /* 3px */
+  position: relative;
+}
+
+.vector-instagram {
+  /*width: 1.55rem; */
+  /* 24.75px */
+ /* height: 1.55rem; */
+  margin: -0.02rem -0.015rem -0.02rem -0.03rem;
+  /* approx from px */
+  position: relative;
+}
+
+.whatsapp-outline {
+  width: 1.9rem;
+  /* 30px */
+  height: 1.9rem;
+  position: relative;
+}
+
+.telegram-outline {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  /* 10px */
+  width: 1.9rem;
+  /* 30px */
+  height: 1.9rem;
+  padding: 0.2rem 0.125rem;
+  /* 3px 2px */
+  position: relative;
+}
+
+.vector-telegram {
+  margin: -0.06rem -0.03rem -0.06rem 0;
+  /* -1px -0.5px */
+  position: relative;
+}
+
+.viber-outline {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 0.6rem;
+  /* 10px */
+  width: 1.9rem;
+  /* 30px */
+  height: 1.9rem;
+  padding: 0.125rem 0.2rem;
+  /* 2px 3px */
+  position: relative;
+}
+
+.vector-viber {
+  /*width: 1.55rem;           /* 25px */
+  /*height: 1.6rem;           /* 26px */
+  /* margin: 0 -0.03rem;       /* -0.5px */
+  position: relative;
+}
+
+.header-action {
+  align-items: center;
+  position: absolute;
+}
+
+
+
+.mobile-header {
+  align-items: center;
+  background-color: var(--backgrounddefaultwhite);
+  display: flex;
+  justify-content: space-between;
+  /*padding: 1rem 1.875rem; /* 16px 30px */
+  position: relative;
+  width: 48rem;
+  /* 768px */
+  max-width: 100%;
+  margin: 0 auto;
+  /* center on smaller screens */
+}
+
+.mobile-header .burger-icon {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  /* 12px */
+  justify-content: center;
+  /* padding: 0.75rem;        /* 12px */
+  position: relative;
+  width: 3rem;
+  /* 48px */
+}
+
+.mobile-header .bove-logo {
+  position: relative;
+  width: 6.625rem;
+  /* 106px */
+}
+
+.mobile-header .communication-phone-1 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  /* 10px */
+  justify-content: center;
+  padding: 0.75rem;
+  /* 12px */
+  position: relative;
+  width: 3rem;
+  /* 48px */
+}
+
+.mobile-header .phone-icon {
+  aspect-ratio: 1;
+  height: 1.625rem;
+  /* 26px */
+  width: 1.625rem;
+  /* 26px */
+  margin: -0.0625rem;
+  /* -1px */
+  position: relative;
+}
+
+    .text-navbar:active,
+    .en:active
+  .ua:active,
+  .vector-instagram:active,
+  .vector-telegram:active,
+  .vector-viber:active,
+  .whatsapp-outline:active,
+    .burger-icon:active,
+  .communication-phone-1:active  {
+    /*transition: transform 0.2s ease; */
+    transform: scale(0.95);
+  }
+
+
+@media screen and (max-width: 767px) {
+  .header {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .header {
+    display: none;
+  }
+
+  .header-mobile {
+    display: flex;
+  }
+  
+}
+
+@media screen and (min-width: 1440px) {
+  .mobile-header {
+    display: none;
+  }
+
+  .text-navbar:hover,
+  .en:hover,
+  .ua:hover,
+  .vector-instagram:hover,
+  .vector-telegram:hover,
+  .vector-viber:hover,
+  .whatsapp-outline:hover
+{
+    /*transition: transform 0.2s ease; */
+    transform: scale(1.05);
+  }
+      .text-navbar:active,
+  .ua:active,
+  .en:active,
+  .vector-instagram:active,
+  .vector-telegram:active,
+  .vector-viber:active,
+  .whatsapp-outline:active {
+    /*transition: transform 0.2s ease; */
+    transform: scale(0.95);
+  }
+
+}

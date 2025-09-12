@@ -1,0 +1,180 @@
+ .title-photo {
+  display: flex;
+  justify-content: space-between;
+  width: 1440px;
+  margin: 0 auto;
+}
+
+body.aboutus .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
+
+body.cosmetics .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
+
+body.courses .title {
+    align-self: stretch;
+    background-color: var(--backgrounddefaultdark);
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: center;
+    padding: 170px 32px 170px 109px;
+}
+
+body.masters .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
+body.haircut .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
+body.coloring .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
+body.restoration .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
+
+.title-text {
+  color: var(--backgrounddefaultwhite);
+  font-weight: 400;
+  line-height: 60px;
+  margin-top: -1.00px;
+  position: relative;
+  width: 491px;
+}
+
+.image {
+    width:808px;
+    height: 400px;
+}
+
+@media screen and (max-width: 767px) {
+  .title-photo {
+    flex-direction: column;
+    width: 375px;
+            margin: 0 auto;
+}
+body.aboutus .title {
+    padding:20px;
+}
+
+body.courses .title {
+    padding: 20px;
+}
+body.cosmetics .title {
+    padding: 20px;
+}
+body.masters .title {
+    padding: 20px;
+}
+body.haircut .title {
+    padding: 20px;
+}
+body.coloring .title {
+    padding: 20px;
+}
+body.restoration .title {
+    padding: 20px;
+}
+.title-text{
+    font-size: 30px;
+    width:100%;
+}
+
+.image {
+    width:375px;
+    height: 185px;
+}
+}
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+.title-photo {
+    flex-direction: column;
+    width: 768px;
+            margin: 0 auto;
+}
+body.aboutus .title {
+    padding: 70px 40px 70px 40px;
+}
+body.courses .title {
+    padding: 70px 40px 70px 40px;
+}
+body.cosmetics .title {
+    padding: 70px 40px 70px 40px;
+}
+body.masters .title {
+    padding: 70px 40px 70px 40px;
+}
+body.haircut .title {
+    padding: 70px 40px 70px 40px;
+}
+body.coloring .title {
+    padding: 70px 40px 70px 40px;
+}
+body.restoration .title {
+    padding: 70px 40px 70px 40px;
+}
+.title-text{
+    white-space: nowrap;
+    width:100%;
+}
+body.aboutus .title-text br {
+    display:none;
+}
+body.cosmetics .title-text br {
+    display:none;
+}
+body.haircut .title-text br {
+    display:none;
+}
+body.coloring .title-text br {
+    display:none;
+}
+body.restoration .title-text br {
+    display:none;
+}
+.image {
+    width:768px;
+    height: 378px;
+}
+}
+@media screen and (min-width: 1440px) {
+
+}

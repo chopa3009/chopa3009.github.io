@@ -1,0 +1,177 @@
+.frame_burger {
+    display: none; /* hidden by default */
+    flex-direction: column;
+    height: 100vh;              /* full screen height */
+    align-items: flex-start;
+    gap: 3.125rem;              /* 50px */
+    padding: 1.25rem 2.5rem;    /* 20px 40px */
+    position: fixed;
+    background-color: #ffffff;
+    z-index: 9999;              /* super high to overlay all */
+    width: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: auto;           /* allow scrolling if content is tall */
+}
+
+body.menu-open {
+  overflow: hidden;
+  height: 100vh; /* щоб iOS не скролив підкладку */
+}
+
+.frame_burger a {
+    display: contents;
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.frame_burger .burger-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+    width: 100%;
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.frame_burger .language-buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;              /* 8px */
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.frame_burger .lang-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;            /* 10px */
+    padding: 0.8125rem 0.6875rem; /* 13px 11px */
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.frame_burger .lang-container.active {
+    background-color: #2b2b2b;
+    color: #fff;
+    font-weight: 600;
+}
+
+.frame_burger .lang-text {
+    position: relative;
+    width: fit-content;
+    margin-top: -0.0625rem;   /* -1px */
+    font-family: "Raleway", Helvetica;
+    font-weight: 400;
+    color: var(--collection-1-text-black90-BOVE);
+    font-size: 1rem;          /* 16px */
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 1.175rem;    /* 18.8px */
+    white-space: nowrap;
+}
+
+.frame_burger .close-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;            /* 10px */
+    padding: 0.625rem;        /* 10px */
+    position: relative;
+    flex: 0 0 auto;
+     -webkit-tap-highlight-color: transparent;
+}
+
+.frame_burger .close-icon {
+    position: relative;
+    width: 1.625rem;          /* 26px */
+    height: 1.625rem;         /* 26px */
+    margin: -0.0625rem;       /* -1px all sides */
+    aspect-ratio: 1;
+}
+
+.frame_burger .frame-header-button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.25rem;             /* 20px */
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.frame_burger .list-text {
+    position: relative;
+    width: fit-content;
+    font-family: "Raleway", Helvetica;
+    font-weight: 400;
+    color: var(--collection-1-botton-text-black-color100);
+    font-size: 1rem;         
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 1.175rem;    
+    white-space: nowrap;
+}
+
+.frame_burger .burger-contacts {
+    display: flex;
+    flex-direction: column;
+    width: 12.5rem;           /* 200px */
+    align-items: flex-start;
+    gap: 0.625rem;            /* 10px */
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.frame_burger .burger-phone {
+    position: relative;
+    align-self: stretch;
+    margin-top: -0.0625rem;   /* -1px */
+    font-family: "Raleway", Helvetica;
+    font-weight: 400;
+    color: var(--collection-1-text-black80-BOVE);
+    font-size: 1rem;          /* 16px */
+    letter-spacing: 0;
+    line-height: normal;
+    font-variant-numeric: lining-nums;
+}
+
+.frame_burger .social-icons {
+    display: flex;
+    gap: 1.75rem;             /* 28px */
+}
+
+.frame_burger .social-img {
+    width: 1.625rem;           /* 26px */
+    height: 1.625rem;          /* 26px */
+    position: relative;
+    flex: 0 0 auto;
+}
+
+    .lang-text:active,
+    .list-text:active,
+    .social-img:active,
+    .close-button:active {
+    transform: scale(0.95);
+  }
+
+@media screen and (max-width: 767px) {
+ .page-navigation {
+    display: none;
+ }
+}
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+ .page-navigation {
+    display: none;
+ }
+   }
+
+   @media screen and (min-width: 1440px) {
+
+    .lang-text:active {
+    transform: scale(0.95);
+  }
+}

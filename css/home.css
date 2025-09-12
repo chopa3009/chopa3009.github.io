@@ -1,0 +1,1007 @@
+html[lang="en"] .s-action {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* 70px */
+    position: relative;
+    width: 24rem;
+    /* 384px */
+}
+
+
+
+.bove-main-photo {
+    height: 45.625rem;
+    /* 730px */
+    position: relative;
+    width: 90rem;
+    /* 1440px */
+    margin: 0 auto;
+}
+
+.main-photo-container {
+    align-items: flex-start;
+    background-image: url(../img/mane-PHOTO.png);
+    background-size: 100% 100%;
+    display: flex;
+    height: 45.625rem;
+    /* 730px */
+    left: 0;
+    min-width: 90rem;
+    /* 1440px */
+    position: absolute;
+    top: 0;
+}
+
+.mane_photo {
+    height: 45.625rem;
+    /* 730px */
+    width: 90rem;
+    /* 1440px */
+}
+
+.main_-logo-action {
+    align-items: center;
+    background-color: #2b2b2b;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4.375rem;
+    /* 70px */
+    justify-content: center;
+    left: 39.5rem;
+    /* 632px */
+    padding: 4.375rem 6.5rem 4.9375rem;
+    /* 70px 104px 79px */
+    position: absolute;
+    top: 5.4375rem;
+    /* 87px */
+}
+
+.bove_-big_logo {
+    aspect-ratio: 1.7;
+    height: 17.875rem;
+    /* 286px */
+    object-fit: cover;
+    position: relative;
+    width: 30.5rem;
+    /* 488px */
+}
+
+.button-white {
+    align-items: center;
+    border: 0.0625rem solid;
+    /* 1px */
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.625rem;
+    /* 10px */
+    justify-content: center;
+    padding: 1rem 2rem;
+    /* 16px 32px */
+    position: relative;
+    border-color: var(--borderdefaultlight);
+    cursor: pointer;
+    user-select: none;
+     -webkit-tap-highlight-color: transparent;
+}
+
+.button-white-aboutus {
+    align-items: center;
+    border: 0.0625rem solid;
+    /* 1px */
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.625rem;
+    /* 10px */
+    justify-content: center;
+    padding: 1rem 2rem;
+    /* 16px 32px */
+    position: relative;
+    border-color: var(--borderdefaultlight);
+    cursor: pointer;
+    user-select: none;
+     -webkit-tap-highlight-color: transparent;
+}
+
+.text-button-white {
+    color: var(--backgrounddefaultwhite);
+    line-height: 1.175rem;
+    /* 18.8px */
+    margin-top: -0.0625rem;
+    /* -1px */
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+}
+
+.services {
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+    /* 32px */
+    padding: 9.375rem 7rem;
+    /* 150px 112px */
+    position: relative;
+    width: 90rem;
+    /* 1440px */
+    margin: 0 auto;
+}
+
+.services-action {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    /* 20px */
+    position: relative;
+    width: 24rem;
+    /* 384px */
+}
+
+.photo-services {
+    align-self: stretch;
+    aspect-ratio: 0.71;
+    position: relative;
+    width: 100%;
+}
+
+.text-services {
+    align-self: stretch;
+    color: var(--textprimarydark);
+    line-height: 1.95rem;
+    /* 31.2px */
+    text-align: center;
+}
+
+.button-black {
+    align-items: center;
+    border: 0.0625rem solid;
+    /* 1px */
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.625rem;
+    /* 10px */
+    justify-content: center;
+    padding: 1rem 2rem;
+    /* 16px 32px */
+    position: relative;
+    border-color: var(--backgrounddefaultdark);
+    cursor: pointer;
+    user-select: none;
+     -webkit-tap-highlight-color: transparent;
+}
+
+.about-us {
+    align-items: center;
+    background-color: var(--backgrounddefaultdark);
+    display: flex;
+    gap: 6.5rem;
+    /* 104px */
+    padding: 0 7rem 0 0;
+    /* 0 112px 0 0 */
+    position: relative;
+    width: 90rem;
+    /* 1440px */
+    margin: 0 auto;
+}
+
+.photo_studio {
+    height: 37.625rem;
+    /* 602px */
+    position: relative;
+    width: 44rem;
+    /* 704px */
+}
+
+.about-us-action {
+    gap: 4.375rem;
+    /* 70px */
+    padding: 9.375rem 0;
+    /* 150px 0 */
+    width: 32.5rem;
+    /* 520px */
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.about-us-text {
+    align-self: stretch;
+    flex: 0 0 auto;
+    gap: 1.875rem;
+    /* 30px */
+    width: 100%;
+}
+
+.bove {
+    align-self: stretch;
+    color: var(--backgrounddefaultwhite);
+    font-weight: 400;
+    line-height: 1.95rem;
+    /* 31.2px */
+    margin-top: -0.0625rem;
+    /* -1px */
+    position: relative;
+    padding-bottom: 1.875rem;
+}
+
+.text-aboutus {
+    align-self: stretch;
+    color: var(--textsecondarylight);
+    line-height: 1.875rem;
+    /* 30px */
+}
+
+.courses {
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+    /* 32px */
+    position: relative;
+    margin: 0 auto;
+    width: 90rem;
+    /* вже в rem */
+        padding: 9.375rem 6.25rem 0 7rem;
+}
+
+.s-action {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 4.375rem;
+    /* 70px */
+    position: relative;
+    width: 24rem;
+    /* 384px */
+}
+
+.courses-text {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 1.875rem;
+    /* 30px */
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.title {
+    align-self: stretch;
+    color: var(--textprimarydark);
+    font-weight: 400;
+    line-height: 1.95rem;
+    /* 31.2px */
+    position: relative;
+}
+
+.text-courses-summary {
+    align-self: stretch;
+    color: var(--textsecondarydark);
+    line-height: 1.875rem;
+    /* 30px */
+}
+
+.areas-of-study {
+    align-items: center;
+    background-color: var(--backgrounddefaultbeige);
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 2rem;
+    /* 32px */
+    padding: 3.625rem 4.5rem 3.625rem 3.125rem;
+    /* 58px 72px 58px 50px */
+    position: relative;
+}
+
+.start-of-study {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    /* 20px */
+    position: relative;
+    width: 20.875rem;
+    /* 334px */
+}
+
+.start {
+    height: 3.5rem;
+    /* 56px */
+    position: relative;
+    width: 3.9rem;
+    /* 62.39px */
+}
+
+.vector-6 {
+    height: 3.5625rem;
+    /* 57px */
+    left: -0.0625rem;
+    /* -1px */
+    position: absolute;
+    top: -0.0625rem;
+    /* -1px */
+    width: 4.0625rem;
+    /* 65px */
+}
+
+.text_courses {
+    align-self: stretch;
+    color: var(--textprimarydark);
+    font-weight: 400;
+    line-height: 1.95rem;
+    /* 31.2px */
+    position: relative;
+}
+
+.continuing-of-study {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    /* 20px */
+    position: relative;
+    width: 19.5rem;
+    /* 312px */
+}
+
+.continuing {
+    height: 3.5675rem;
+    /* 57.08px */
+    position: relative;
+    width: 2.67rem;
+    /* 42.71px */
+}
+
+.cosmetics {
+    display: flex;
+    gap: 2rem;
+    /* margin-top: 6.25rem; */
+    padding: 9.375rem 7rem;
+    margin: 0 auto;
+    width: 90rem;
+}
+
+.photos-cosmetic {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 2rem;
+    /* 32px */
+    position: relative;
+}
+
+.photo_cosmetic_-left {
+    aspect-ratio: 0.77;
+    /* залишаємо як є, без px */
+}
+
+.photo_cosmetic_-right {
+    object-fit: cover;
+    /* без px */
+}
+
+.cosmetics-text {
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 1.875rem;
+    /* 30px */
+    width: 100%;
+}
+
+.masters {
+    align-items: center;
+    background-color: var(--backgrounddefaultdark);
+    gap: 8.5rem;
+    /* 136px */
+    padding: 0 7rem;
+    /* 0px 112px */
+    width: 90rem;
+    /* 1440px */
+    display: flex;
+    margin: 0 auto;
+}
+
+.masters-action {
+    align-items: flex-end;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 4.375rem;
+    /* 70px */
+    padding: 9.375rem 0 11.125rem;
+    /* 150px 0px 178px */
+}
+
+.masters-text {
+    align-items: flex-start;
+    align-self: stretch;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 1.875rem;
+    /* 30px */
+    width: 100%;
+    display: flex;
+}
+
+.title_master {
+    color: var(--backgrounddefaultwhite);
+    font-weight: 400;
+    line-height: 1.95rem;
+    /* 31.2px */
+    margin-top: -0.0625rem;
+    /* -1px */
+    position: relative;
+    width: 29.5rem;
+    /* 472px */
+}
+
+.text_master {
+    color: var(--textsecondarylight);
+    font-weight: 400;
+    line-height: 1.875rem;
+    /* 30px */
+    position: relative;
+    width: 30.5rem;
+    /* 488px */
+}
+
+.photo_master {
+    aspect-ratio: 0.81;
+    height: 45.625rem;
+    /* 730px */
+    position: relative;
+    width: 37rem;
+    /* 592px */
+}
+
+
+ .block_-our-portfolio {
+  align-items: center;
+  background-color: var(--backgrounddefaultbeige);
+  display: flex;
+  gap: 136px;
+  padding: 150px 216px 150px 112px;
+  position: relative;
+  margin: 0 auto;
+  width: 90rem;
+
+}
+
+ .photo_after_1 {
+  aspect-ratio: 0.93;
+  height: 523px;
+  position: relative;
+  width: 488px;
+}
+
+ .portfolio_1-action {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  /*gap: 200px; */
+  height: 523px;
+  position: relative;
+  width: 488px;
+}
+
+ .text-portfolio {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+ .navigation-arrows {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  position: relative;
+  margin-top: auto;
+}
+
+ .left-arrow {
+  align-items: center;
+  border: 1px solid;
+  border-color: var(--textprimarydark);
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  padding: 19px 23px;
+  cursor: pointer;
+   user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+ .vector-left {
+  height: 14px;
+  margin-bottom: -0.50px;
+  margin-left: -0.50px;
+  margin-right: -0.50px;
+  margin-top: -0.50px;
+  position: relative;
+  width: 25px;
+  user-select: none;
+}
+
+ .right-arrow {
+  align-items: center;
+  border: 1px solid;
+  border-color: var(--textprimarydark);
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  padding: 19px 23px;
+  /*transform: rotate(180deg);*/
+  cursor: pointer;
+  user-select: none;
+   -webkit-tap-highlight-color: transparent;
+}
+
+ .vector-right {
+  height: 14px;
+  margin-bottom: -0.50px;
+  margin-left: -0.50px;
+  margin-right: -0.50px;
+  margin-top: -0.50px;
+  position: relative;
+/*  transform: rotate(-180deg); */
+  width: 25px;
+   user-select: none;
+}
+
+ .button-black:active,
+    .button-white:active,
+    .button-white-aboutus:active,
+    .left-arrow:active,
+    .right-arrow:active {
+        transform: scale(0.95);
+       
+    }
+
+
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 767px) {
+    .main-photo-container {
+        background-image: url(../img/mane-photo-1.png);
+        min-width: 23.4375rem;
+        /* 375px */
+    }
+
+    .main_-logo-action {
+        transform: scale(0.5);
+        transform-origin: left;
+        left: 4%;
+    }
+
+    .bove-main-photo {
+        height: 45.625rem;
+        /* 730px */
+        position: relative;
+        width: 23.4375rem;
+        /* 375px */
+        margin: 0 auto;
+    }
+
+    .button-white {
+        transform: scale(2);
+    }
+
+    .services {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 1rem;
+        /* 16px */
+        padding: 3.125rem 1rem;
+        /* 32px 16px */
+        width: 100%;
+    }
+
+    .services-action {
+        flex: 0 0 auto;
+        width: 16rem;
+        /* 256px */
+    }
+
+    .services::-webkit-scrollbar {
+        display: none;
+    }
+
+    .about-us {
+        flex-direction: column-reverse;
+        width: 100%;
+        max-width: 23.4375rem;
+        /* 1440px */
+        padding: 0;
+        gap: 1.875rem;
+        /* 50px */
+    }
+
+    .about-us-action {
+        gap: 1.875rem;
+        /* 30px */
+        padding: 3.125rem 0 0 0;
+        /* 70px 0 0 0 */
+        width: 20.9375rem;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .bove {
+        padding-bottom: 1.875rem;
+        /* 30px */
+        font-size: 20px;
+    }
+
+    .photo_studio {
+        width: 23.4375rem;
+        height: 20.0625rem;
+    }
+
+    .about-us-text {
+        font-size: 17px;
+    }
+
+    .text-aboutus {
+        font-size: 17px;
+    }
+
+    .courses {
+        flex-direction: column;
+        max-width: 23.4375rem;
+        padding: 3.125rem 0 0 0;
+    }
+
+    .areas-of-study {
+        flex-direction: column;
+        padding: 30px 20px;
+    }
+
+    .s-action {
+        gap: 1.875rem;
+        align-items: center;
+        width: 23.4375rem;
+        padding: 0 20px 0px 20px;
+    }
+        html[lang="en"] .s-action {
+        gap: 1.875rem;
+        align-items: center;
+        width: 23.4375rem;
+        padding: 0 20px 0px 20px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .text-courses-summary {
+        font-size: 17px;
+    }
+
+    .text_courses {
+        font-size: 17px;
+    }
+
+    .continuing-of-study {
+        width: 20.875rem;
+    }
+
+    .cosmetics {
+        flex-direction: column-reverse;
+        width: 23.4375rem;
+        padding: 50px 0 50px 0;
+    }
+
+    .photos-cosmetic {
+        flex-direction: column;
+    }
+
+    .photo_cosmetic_-left {
+        width: 335px;
+        height: 434px;
+    }
+
+    .photo_cosmetic_-right {
+        width: 335px;
+        height: 434px;
+    }
+
+     .masters {
+        flex-direction: column;
+        width: 375px;
+        padding: 0 0 50px 0;
+        gap: 0;
+    }
+
+    .masters-action {
+        gap: 30px;
+        padding: 50px 0 30px;
+    }
+
+    .title_master {
+        width: 335px;
+        font-size: 20px;
+    }
+
+    .text_master {
+        width: 335px;
+        font-size: 17px;
+    }
+
+    .photo_master {
+
+        height: 413px;
+        /* 730px */
+
+        width: 335px;
+        /* 592px */
+    }
+      .block_-our-portfolio {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 50px 20px;
+    width: 375px;
+    
+  }
+
+  .portfolio_1-action {
+    order: 1; /* текст лишається зверху */
+    width: 100%;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .photo_after_1 {
+    order: 2;
+    width: 100%;
+    max-width: 375px;
+    height: auto;
+  }
+
+  .navigation-arrows {
+    order: 3;
+    align-self: center;
+    margin-top: 15px;
+  }
+   .text-portfolio {
+min-height: 305px;
+}
+.button-white:active {
+    transform: scale(1.95);
+}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+    .main-photo-container {
+        background-image: url(../img/mane-photo-2.png);
+        min-width: 48rem;
+        /* 768px */
+        height: 59rem;
+        /* 944px */
+    }
+
+    .bove-main-photo {
+        height: 59rem;
+        /* 944px */
+        position: relative;
+        width: 48rem;
+        /* 768px */
+        margin: 0 auto;
+    }
+
+    .main_-logo-action {
+        top: 9.75rem;
+        /* 156px */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .services {
+        padding: 4.375rem 2.5rem;
+        /* 70px 40px */
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .about-us {
+        flex-direction: column-reverse;
+        width: 100%;
+        max-width: 48rem;
+        /* 1440px */
+        padding: 0;
+        gap: 3.125rem;
+        /* 50px */
+    }
+
+    .about-us-action {
+        gap: 1.875rem;
+        /* 30px */
+        padding: 4.375rem 0 0 0;
+        /* 70px 0 0 0 */
+        width: 42.5rem;
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .bove {
+        padding-bottom: 1.875rem;
+        /* 30px */
+    }
+
+    .photo_studio {
+        width: 48rem;
+        height: 41.0625rem;
+    }
+
+    .courses {
+        flex-direction: column;
+        width: 48rem;
+        padding: 4.375rem 0 4.375rem 0;
+        gap: 3.125rem;
+    }
+
+    .s-action {
+        width: 42.5rem;
+        gap: 1.875rem;
+        align-items: flex-end;
+        margin: 0 auto;
+    }
+      html[lang="en"] .s-action {
+        width: 42.5rem;
+        gap: 1.875rem;
+        align-items: flex-end;
+        margin: 0 auto;
+    }
+
+    .areas-of-study {
+        padding: 20px 30px;
+        width: 43rem;
+    }
+
+    .start-of-study {
+        width: 21.875rem;
+    }
+
+    .continuing-of-study {
+        width: 22.875rem;
+    }
+
+    .cosmetics {
+        flex-direction: column-reverse;
+        width: 48rem;
+        padding: 0 0 3.125rem 0;
+    }
+
+    .photo_cosmetic_-left {
+        width: 329px;
+        height: 427px;
+    }
+
+    .photo_cosmetic_-right {
+        width: 329px;
+        height: 427px;
+    }
+
+    .photos-cosmetic {
+        display: flex;
+        margin: 0 auto;
+    }
+
+    .masters {
+        flex-direction: column;
+        width: 48rem;
+        padding: 0 0 70px 0;
+        gap: 0;
+    }
+
+    .masters-action {
+        gap: 30px;
+        padding: 70px 0 50px;
+    }
+
+    .title_master {
+        width: 688px;
+    }
+
+    .text_master {
+        width: 688px;
+    }
+
+    .photo_master {
+
+        height: 848px;
+        /* 730px */
+
+        width: 688px;
+        /* 592px */
+    }
+   /* .block_-our-portfolio {
+        flex-direction: column-reverse;
+        width: 48rem;
+        padding: 70px 40px 70px 40px;
+    }
+    .portfolio_1-action {
+    align-items: center;
+    width: 688px;
+    order: 1;
+}
+ .photo_after_1 {
+    order: 2;
+  }
+
+  .navigation-arrows {
+    order: 3;
+    margin-top: 1rem;
+  }*/
+
+  .block_-our-portfolio {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 20px;
+    width: 48rem;
+    
+  }
+
+  .portfolio_1-action {
+    order: 1; /* текст лишається зверху */
+    width: 100%;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .photo_after_1 {
+    order: 2;
+    width: 100%;
+    max-width: 768px;
+    height: auto;
+  }
+
+  .navigation-arrows {
+    order: 3;
+    align-self: center;
+    margin-top: 15px;
+  }
+   .text-portfolio {
+min-height: 200px;
+}
+
+
+}
+
+@media screen and (min-width: 1440px) {
+    .button-black:hover,
+    .button-white:hover,
+    .button-white-aboutus:hover,
+    .left-arrow:hover,
+    .right-arrow:hover {
+        transform: scale(1.05);
+    }
+        .button-black:active,
+    .button-white:active,
+    .button-white-aboutus:active,
+    .left-arrow:active,
+    .right-arrow:active {
+        transform: scale(0.95);
+    }
+}

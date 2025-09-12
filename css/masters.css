@@ -1,0 +1,91 @@
+.masters-page-section-element-state {
+    align-items: flex-start;
+    display: flex;
+    gap: 136px;
+    padding: 0px 216px 150px 112px;
+    position: relative;
+    width: 1440px;
+    margin: 0 auto;
+}
+
+ .masters-page-photo {
+  aspect-ratio: 0.65;
+  height: 590px;
+  object-fit: cover;
+  position: relative;
+  width: 384px;
+}
+
+ .masters-page-title-body-text-footnote {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+  width: 592px;
+}
+
+ .masters-page-title-body-text {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  width: 100%;
+}
+
+ .text-master-header {
+  align-self: stretch;
+  color: var(--textprimarydark);
+  font-weight: 400;
+  line-height: 31.2px;
+  margin-top: -1.00px;
+  position: relative;
+}
+
+ .text-master-regular {
+  align-self: stretch;
+  color: var(--textsecondarydark);
+  font-weight: 400;
+  line-height: 30px;
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+.masters-page-section-element-state {
+    flex-direction: column-reverse;
+    width: 375px;
+         padding: 40px 20px 40px 20px;
+         gap:50px;
+}
+.masters-page-title-body-text {
+    width: 335px;
+}
+.text-master-header {
+    font-size: 20px;
+}
+.text-master-regular {
+    font-size: 17px;
+}
+.masters-page-photo {
+    height: auto;
+    width: 335px;
+}
+.masters-page-title-body-text-footnote {
+    width: 335px;
+}
+}
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+.masters-page-section-element-state {
+    flex-direction: column-reverse;
+    width: 768px;
+         padding: 70px 40px 70px 40px;
+         gap:50px;
+}
+.masters-page-title-body-text {
+    width: 688px;
+}
+   }
+

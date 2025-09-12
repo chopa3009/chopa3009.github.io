@@ -1,0 +1,70 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Prata:400|Raleway:400");
+/* The following line is used to measure usage of this code. You can remove it if you want. */
+@import url("https://px.animaapp.com/685aa851187ad8c9ba9ad7a3.685aa851187ad8c9ba9ad7a6.PFpin9n.hcp.png");
+
+.screen a {
+  display: contents;
+  text-decoration: none;
+}
+
+
+html, body, * {
+  -webkit-user-select: none; /* Safari, Chrome (WebKit) */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE/Edge legacy */
+  user-select: none;
+  -webkit-touch-callout: none; /* iOS: прибирає контекстне меню при довгому тапі */
+}
+
+#header-placeholder {
+  width: 100%;
+  display: block;
+}
+
+/* Optional: fix header to top of page */
+#header-placeholder .header {
+  position: sticky;
+  /* or fixed */
+  top: 0;
+  z-index: 1000;
+  background: var(--backgrounddefaultwhite);
+  width: 100%;
+}
+
+#footer-placeholder {
+  width: 100%;
+  display: block;
+}
+
+/* Optional: reserve header height so page doesn’t “jump” when JS inserts it */
+#footer-placeholder {
+  min-height: 5rem;
+  /* adjust to your header height */
+}
+
+/* Optional: fix header to top of page */
+#footer-placeholder .footer {
+  position: sticky;
+  /* or fixed */
+  top: 0;
+  z-index: 1000;
+  background: var(--backgrounddefaultdark);
+  width: 100%;
+}
+
+.valign-text-middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hidden,
+.hidden * {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}

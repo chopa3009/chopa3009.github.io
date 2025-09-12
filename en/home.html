@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <style></style>
+    <link rel="stylesheet" type="text/css" href="/css/styleguide.css" />
+    <link rel="stylesheet" type="text/css" href="/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/css/burger.css" />
+    <link rel="stylesheet" type="text/css" href="/css/modal_popup.css" />
+    <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="/css/home.css" />
+    <link rel="stylesheet" type="text/css" href="/css/preloader.css" />
+    <link rel="stylesheet" type="text/css" href="/css/globals.css" />
+</head>
+
+<body style="margin: 0; background: #ffffff">
+
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <header id="header-placeholder"></header>
+    <header id="burger-menu"></header>
+
+    <div class="bove-main-photo">
+        <div class="main-photo-container"></div>
+        <div class="main_-logo-action">
+            <img class="bove_-big_logo" src="/img/BOVE-big-LOGO.png" alt="BOVE_Big_LOGO" />
+            <div class="button-white" onclick="openModal()">
+                <div class="text-button-white mobtext16bove">Book</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="services scroll-services" id="services-desktop">
+        <div class="services-action">
+            <img class="photo-services" src="/img/photo-cut.png" alt="PHOTO_Cut" />
+            <h1 class="text-services boveheading24regulardark">Haircuts</h1>
+            <a href="haircut.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Choose</div>
+                </div>
+            </a>
+        </div>
+        <div class="services-action">
+            <img class="photo-services" src="/img/photo-paint.png" alt="PHOTO_Paint" />
+            <div class="text-services boveheading24regulardark">Coloring</div>
+            <a href="coloring.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Choose</div>
+                </div>
+            </a>
+        </div>
+        <div class="services-action">
+            <img class="photo-services" src="/img/photo-care.png" alt="PHOTO_Care" />
+            <div class="text-services boveheading24regulardark" id="service-text">Care and restoration</div>
+            <a href="restoration.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">Choose</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="about-us">
+        <img class="photo_studio" src="/img/photo-studio-1.png" alt="Photo_STUDIO" />
+        <div class="about-us-action">
+            <div class="about-us-text">
+                <div class="bove boveheading24regulardark">BOVÉ – a personal space for beauty</div>
+                <p class="text-aboutus bovebody20regularlight">
+                    A premium conceptual space where aesthetics meet comfort, and beauty blends with individuality.
+                    Here, every client is a unique story, a source of inspiration, a distinct image.
+                </p>
+            </div>
+            <a href="aboutus.html">
+                <div class="button-white-aboutus">
+                    <div class="text-button-white mobtext16bove">Read More</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="courses">
+        <div class="s-action">
+            <div class="courses-text">
+                <p class="title boveheading24regulardark">
+                    Training at BOVE is an entry into the world of beauty, where a 
+                    profession transforms into an art form.
+                </p>
+                <p class="text-courses-summary bovebody20regularlight">
+                   We offer an exclusive program created by a practicing expert, 
+                   combining fundamental knowledge with modern trends.
+                </p>
+            </div>
+            <a href="courses.html">
+                <div class="button-black">
+                    <div class=" mobtext16bove">Learn more</div>
+                </div>
+            </a>
+        </div>
+        <div class="areas-of-study">
+            <div class="start-of-study">
+                <div class="start"><img class="vector-6" src="/img/start-study.svg" alt="Vector" /></div>
+                <div class="text_courses boveheading24regulardark">Beginner coloring course.</div>
+                <p class="text-courses-summary bovebody20regularlight">
+                    Suitable for beginners.<br />Theory + practice on models.<br />Certificate upon completion.
+                </p>
+            </div>
+            <div class="continuing-of-study">
+                <img class="continuing" src="/img/continuing.svg" alt="Continuing" />
+                <div class="text_courses boveheading24regulardark">Advanced training course.</div>
+                <p class="text-courses-summary bovebody20regularlight">
+                    For practicing specialists.<br />One day — maximum benefit.<br />Certificate of completion.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cosmetics cosmetics-1">
+        <div class="photos-cosmetic">
+            <img class="photo_cosmetic_-left photo_cosmetic_" src="/img/photo-cosmetic-left.png"
+                alt="Photo_COSMETIC_Left" />
+            <img class="photo_cosmetic_-right photo_cosmetic_" src="/img/photo-cosmetic-right.png"
+                alt="Photo_COSMETIC_Right" />
+        </div>
+        <div class="s-action">
+            <div class="cosmetics-text cosmetics-1">
+                <p class="title boveheading24regulardark">We use only high-quality professional products.</p>
+                <p class="text-courses-summary bovebody20regularlight">
+                   Our technologies provide deep nourishment, protection, and restoration.
+                    Shine, elasticity, and volume are the result of a systematic and mindful approach.
+                </p>
+            </div>
+            <a href="cosmetics.html">
+                <div class="button-black">
+                    <div class="mobtext16bove">More details</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="masters">
+        <div class="masters-action">
+            <div class="masters-text">
+                <p class="title_master boveheading24regulardark">
+                    Master and certified specialist, art director Valentyna Bodnaruk.
+                </p>
+                <p class="text_master bovebody20regularlight">
+                    “I specialize in creating stylish, individual haircuts and coloring of any complexity, 
+                    taking into account natural features and the wishes of each client. I also provide professional 
+                    hair restoration services and scalp treatments.”
+                </p>
+            </div>
+            <a href="masters.html">
+                <div class="button-white-aboutus">
+                    <div class="text-button-white mobtext16bove">Read more</div>
+                </div>
+            </a>
+        </div>
+        <img class="photo_master" src="/img/photo-master-1.png" alt="Photo_MASTER" />
+    </div>
+
+    <div class="block_-our-portfolio" id="portfolio-desktop">
+        <img class="photo_after_1" id="photoAfter" src="/img/photo-after-1.png" alt="Photo_AFTER" />
+        <div class="portfolio_1-action">
+            <div class="text-portfolio">
+                <div class="title boveheading24regulardark" id="portfolioTitle">
+                    Every coloring is an individual project.
+                </div>
+                <p class="text-courses-summary bovebody20regularlight" id="portfolioText">
+                    A complex coloring technique that ensures a smooth transition from roots to ends.
+                </p>
+            </div>
+            <div class="navigation-arrows">
+                <div class="left-arrow" onclick="prevSlide()">
+                    <img class="vector-left" src="/img/left-arrow.svg" alt="Prev" />
+                </div>
+                <div class="right-arrow" onclick="nextSlide()">
+                    <img class="vector-right" src="/img/right-arrow.svg" alt="Next" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="/js/modal_popup.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/slider.js"></script>
+    <script src="/js/portfolio.js"></script>
+    <script src="/js/burger_menu.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="/js/footer.js"></script>
+    <script src="/js/updateServiceTest.js"></script>
+
+</body>
+<div id="modal-popup"></div>
+
+</html>

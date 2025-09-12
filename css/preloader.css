@@ -1,0 +1,36 @@
+/* Екран прелоадера */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: #ffffff; /* можна замінити на брендований колір */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* вище всього */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* Ховаємо з fade-out */
+#preloader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Спіннер */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Анімація крутіння */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
