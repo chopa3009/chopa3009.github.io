@@ -19,7 +19,14 @@
 </head>
 
 <body style="margin: 0; background: #ffffff">
-
+<div id="debug" style="position:fixed;top:0;left:0;background:#fff;z-index:9999;"></div>
+<script>
+  function updateDebug() {
+    document.getElementById('debug').innerText = window.innerWidth + ' x ' + window.innerHeight;
+  }
+  window.addEventListener('resize', updateDebug);
+  updateDebug();
+</script>
     <div id="preloader">
         <div class="spinner"></div>
     </div>
