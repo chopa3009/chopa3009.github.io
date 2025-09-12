@@ -44,7 +44,7 @@ if (langLinks && langLinks.length >= 2) {
 }
 
  // Normalize path: remove double slashes just in case
- function normalize(url) {
+  function normalize(url) {
    return url.replace(/\/{2,}/g, '/');
  }
  // EN link: only add "/en" if it’s not already there
