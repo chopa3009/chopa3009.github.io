@@ -6,11 +6,23 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("burger-menu").innerHTML = data;
 
       const currentPage = window.location.pathname.split("/").pop() || "index.html";
+ const serviceLink = document.querySelector(
+        '.frame_burger a[href="#services-desktop"]'
+      );
+      const portfolioLink = document.querySelector(
+        '.frame_burger a[href="#portfolio-desktop"]'
+      );
 
-
-
-
-
+      if (currentPage !== "index.html") {
+        if (serviceLink)
+          serviceLink.setAttribute("href", "index.html#services-desktop");
+        if (portfolioLink)
+          portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
+      } else {
+        if (serviceLink) serviceLink.setAttribute("href", "#services-desktop");
+        if (portfolioLink)
+          portfolioLink.setAttribute("href", "#portfolio-desktop");
+      }
       // Тепер елемент frame_burger точно є в DOM
       const burgerMenu = document.querySelector(".frame_burger");
       if (!burgerMenu) return;
