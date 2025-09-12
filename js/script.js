@@ -44,11 +44,5 @@ window.addEventListener("load", () => {
     }
   });
 
-  window.addEventListener("orientationchange", () => {
-    document.body.style.display = "none";
-    setTimeout(() => {
-        document.body.style.display = "";
-    }, 100);
-});
 
 
