@@ -103,6 +103,7 @@ a {
   /* 23px */
   text-align: center;
   white-space: nowrap;
+  cursor: pointer;
 }
 .en {
   color: var(--textprimarydark);
@@ -114,6 +115,7 @@ a {
   /* 23px */
   text-align: center;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .header-action-icon {
@@ -302,8 +304,6 @@ a {
   }
 
   .text-navbar:hover,
-  .en:hover,
-  .ua:hover,
   .vector-instagram:hover,
   .vector-telegram:hover,
   .vector-viber:hover,

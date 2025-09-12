@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Підсвічування мови після вставки header
   const path = window.location.pathname; // full path, e.g., "/index.html" or "/en/about.html"
-  const langLinks = document.querySelectorAll(".header-action-language a");
+  const langLinks = document.querySelectorAll(".header-action-language div");
 
   if (!langLinks || langLinks.length < 2) return;
 
@@ -35,16 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("UA active header");
   }
 
+
+
  // Normalize path: remove double slashes just in case
- function normalize(url) {
-   return url.replace(/\/{2,}/g, '/');
- }
- // EN link: only add "/en" if it’s not already there
- let enPath = path.startsWith("/en/") ? path : "/en" + path;
- document.getElementById("en-link").href = normalize(enPath);
- // UA link: remove the first "/en" if it exists
- let uaPath = path.startsWith("/en/") ? path.replace(/^\/en/, "") : path;
- document.getElementById("ua-link").href = normalize(uaPath);
     })
     .catch((err) => console.error("Header load error:", err));
 });
+

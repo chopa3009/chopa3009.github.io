@@ -7,17 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
-  // Посилання на "Послуги" та "Наші роботи"
-  const serviceLink = document.querySelector('.frame_burger a[href="#services-desktop"]');
-  const portfolioLink = document.querySelector('.frame_burger a[href="#portfolio-desktop"]');
 
-  if (currentPage !== "index.html") {
-    if (serviceLink) serviceLink.setAttribute("href", "index.html#services-desktop");
-    if (portfolioLink) portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
-  } else {
-    if (serviceLink) serviceLink.setAttribute("href", "#services-desktop");
-    if (portfolioLink) portfolioLink.setAttribute("href", "#portfolio-desktop");
-  }
+
+
 
       // Тепер елемент frame_burger точно є в DOM
       const burgerMenu = document.querySelector(".frame_burger");
@@ -43,17 +35,6 @@ if (langLinks && langLinks.length >= 2) {
   }
 }
 
- // Normalize path: remove double slashes just in case
-  function normalize(url) {
-   return url.replace(/\/{2,}/g, '/');
- }
- // EN link: only add "/en" if it’s not already there
- let enPath = path.startsWith("/en/") ? path : "/en" + path;
- document.getElementById("en-link").href = normalize(enPath);
- // UA link: remove the first "/en" if it exists
- let uaPath = path.startsWith("/en/") ? path.replace(/^\/en/, "") : path;
- document.getElementById("ua-link").href = normalize(uaPath);
-
     })
     .catch((err) => console.error("Burger menu load error:", err));
 });
@@ -67,4 +48,23 @@ function openBurger() {
   document.body.classList.add("menu-open");
 }
 
+let path = window.location.pathname;
+console.log("new" + path);
+  function switchLanguage(toLang) {
+    console.log("blabla")
+    if (toLang === "en") {
+      if (!path.startsWith("/en/")) {
+        // Add /en/ before filename
+        const newPath = "/en" + path;
+        window.location.href = newPath;
+      }
+    } else {
+      if (path.startsWith("/en/")) {
+        // Remove /en/ from path
+        console.log("blablabla")
+        const newPath = path.replace(/^\/en/, "");
+        window.location.href = newPath;
+      }
+    }
+  }
 
