@@ -12,7 +12,7 @@
 
 .footer-bottom {
     text-align: center;
-    font-size: 16px;
+    font-size: 12px;
     color: #888888;
     z-index: 10001;
     background-color: var(--backgrounddefaultdark);
