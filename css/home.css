@@ -574,7 +574,7 @@ html[lang="en"] .s-action {
 
 
 /* MEDIA QUERIES */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) and (orientation: portrait){
     .main-photo-container {
         background-image: url(../img/mane-photo-1.png);
         min-width: 23.4375rem;
@@ -806,7 +806,7 @@ gap:20px;
 }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1439px) {
+@media screen and (min-width: 768px) and (max-width: 1439px) and (orientation: landscape) {
     .main-photo-container {
         background-image: url(../img/mane-photo-2.png);
         min-width: 48rem;
