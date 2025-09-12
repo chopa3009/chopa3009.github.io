@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (serviceLink) serviceLink.setAttribute("href", "#services-desktop");
     if (portfolioLink) portfolioLink.setAttribute("href", "#portfolio-desktop");
   }
+
+  const yearSpan = document.getElementById("currentYear");
+if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+}
     })
     .catch((err) => console.error("Burger menu load error:", err));
 });

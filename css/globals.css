@@ -45,7 +45,7 @@ html, body, * {
 
 /* Optional: fix header to top of page */
 #footer-placeholder .footer {
-  position: sticky;
+  /*position: sticky;*/
   /* or fixed */
   top: 0;
   z-index: 1000;

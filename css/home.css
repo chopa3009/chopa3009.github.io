@@ -644,7 +644,7 @@ html[lang="en"] .s-action {
     }
 
     .bove {
-        padding-bottom: 1.875rem;
+        padding-bottom: 20px;
         /* 30px */
         font-size: 20px;
     }
@@ -666,6 +666,12 @@ html[lang="en"] .s-action {
         flex-direction: column;
         max-width: 23.4375rem;
         padding: 3.125rem 0 0 0;
+    }
+
+    .courses-text {
+   
+    gap: 20px;
+    /* 30px */
     }
 
     .areas-of-study {
@@ -708,6 +714,17 @@ html[lang="en"] .s-action {
         padding: 50px 0 50px 0;
     }
 
+    .cosmetics-text {
+
+    gap: 20px;
+
+}
+
+        .masters-text {
+
+    gap: 20px;
+
+}
     .photos-cosmetic {
         flex-direction: column;
     }
@@ -756,7 +773,7 @@ html[lang="en"] .s-action {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 50px 20px;
+    padding: 50px 20px 50px 20px;
     width: 375px;
     
   }
@@ -782,6 +799,7 @@ html[lang="en"] .s-action {
   }
    .text-portfolio {
 min-height: 305px;
+gap:20px;
 }
 .button-white:active {
     transform: scale(1.95);
@@ -844,7 +862,7 @@ min-height: 305px;
     }
 
     .bove {
-        padding-bottom: 1.875rem;
+        padding-bottom: 20px;
         /* 30px */
     }
 
@@ -858,6 +876,11 @@ min-height: 305px;
         width: 48rem;
         padding: 4.375rem 0 4.375rem 0;
         gap: 3.125rem;
+    }
+        .courses-text {
+   
+    gap: 20px;
+    /* 30px */
     }
 
     .s-action {
@@ -891,6 +914,16 @@ min-height: 305px;
         width: 48rem;
         padding: 0 0 3.125rem 0;
     }
+        .cosmetics-text {
+
+    gap: 20px;
+
+}
+        .masters-text {
+
+    gap: 20px;
+
+}
 
     .photo_cosmetic_-left {
         width: 329px;
@@ -958,7 +991,7 @@ min-height: 305px;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 40px 20px;
+    padding: 70px 20px 40px 20px;
     width: 48rem;
     
   }
@@ -984,6 +1017,7 @@ min-height: 305px;
   }
    .text-portfolio {
 min-height: 200px;
+gap:20px;
 }
 
 
