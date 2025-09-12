@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((r) => r.text())
     .then((data) => {
       document.getElementById("footer-placeholder").innerHTML = data;
-      console.log("222");
 
       const currentPage = window.location.pathname.split("/").pop() || "index.html";
 

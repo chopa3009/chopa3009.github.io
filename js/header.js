@@ -5,40 +5,45 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       document.getElementById("header-placeholder").innerHTML = data;
 
-      const currentPage = window.location.pathname.split("/").pop() || "index.html";
+      const currentPage =
+        window.location.pathname.split("/").pop() || "index.html";
 
       // Посилання на "Послуги" та "Наші роботи"
-      const serviceLink = document.querySelector('.header a[href="#services-desktop"]');
-      const portfolioLink = document.querySelector('.header a[href="#portfolio-desktop"]');
+      const serviceLink = document.querySelector(
+        '.header a[href="#services-desktop"]'
+      );
+      const portfolioLink = document.querySelector(
+        '.header a[href="#portfolio-desktop"]'
+      );
 
       if (currentPage !== "index.html") {
-        if (serviceLink) serviceLink.setAttribute("href", "index.html#services-desktop");
-        if (portfolioLink) portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
+        if (serviceLink)
+          serviceLink.setAttribute("href", "index.html#services-desktop");
+        if (portfolioLink)
+          portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
       } else {
         if (serviceLink) serviceLink.setAttribute("href", "#services-desktop");
-        if (portfolioLink) portfolioLink.setAttribute("href", "#portfolio-desktop");
+        if (portfolioLink)
+          portfolioLink.setAttribute("href", "#portfolio-desktop");
       }
 
       // Підсвічування мови після вставки header
-  const path = window.location.pathname; // full path, e.g., "/index.html" or "/en/about.html"
-  const langLinks = document.querySelectorAll(".header-action-language div");
+      const path = window.location.pathname; // full path, e.g., "/index.html" or "/en/about.html"
+      const langLinks = document.querySelectorAll(
+        ".header-action-language div"
+      );
 
-  if (!langLinks || langLinks.length < 2) return;
+      if (!langLinks || langLinks.length < 2) return;
 
-  // If path starts with /en/ → EN
-  if (path.startsWith("/en/")) {
-    langLinks[0].classList.add("active"); // EN
-    console.log("EN active header");
-  } else {
-    // Any other path in root → UA
-    langLinks[1].classList.add("active"); // UA
-    console.log("UA active header");
-  }
+      // If path starts with /en/ → EN
+      if (path.startsWith("/en/")) {
+        langLinks[0].classList.add("active"); // EN
+      } else {
+        // Any other path in root → UA
+        langLinks[1].classList.add("active"); // UA
+      }
 
-
-
- // Normalize path: remove double slashes just in case
+      // Normalize path: remove double slashes just in case
     })
     .catch((err) => console.error("Header load error:", err));
 });
-

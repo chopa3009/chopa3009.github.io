@@ -27,11 +27,9 @@ if (langLinks && langLinks.length >= 2) {
   // Pages in /en/ → EN
   if (path.startsWith("/en/")) {
     langLinks[1].classList.add("active"); // EN
-    console.log("EN active");
   } else {
     // Any other page in root → UA
     langLinks[0].classList.add("active"); // UA
-    console.log("UA active");
   }
 }
 
@@ -49,9 +47,7 @@ function openBurger() {
 }
 
 let path = window.location.pathname;
-console.log("new" + path);
   function switchLanguage(toLang) {
-    console.log("blabla")
     if (toLang === "en") {
       if (!path.startsWith("/en/")) {
         // Add /en/ before filename
@@ -61,7 +57,7 @@ console.log("new" + path);
     } else {
       if (path.startsWith("/en/")) {
         // Remove /en/ from path
-        console.log("blablabla")
+
         const newPath = path.replace(/^\/en/, "");
         window.location.href = newPath;
       }
