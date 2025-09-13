@@ -810,27 +810,30 @@ gap:20px;
 @media screen and (min-width: 768px) and (max-width: 1439px){
     .main-photo-container {
         background-image: url(../img/mane-photo-2.png);
-        min-width: 48rem;
-        /* 768px */
-        height: 59rem;
-        /* 944px */
+min-width: 768px;
+        height: 800px;
     }
 
     .bove-main-photo {
-        height: 59rem;
+        height: 800px;
         /* 944px */
         position: relative;
         width: 48rem;
         /* 768px */
         margin: 0 auto;
     }
+    .bove_-big_logo {
+    height: 228px;
+    width: 389px;
+}
 
     .main_-logo-action {
-        top: 9.75rem;
-        /* 156px */
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 24%;
+        left: 29%;
+        /* transform: translate(-50%, -50%); */
+        width: 508px;
+        height: 432px;
+        gap:50px;
     }
 
     .services {
