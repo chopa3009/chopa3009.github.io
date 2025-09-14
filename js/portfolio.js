@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
   if (!action || !arrows || !photo) return;
 
   function adapt() {
-    if (window.innerWidth <= BP) {
+    if (window.innerWidth < BP) {
       // move arrows after photo (if not already moved)
       if (arrows.parentElement !== portfolio) {
         portfolio.insertBefore(arrows, photo.nextSibling);
