@@ -637,7 +637,7 @@ html[lang="en"] .s-action {
     .about-us-action {
         gap: 1.875rem;
         /* 30px */
-        padding: 3.125rem 0 0 0;
+        padding: 70px 0 0 0;
         /* 70px 0 0 0 */
         width: 20.9375rem;
         align-items: center;
@@ -679,7 +679,7 @@ html[lang="en"] .s-action {
 
     .areas-of-study {
         flex-direction: column;
-        padding: 30px 20px;
+        padding: 30px 20px 70px 20px;
     }
 
     .s-action {
@@ -745,13 +745,13 @@ html[lang="en"] .s-action {
      .masters {
         flex-direction: column;
         width: 375px;
-        padding: 0 0 50px 0;
+        padding: 0 0 70px 0;
         gap: 0;
     }
 
     .masters-action {
         gap: 30px;
-        padding: 50px 0 30px;
+        padding: 70px 0 30px;
     }
 
     .title_master {
@@ -858,7 +858,7 @@ min-width: 768px;
     .about-us-action {
         gap: 1.875rem;
         /* 30px */
-        padding: 4.375rem 0 0 0;
+        padding: 100px 0 0 0;
         /* 70px 0 0 0 */
         width: 42.5rem;
         align-items: flex-end;
@@ -949,13 +949,13 @@ min-width: 768px;
     .masters {
         flex-direction: column;
         width: 48rem;
-        padding: 0 0 70px 0;
+        padding: 0 0 100px 0;
         gap: 0;
     }
 
     .masters-action {
         gap: 30px;
-        padding: 70px 0 50px;
+        padding: 100px 0 50px;
     }
 
     .title_master {

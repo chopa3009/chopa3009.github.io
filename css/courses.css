@@ -93,7 +93,7 @@
  .courses-page-section-element-state {
   flex-direction: column;
   width: 375px;
-  padding: 50px 20px 50px 20px;
+  padding: 70px 20px 70px 20px;
 }
 .courses-page-areas-_of_study {
     flex-direction: column;
@@ -108,7 +108,7 @@
 }
 .courses-page-title-body-text-footnote {
     width: 335px;
-    padding-top: 20px;
+    padding-top: 50px;
 }
 .text-courses-regular {
     font-size: 17px;
@@ -128,7 +128,7 @@
  .courses-page-section-element-state {
   flex-direction: column;
   width: 768px;
-  padding: 70px 40px 70px 40px;
+  padding: 100px 40px 100px 40px;
 }
 .courses-page-areas-_of_study {
     flex-direction: row;

@@ -45,3 +45,8 @@ window.addEventListener("load", () => {
   });
 
 
+function closeOnOverlay(event) {
+  if (event.target.classList.contains("modal-overlay")) {
+    closeModal();
+  }
+}
