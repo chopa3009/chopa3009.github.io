@@ -178,6 +178,9 @@ gap:70px;
 .footnote-price,.haircut-page-heading-price-action, .haircut-page-title-body-text-footnote{
     width:335px;
 }
+ .re-haircut-page-price-action-footnote {
+  width: 335px;
+}
 }
 @media screen and (min-width: 768px) and (max-width: 1439px) {
  .haircut-page-section-element-state {
