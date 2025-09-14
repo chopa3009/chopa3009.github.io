@@ -29,7 +29,12 @@
     <div class="bove-main-photo">
         <div class="main-photo-container"></div>
         <div class="main_-logo-action">
-            <img class="bove_-big_logo" src="/img/BOVE-big-LOGO.png" alt="BOVE_Big_LOGO" />
+                       <picture>
+                <!-- Mobile version -->
+                <source srcset="/img/BOVE-big-LOGO-mobile.svg" media="(max-width: 767px)">
+                <!-- Desktop version -->
+                <img class="bove_-big_logo" src="i/mg/BOVE-big-LOGO.png" alt="BOVE_Big_LOGO">
+            </picture>
             <div class="button-white" onclick="openModal()">
                 <div class="text-button-white mobtext16bove">Book Now</div>
             </div>

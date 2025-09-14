@@ -8,14 +8,14 @@
     <meta name="twitter:card" content="photo" />
     <style></style>
     <link rel="stylesheet" type="text/css" href="css/styleguide.css" />
-   
+
     <link rel="stylesheet" type="text/css" href="css/header.css" />
     <link rel="stylesheet" type="text/css" href="css/burger.css" />
     <link rel="stylesheet" type="text/css" href="css/modal_popup.css" />
     <link rel="stylesheet" type="text/css" href="css/footer.css" />
     <link rel="stylesheet" type="text/css" href="css/home.css" />
     <link rel="stylesheet" type="text/css" href="css/preloader.css" />
-     <link rel="stylesheet" type="text/css" href="css/globals.css" />
+    <link rel="stylesheet" type="text/css" href="css/globals.css" />
 </head>
 
 <body style="margin: 0; background: #ffffff">
@@ -30,7 +30,12 @@
         <div class="main-photo-container">
         </div>
         <div class="main_-logo-action">
-            <img class="bove_-big_logo" src="img/BOVE-big-LOGO.png" alt="BOVE_Big_LOGO" />
+            <picture>
+                <!-- Mobile version -->
+                <source srcset="img/BOVE-big-LOGO-mobile.svg" media="(max-width: 767px)">
+                <!-- Desktop version -->
+                <img class="bove_-big_logo" src="img/BOVE-big-LOGO.png" alt="BOVE_Big_LOGO">
+            </picture>
             <div class="button-white" onclick="openModal()">
                 <div class="text-button-white mobtext16bove">Записатись</div>
             </div>

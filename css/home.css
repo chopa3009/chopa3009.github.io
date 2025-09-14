@@ -579,27 +579,29 @@ html[lang="en"] .s-action {
     .main-photo-container {
         background-image: url(../img/mane-photo-1.png);
         min-width: 23.4375rem;
+        height: 300px;
         /* 375px */
     }
 
     .main_-logo-action {
-        transform: scale(0.5);
-        transform-origin: left;
-        left: 4%;
+     width: 375px;
+        height: 292px;
+        margin-top: 299px;
+        padding: 70px 20px 70px 20px;
+        position: static;
+        gap:40px;
     }
 
     .bove-main-photo {
-        height: 45.625rem;
-        /* 730px */
+        height: 592px;
         position: relative;
         width: 23.4375rem;
-        /* 375px */
         margin: 0 auto;
     }
-
-    .button-white {
-        transform: scale(2);
-    }
+    .bove_-big_logo {
+    height: 61px;
+    width: 335px;
+}
 
     .services {
         flex-direction: row;
@@ -607,7 +609,7 @@ html[lang="en"] .s-action {
         -webkit-overflow-scrolling: touch;
         gap: 1rem;
         /* 16px */
-        padding: 3.125rem 1rem;
+        padding: 70px 1rem;
         /* 32px 16px */
         width: 100%;
     }
@@ -666,7 +668,7 @@ html[lang="en"] .s-action {
     .courses {
         flex-direction: column;
         max-width: 23.4375rem;
-        padding: 3.125rem 0 0 0;
+        padding: 70px 0 0 0;
     }
 
     .courses-text {
@@ -712,7 +714,7 @@ html[lang="en"] .s-action {
     .cosmetics {
         flex-direction: column-reverse;
         width: 23.4375rem;
-        padding: 50px 0 50px 0;
+        padding: 70px 0 70px 0;
     }
 
     .cosmetics-text {
@@ -774,7 +776,7 @@ html[lang="en"] .s-action {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 50px 20px 50px 20px;
+    padding: 70px 20px 70px 20px;
     width: 375px;
     
   }
