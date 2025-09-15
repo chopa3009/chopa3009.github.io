@@ -44,28 +44,54 @@ const slidesUA = [
     }
   ];
 
-  // Вибір мови зі сторінки
-  const lang = document.documentElement.lang; // "uk" або "en"
-  const slides = lang === "en" ? slidesEN : slidesUA;
+ const lang = document.documentElement.lang; // "uk" або "en"
+const slides = lang === "en" ? slidesEN : slidesUA;
 
-  let current = 0;
+let current = 0;
 
-  function showSlide(index) {
-    const slide = slides[index];
-    document.getElementById("photoAfter").src = slide.img;
-    document.getElementById("portfolioTitle").textContent = slide.title;
-    document.getElementById("portfolioText").textContent = slide.text;
-  }
+function showSlide(index) {
+  const slide = slides[index];
+  const imgElement = document.getElementById("photoAfter");
+  const titleElement = document.getElementById("portfolioTitle");
+  const textElement = document.getElementById("portfolioText");
 
-  function prevSlide() {
-    current = (current - 1 + slides.length) % slides.length;
-    showSlide(current);
-  }
+  // Додаємо transition, якщо ще немає
+  [imgElement, titleElement, textElement].forEach(el => {
+    el.style.transition = "opacity 0.5s ease";
+  });
 
-  function nextSlide() {
-    current = (current + 1) % slides.length;
-    showSlide(current);
-  }
+  // fade out
+  [imgElement, titleElement, textElement].forEach(el => el.style.opacity = 0);
 
-  // показати перший слайд
+  // невелика затримка для fade out
+  setTimeout(() => {
+    imgElement.onload = () => {
+      titleElement.textContent = slide.title;
+      textElement.textContent = slide.text;
+
+      // fade in
+      [imgElement, titleElement, textElement].forEach(el => el.style.opacity = 1);
+    };
+
+    // Змінюємо src, якщо він відрізняється
+    if (imgElement.src !== slide.img) {
+      imgElement.src = slide.img;
+    } else {
+      // Для першого слайду, якщо зображення вже завантажене
+      imgElement.onload();
+    }
+  }, 200);
+}
+
+function prevSlide() {
+  current = (current - 1 + slides.length) % slides.length;
   showSlide(current);
+}
+
+function nextSlide() {
+  current = (current + 1) % slides.length;
+  showSlide(current);
+}
+
+// Показати перший слайд
+showSlide(current);
