@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "masters.html": "Майстри",
         "haircut.html": "Стрижка",
         "coloring.html": "Фарбування",
-        "restoration.html": "Догляд та відновлення"
+        "restoration.html": "Догляд та відновлення",
+        "shop.html": "Магазин"
       };
 
       // Тексти для англійської
@@ -27,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "masters.html": "Masters",
         "haircut.html": "Haircuts",
         "coloring.html": "Coloring",
-        "restoration.html": "Care & Restoration"
+        "restoration.html": "Care & Restoration",
+         "shop.html": "Shop"
       };
 
       // Поточний файл сторінки
