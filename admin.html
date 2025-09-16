@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/css/admin.css" />
+<title>Secure Admin Panel</title>
+</head>
+<body>
+
+<h1>Admin Panel / Адмін панель</h1>
+
+<!-- Login Form -->
+<div id="loginDiv">
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login / Логін</button>
+  </form>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminDiv" style="display:none;">
+  <h2>Add / Edit Product / Додати / Відредагувати продукт</h2>
+  <form id="productForm">
+    <label>
+      Title (EN) / Назва: <small>*Max 50 characters</small>
+      <input type="text" id="title" placeholder="Product Title" required maxlength="50" />
+      
+    </label>
+
+    <label>
+      Description (UA) / Опис українською: <small>*Max 400 characters</small>
+      <textarea id="description" placeholder="Description in Ukrainian" required maxlength="400"></textarea>
+
+    </label>
+    <label>
+      Description (EN) / Опис англійською: <small>*Max 400 characters</small>
+      <textarea id="descriptionEn" placeholder="Description in English" required maxlength="400"></textarea>
+    </label>
+
+   <label>
+  Brand / Бренд: <small>*Choose one brand</small>
+  <select id="brand" required>
+    <option value="" disabled selected>Select Brand</option>
+    <option value="Brae">Brae</option>
+    <option value="Dr. Sorbie">Dr. Sorbie</option>
+    <option value="Kis">Kis</option>
+    <option value="Tempting">Tempting</option>
+    <option value="Viart">Viart</option>
+  </select>
+ 
+</label>
+    <label>
+    <br /> Image / Зображення:  <small>*Max 1 MB</small>
+      <input type="file" id="image" accept="image/*" />
+    
+    </label>
+
+    <input type="hidden" id="editingId" />
+    <button type="submit">Save Product / Зберегти продукт</button>
+  </form>
+
+  <h2>Products / Продукти</h2>
+  <div id="productsContainer"></div>
+
+  <button id="logoutBtn">Logout / Вийти</button>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="/js/admin.js"></script>
+
+</body>
+</html>

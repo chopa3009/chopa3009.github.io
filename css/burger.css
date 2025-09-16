@@ -137,6 +137,7 @@ body.menu-open {
     letter-spacing: 0;
     line-height: normal;
     font-variant-numeric: lining-nums;
+    text-decoration: underline;
 }
 
 .frame_burger .social-icons {
@@ -157,6 +158,23 @@ body.menu-open {
     .close-button:active {
     transform: scale(0.95);
   }
+
+  .submenu {
+  padding-left: 20px; /* indentation */
+  display: none;
+  gap:5px;
+  flex-direction: column;
+  margin-top: -10px;
+}
+
+.submenu a {
+  font-size: 14px; 
+  padding: 6px 0;
+}
+
+.submenu.show {
+  display: flex;
+}
 
 @media screen and (max-width: 767px) {
  .page-navigation {

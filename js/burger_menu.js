@@ -6,73 +6,99 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("burger-menu").innerHTML = data;
 
       const currentPage = window.location.pathname.split("/").pop() || "index.html";
- const serviceLink = document.querySelector(
-        '.frame_burger a[href="#services-desktop"]'
-      );
-      const portfolioLink = document.querySelector(
-        '.frame_burger a[href="#portfolio-desktop"]'
-      );
+      const serviceLink = document.querySelector('.frame_burger a[href="#services-desktop"]');
+      const portfolioLink = document.querySelector('.frame_burger a[href="#portfolio-desktop"]');
+      const contactsLink = document.querySelector('.frame_burger a[href="#contacts-desktop"]');
 
+      // Adjust Services & Portfolio links if not on index.html
       if (currentPage !== "index.html") {
-        if (serviceLink)
-          serviceLink.setAttribute("href", "index.html#services-desktop");
-        if (portfolioLink)
-          portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
+        if (serviceLink) serviceLink.setAttribute("href", "index.html#services-desktop");
+        if (portfolioLink) portfolioLink.setAttribute("href", "index.html#portfolio-desktop");
       } else {
         if (serviceLink) serviceLink.setAttribute("href", "#services-desktop");
-        if (portfolioLink)
-          portfolioLink.setAttribute("href", "#portfolio-desktop");
+        if (portfolioLink) portfolioLink.setAttribute("href", "#portfolio-desktop");
       }
-      // Тепер елемент frame_burger точно є в DOM
+
+      // Smooth scroll for contacts in burger menu
+      if (contactsLink) {
+        contactsLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          const target = document.getElementById("contacts-desktop");
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            closeBurger(); // close burger after click
+          }
+        });
+      }
+
+      // Burger menu click handler
       const burgerMenu = document.querySelector(".frame_burger");
       if (!burgerMenu) return;
 
       burgerMenu.addEventListener("click", (e) => {
-        if (e.target.closest("a") || e.target.closest(".close-button")) {
+        const isLink = e.target.closest("a");
+        const isClose = e.target.closest(".close-button");
+        const isSubmenuToggle = isLink && isLink.getAttribute("href") === "javascript:void(0);";
+
+        if ((isLink && !isSubmenuToggle) || isClose) {
           closeBurger();
         }
       });
-const path = window.location.pathname; // full path, e.g., "/index.html" or "/en/index.html"
-const langLinks = document.querySelectorAll(".frame_burger .lang-container");
 
-if (langLinks && langLinks.length >= 2) {
-  // Pages in /en/ → EN
-  if (path.startsWith("/en/")) {
-    langLinks[1].classList.add("active"); // EN
-  } else {
-    // Any other page in root → UA
-    langLinks[0].classList.add("active"); // UA
-  }
-}
-
+      // Language highlighting
+      const path = window.location.pathname;
+      const langLinks = document.querySelectorAll(".frame_burger .lang-container");
+      if (langLinks && langLinks.length >= 2) {
+        if (path.startsWith("/en/")) {
+          langLinks[1].classList.add("active"); // EN
+        } else {
+          langLinks[0].classList.add("active"); // UA
+        }
+      }
     })
     .catch((err) => console.error("Burger menu load error:", err));
 });
 
+// Burger open/close functions
 function closeBurger() {
-  document.querySelector(".frame_burger").style.display = "none";
+  const burger = document.querySelector(".frame_burger");
+  if (burger) burger.style.display = "none";
   document.body.classList.remove("menu-open");
+
+  const submenu = document.getElementById("services-submenu");
+  if (submenu) {
+    submenu.classList.remove("show");
+    submenu.classList.add("hidden");
+  }
 }
+
 function openBurger() {
-  document.querySelector(".frame_burger").style.display = "flex";
+  const burger = document.querySelector(".frame_burger");
+  if (burger) burger.style.display = "flex";
   document.body.classList.add("menu-open");
 }
 
+// Language switch
 let path = window.location.pathname;
-  function switchLanguage(toLang) {
-    if (toLang === "en") {
-      if (!path.startsWith("/en/")) {
-        // Add /en/ before filename
-        const newPath = "/en" + path;
-        window.location.href = newPath;
-      }
-    } else {
-      if (path.startsWith("/en/")) {
-        // Remove /en/ from path
-
-        const newPath = path.replace(/^\/en/, "");
-        window.location.href = newPath;
-      }
+function switchLanguage(toLang) {
+  if (toLang === "en") {
+    if (!path.startsWith("/en/")) {
+      const newPath = "/en" + path;
+      window.location.href = newPath;
+    }
+  } else {
+    if (path.startsWith("/en/")) {
+      const newPath = path.replace(/^\/en/, "");
+      window.location.href = newPath;
     }
   }
+}
 
+// Toggle Services submenu
+function toggleSubmenu() {
+  const submenu = document.getElementById("services-submenu");
+  if (submenu) {
+    submenu.classList.toggle("show");
+    submenu.classList.toggle("hidden");
+  }
+}

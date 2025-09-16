@@ -71,6 +71,15 @@ body.restoration .title {
   justify-content: center;
   padding: 140px 32px 140px 109px;
 }
+body.shop .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+}
 
 .title-text {
   color: var(--backgrounddefaultwhite);
@@ -114,6 +123,9 @@ body.coloring .title {
 body.restoration .title {
     padding: 20px;
 }
+body.shop .title {
+    padding: 20px;
+}
 .title-text{
     font-size: 30px;
     width:100%;
@@ -151,6 +163,9 @@ body.coloring .title {
 body.restoration .title {
     padding: 70px 40px 70px 40px;
 }
+body.shop .title {
+    padding: 70px 40px 70px 40px;
+}
 .title-text{
     white-space: nowrap;
     width:100%;
@@ -168,6 +183,9 @@ body.coloring .title-text br {
     display:none;
 }
 body.restoration .title-text br {
+    display:none;
+}
+body.shop .title-text br {
     display:none;
 }
 .image {

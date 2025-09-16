@@ -34,15 +34,35 @@ window.addEventListener('hashchange', () => {
   scrollToHash(window.location.hash);
 });
 
-window.addEventListener("load", () => {
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-      preloader.classList.add("hide");
-      setTimeout(() => {
-        preloader.remove(); // повністю видаляємо з DOM після анімації
-      }, 500); // час має збігатися з transition у CSS
-    }
-  });
+async function hidePreloaderAfterLoad() {
+  const preloader = document.getElementById("preloader");
+  if (!preloader) return;
+
+  // Function to actually remove preloader
+  const removePreloader = () => {
+    if (preloader.parentNode) preloader.remove();
+  };
+
+  // Check if we are on shop.html
+  const isShopPage = window.location.pathname.includes("shop.html");
+
+  if (isShopPage && typeof loadProducts === "function") {
+    // Wait for products to load first
+    await loadProducts(); // assumes your loadProducts() is async and returns a promise
+  }
+
+  // Fade out
+  preloader.classList.add("hide");
+
+  // Remove after CSS transition
+  preloader.addEventListener("transitionend", removePreloader);
+  setTimeout(removePreloader, 500); // fallback in case transitionend doesn't fire
+}
+
+// Run on window load
+window.addEventListener("load", hidePreloaderAfterLoad);
+
+
 
 
 function closeOnOverlay(event) {

@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "masters.html": "Арт-директор<br/> Валентина Боднарук",
         "haircut.html": "Ваш ідеальний <br/> стиль вже поруч.",
         "coloring.html": "Ваш ідеальний <br/> стиль вже поруч.",
-        "restoration.html": "Ваш ідеальний <br/> стиль вже поруч."
+        "restoration.html": "Ваш ідеальний <br/> стиль вже поруч.",
+        "shop.html": "Ваш ідеальний <br/> стиль вже поруч."
       };
 
       // Заголовки англійською
@@ -30,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "masters.html": "Art Director<br/> Valentina Bodnaruk",
         "haircut.html": "Your perfect <br/> style is near.",
         "coloring.html": "Your perfect <br/> style is near.",
-        "restoration.html": "Your perfect <br/> style is near."
+        "restoration.html": "Your perfect <br/> style is near.",
+        "shop.html": "Your perfect <br/> style is near."
       };
 
       // Визначаємо мову по html[lang]
