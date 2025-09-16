@@ -158,6 +158,23 @@ body.menu-open {
     transform: scale(0.95);
   }
 
+  .submenu {
+  padding-left: 20px; /* indentation */
+  display: none;
+  gap:5px;
+  flex-direction: column;
+  margin-top: -10px;
+}
+
+.submenu a {
+  font-size: 14px; 
+  padding: 6px 0;
+}
+
+.submenu.show {
+  display: flex;
+}
+
 @media screen and (max-width: 767px) {
  .page-navigation {
     display: none;

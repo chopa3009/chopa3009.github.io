@@ -1,0 +1,115 @@
+
+body { font-family: Arial; padding: 20px; }
+form { margin-bottom: 20px; }
+input, textarea { display: block; margin-bottom: 10px; width: 300px; padding: 5px; }
+button { padding: 5px 10px; cursor: pointer; }
+
+/* ===== Products Grid ===== */
+#productsContainer {
+  display: grid;
+ /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+  gap: 20px;
+}
+.product {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #f9f9f9;
+  position: relative;
+}
+.product img {
+  width: 100%;
+  height: 150px;     
+  object-fit: cover;  
+  border-radius: 5px;
+}
+.product h3 {
+  font-size: 16px;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.product p {
+  font-size: 14px;
+  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;   
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+.delete-btn, .edit-btn {
+  position: absolute;
+  top: 5px;
+  color: white;
+  border: none;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+.delete-btn { right: 5px; background: red; }
+.edit-btn { right: 172px; background: blue; }
+
+/* Контейнер бренду */
+.brand-group {
+  margin-bottom: 40px;
+}
+
+/* Назва бренду */
+.brand-group h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* Grid продуктів всередині бренду */
+.brand-group .products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Продукт */
+.product {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #f9f9f9;
+  position: relative;
+}
+.product img {
+  width: 100%;
+  height: 150px;     
+  object-fit: cover;  
+  border-radius: 5px;
+}
+.product h3 {
+  font-size: 16px;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.product p {
+  font-size: 14px;
+  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;   
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+.delete-btn, .edit-btn {
+  position: absolute;
+  top: 5px;
+  color: white;
+  border: none;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+.delete-btn { right: 5px; background: red; }
+.edit-btn { right: 172px; background: blue; }
+

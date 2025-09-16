@@ -42,7 +42,29 @@ document.addEventListener("DOMContentLoaded", function () {
         // Any other path in root → UA
         langLinks[1].classList.add("active"); // UA
       }
+ const dropdowns = document.querySelectorAll(".dropdown");
 
+  dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector(".dropdown-toggle");
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Закриваємо інші меню
+      dropdowns.forEach(d => {
+        if (d !== dropdown) d.classList.remove("active");
+      });
+      // Перемикаємо активність
+      dropdown.classList.toggle("active");
+    });
+  });
+
+  // Закриває підменю при кліку поза ним
+  document.addEventListener("click", (e) => {
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("active");
+      }
+    });
+  });
       // Normalize path: remove double slashes just in case
     })
     .catch((err) => console.error("Header load error:", err));

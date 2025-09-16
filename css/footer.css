@@ -203,9 +203,12 @@
 }
 
 @media screen and (min-width: 1440px) {
-  .list-text-footer:hover,
+  
   .x-outline:hover {
     transform: scale(1.05);
+  }
+  .list-text-footer:hover {
+    text-decoration: underline;
   }
     .list-text-footer:active,
   .x-outline:active {

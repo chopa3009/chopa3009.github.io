@@ -27,11 +27,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const burgerMenu = document.querySelector(".frame_burger");
       if (!burgerMenu) return;
 
-      burgerMenu.addEventListener("click", (e) => {
-        if (e.target.closest("a") || e.target.closest(".close-button")) {
-          closeBurger();
-        }
-      });
+burgerMenu.addEventListener("click", (e) => {
+  // if clicked element is an <a> OR the close button
+  const isLink = e.target.closest("a");
+  const isClose = e.target.closest(".close-button");
+
+  // but ignore links that are only toggling submenu
+  const isSubmenuToggle = isLink && isLink.getAttribute("href") === "javascript:void(0);";
+
+  if ((isLink && !isSubmenuToggle) || isClose) {
+    closeBurger();
+  }
+});
 const path = window.location.pathname; // full path, e.g., "/index.html" or "/en/index.html"
 const langLinks = document.querySelectorAll(".frame_burger .lang-container");
 
@@ -52,6 +59,9 @@ if (langLinks && langLinks.length >= 2) {
 function closeBurger() {
   document.querySelector(".frame_burger").style.display = "none";
   document.body.classList.remove("menu-open");
+  const submenu = document.getElementById("services-submenu");
+  submenu.classList.remove("show");
+  submenu.classList.add("hidden");
 }
 function openBurger() {
   document.querySelector(".frame_burger").style.display = "flex";
@@ -75,4 +85,9 @@ let path = window.location.pathname;
       }
     }
   }
+function toggleSubmenu() {
+  const submenu = document.getElementById("services-submenu");
+  submenu.classList.toggle("show");
+  submenu.classList.toggle("hidden");
+}
 
