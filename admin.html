@@ -24,33 +24,37 @@
   <h2>Add / Edit Product / Додати / Відредагувати продукт</h2>
   <form id="productForm">
     <label>
-      Title (UA/EN) / Назва:
+      Title (UA/EN) / Назва: <small>*Max 50 characters</small>
       <input type="text" id="title" placeholder="Product Title" required maxlength="50" />
-      <small>*Max 50 characters</small>
+      
     </label>
 
     <label>
-      Description (UA) / Опис українською:
+      Description (UA) / Опис українською: <small>*Max 400 characters</small>
       <textarea id="description" placeholder="Description in Ukrainian" required maxlength="400"></textarea>
-      <small>*Max 400 characters</small>
-    </label>
 
+    </label>
     <label>
-      Description (EN) / Опис англійською:
+      Description (EN) / Опис англійською: <small>*Max 400 characters</small>
       <textarea id="descriptionEn" placeholder="Description in English" required maxlength="400"></textarea>
-      <small>*Max 400 characters</small>
     </label>
 
+   <label>
+  Brand / Бренд: <small>*Choose one brand</small>
+  <select id="brand" required>
+    <option value="" disabled selected>Select Brand</option>
+    <option value="Brae">Brae</option>
+    <option value="Dr. Sorbie">Dr. Sorbie</option>
+    <option value="Kis">Kis</option>
+    <option value="Tempting">Tempting</option>
+    <option value="Viart">Viart</option>
+  </select>
+ 
+</label>
     <label>
-      Brand / Бренд:
-      <input type="text" id="brand" placeholder="Brand" required maxlength="30" />
-      <small>*Max 30 characters</small>
-    </label>
-
-    <label>
-      Image / Зображення:
+    <br /> Image / Зображення:  <small>*Max 1 MB</small>
       <input type="file" id="image" accept="image/*" />
-      <small>*Max 1 MB</small>
+    
     </label>
 
     <input type="hidden" id="editingId" />

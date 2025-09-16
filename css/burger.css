@@ -137,6 +137,7 @@ body.menu-open {
     letter-spacing: 0;
     line-height: normal;
     font-variant-numeric: lining-nums;
+    text-decoration: underline;
 }
 
 .frame_burger .social-icons {
