@@ -466,7 +466,7 @@ html[lang="en"] .s-action {
 
  .block_-our-portfolio {
   align-items: center;
-  background-color: var(--backgrounddefaultbeige);
+ /* background-color: var(--backgrounddefaultbeige); */
   display: flex;
   gap: 136px;
   padding: 150px 216px 150px 112px;
