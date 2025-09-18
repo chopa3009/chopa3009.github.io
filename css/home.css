@@ -362,7 +362,7 @@ html[lang="en"] .s-action {
     display: flex;
     gap: 2rem;
     /* margin-top: 6.25rem; */
-    padding: 9.375rem 7rem;
+    padding: 300px 7rem 150px;
     margin: 0 auto;
     width: 90rem;
 }
@@ -883,7 +883,7 @@ min-width: 768px;
     .courses {
         flex-direction: column;
         width: 48rem;
-        padding: 100px 0 100px 0;
+        padding: 100px 0 200px 0;
         gap: 3.125rem;
     }
         .courses-text {
