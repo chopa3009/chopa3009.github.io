@@ -1,0 +1,134 @@
+.titleWrap {
+  min-height: 400px; /* під 2 рядки + padding */
+  display: flex;
+  align-items: stretch;
+   max-height: 400px;
+   width: 100%;
+}
+
+.title-photo {
+  display: flex;
+  justify-content: space-between;
+  width: 1440px;
+  margin: 0 auto;
+  background-position: center;
+  background-size: cover;
+  background-color: var(--backgrounddefaultdark);
+
+  transition:
+    padding 0.6s ease,
+    background-color 0.6s ease,
+    background-position 0.6s ease;
+}
+
+/* локальні класи для Home.jsx */
+.title-photo.about .title,
+.title-photo.cosmetics .title,
+.title-photo.masters .title,
+.title-photo.courses .title,
+.title-photo.haircut .title,
+.title-photo.coloring .title,
+.title-photo.restoration .title,
+.title-photo.shop .title {
+  align-self: stretch;
+  background-color: var(--backgrounddefaultdark);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 140px 32px 140px 109px;
+  transition: padding 0.6s ease;
+  
+
+}
+
+.title-photo.courses .title {
+  padding: 170px 32px 170px 109px;
+  transition: padding 0.6s ease;
+}
+
+.title-text {
+  color: var(--backgrounddefaultwhite);
+  font-weight: 400;
+  line-height: 60px;
+  margin-top: -1px;
+  position: relative;
+  width: 491px;
+}
+
+.image {
+  width: 808px;
+  height: 400px;
+}
+
+/* Мобільні стилі */
+@media screen and (max-width: 767px) {
+  .title-photo {
+    flex-direction: column;
+    width: 375px;
+    margin: 0 auto;
+  }
+  .titleWrap {
+ min-height: unset;
+    max-height: unset;
+}
+
+  .title-photo.about .title,
+.title-photo.cosmetics .title,
+.title-photo.masters .title,
+.title-photo.courses .title,
+.title-photo.haircut .title,
+.title-photo.coloring .title,
+.title-photo.restoration .title,
+.title-photo.shop .title {
+    padding: 20px;
+  }
+
+  .title-text {
+    font-size: 30px;
+    width: 100%;
+  }
+
+  .image {
+    width: 375px;
+    height: 185px;
+  }
+}
+
+/* Планшет */
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .title-photo {
+    flex-direction: column;
+    width: 768px;
+    margin: 0 auto;
+  }
+    .titleWrap {
+ min-height: unset;
+    max-height: unset;
+}
+
+  .title-photo.about .title,
+.title-photo.cosmetics .title,
+.title-photo.masters .title,
+.title-photo.courses .title,
+.title-photo.haircut .title,
+.title-photo.coloring .title,
+.title-photo.restoration .title,
+.title-photo.shop .title  {
+    padding: 70px 40px 70px 40px;
+  }
+
+  .title-text {
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .title-photo .title-text br {
+    display: none;
+  }
+
+  .image {
+    width: 768px;
+    height: 378px;
+  }
+}

@@ -1,0 +1,9 @@
+.tickerWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.tickerContent {
+  display: flex;
+}
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://bove.com.ua/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/aboutus.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/haircut.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/coloring.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/restoration.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/courses.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/shop.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/masters.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://bove.com.ua/cosmetics.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
