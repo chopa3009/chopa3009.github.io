@@ -163,7 +163,7 @@ function AppWrapper() {
       )}
 
       {showHeaderFooter && <Footer />}
-      <ModalPopup isOpen={isModalOpen} onClose={closeModal} />
+      <ModalPopup isOpen={isModalOpen} onClose={closeModal} location={location}/>
     </>
   );
 }
