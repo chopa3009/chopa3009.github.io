@@ -43,6 +43,7 @@ const ModalPopup = ({ isOpen, onClose, location }) => {
   const closeOnOverlay = (e) => {
     if (e.target === e.currentTarget) onClose();
   };
+  console.log("Modal location pathname:", location?.pathname);
 
   return (
     <AnimatePresence>
