@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -170,9 +170,9 @@ function AppWrapper() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppWrapper />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
