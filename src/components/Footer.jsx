@@ -67,9 +67,9 @@ const Footer = () => {
 
           {/* Навігація */}
           <div className="footer-navigation mobtext16bove">
-            <a href="/#services-desktop">
+            <Link to="/#services-desktop">
               <div className="list-text-footer">{t("services")}</div>
-            </a>
+            </Link>
             <Link to="/about">
               <div className="list-text-footer">{t("about")}</div>
             </Link>

@@ -121,7 +121,7 @@ const Home = ({ openModal }) => {
             </p>
           </div>
 
-          <Link to="/aboutus">
+          <Link to="/about">
             <div className={homeStyles["button-white-aboutus"]}>
               <div className={`${homeStyles["text-button-white"]} mobtext16bove`}>
                 {t("readMore")}

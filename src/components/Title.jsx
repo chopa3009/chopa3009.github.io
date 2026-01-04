@@ -22,7 +22,7 @@ const pageTitlesUA = {
 const pageTitlesEN = {
   about: "BOVÉ – the philosophy <br/> of beauty.",
   courses: "Training at BOVÉ.",
-  cosmetics: "Professional premium-class products.",
+  cosmetics: "Professional premium-<br/>class products.",
   masters: "Art Director<br/> Valentina Bodnaruk",
   haircut: "Your perfect <br/> style is near.",
   coloring: "Your perfect <br/> style is near.",
