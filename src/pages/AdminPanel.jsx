@@ -194,7 +194,6 @@ const AdminPanel = () => {
 
   return (
     <>
-    <Ticker />
       <h1>Admin Panel / Адмін панель</h1>
       <div className={styles.adminPanel}>
         {!user && (
