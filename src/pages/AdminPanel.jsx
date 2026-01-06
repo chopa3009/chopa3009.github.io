@@ -1,6 +1,7 @@
 // AdminPanel.jsx
 import React, { useState, useEffect, useRef } from "react";
 import styles from "../css/AdminPanel.module.css";
+import Ticker from "../components/Ticker";
 import { db } from "../js/firebase";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
@@ -193,6 +194,7 @@ const AdminPanel = () => {
 
   return (
     <>
+    <Ticker />
       <h1>Admin Panel / Адмін панель</h1>
       <div className={styles.adminPanel}>
         {!user && (
