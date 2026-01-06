@@ -18,6 +18,10 @@ const ImageTicker = ({
   const containerRef = useRef(null);
   const firstCopyRef = useRef(null);
 
+  const [allImages, setAllImages] = useState([]);
+  const [animationWidth, setAnimationWidth] = useState(0);
+
+  // 🔹 Responsive settings
   const [settings, setSettings] = useState({
     speed,
     containerHeight,
@@ -25,7 +29,7 @@ const ImageTicker = ({
     gap,
   });
 
-  // мемоізовані зображення
+  // ✅ Images array memoized, щоб useEffect не зациклювався
   const images = useMemo(
     () => [
       { src: img1, opacity: 0.8 },
@@ -39,7 +43,7 @@ const ImageTicker = ({
     []
   );
 
-  // 🔹 Responsive
+  // ✅ Responsive logic
   useEffect(() => {
     const updateSettings = () => {
       if (window.innerWidth <= 1439) {
@@ -59,10 +63,7 @@ const ImageTicker = ({
     return () => window.removeEventListener("resize", updateSettings);
   }, [speed, containerHeight, imageHeight, gap]);
 
-  // 🔹 Width and repeat count
-  const [repeatCount, setRepeatCount] = useState(1);
-  const [animationWidth, setAnimationWidth] = useState(0);
-
+  // ✅ Setup ticker
   useEffect(() => {
     const setupTicker = () => {
       if (!containerRef.current || !firstCopyRef.current) return;
@@ -70,13 +71,15 @@ const ImageTicker = ({
       const containerWidth = containerRef.current.offsetWidth;
       const firstCopyWidth = firstCopyRef.current.scrollWidth;
 
-      const repeats = Math.ceil(containerWidth / firstCopyWidth) + 1;
-      setRepeatCount(repeats);
+      const repeatCount = Math.ceil(containerWidth / firstCopyWidth) + 2;
+
+      setAllImages(Array.from({ length: repeatCount }).flatMap(() => images));
       setAnimationWidth(firstCopyWidth);
     };
 
-    setupTicker();
+    setupTicker(); // викликаємо одразу після рендеру
     window.addEventListener("resize", setupTicker);
+
     return () => window.removeEventListener("resize", setupTicker);
   }, [images, settings.gap, settings.imageHeight]);
 
@@ -88,12 +91,6 @@ const ImageTicker = ({
     flexShrink: 0,
     transition: "opacity 0.3s ease",
   });
-
-  // 🔹 Подвійне дублювання для seamless анімації
-  const displayImages = [];
-  for (let i = 0; i < repeatCount; i++) {
-    displayImages.push(...images);
-  }
 
   return (
     <div
@@ -109,7 +106,7 @@ const ImageTicker = ({
         position: "relative",
       }}
     >
-      {/* hidden copy для вимірювання */}
+      {/* Hidden copy for width measurement */}
       <div
         ref={firstCopyRef}
         style={{
@@ -123,7 +120,7 @@ const ImageTicker = ({
         ))}
       </div>
 
-      {/* анімований ticker */}
+      {/* Animated ticker */}
       <div
         className={styles.tickerContent}
         style={{
@@ -132,18 +129,17 @@ const ImageTicker = ({
           animation: animationWidth
             ? `scrollLeft ${settings.speed}s linear infinite`
             : "none",
-          willChange: "transform",
         }}
       >
-        {displayImages.map((img, idx) => (
+        {allImages.map((img, idx) => (
           <img key={idx} src={img.src} alt="" style={imageStyle(img.opacity)} />
         ))}
       </div>
 
       <style>{`
         @keyframes scrollLeft {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-${animationWidth}px, 0, 0); }
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-${animationWidth}px); }
         }
       `}</style>
     </div>
