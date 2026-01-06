@@ -1,9 +1,20 @@
 .tickerWrapper {
   position: relative;
   overflow: hidden;
+    height: 100px;
 }
 
 .tickerContent {
   display: flex;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+.tickerWrapper {
+  height: 80px;
+} 
+}
+@media screen and (max-width: 767px) {
+  .tickerWrapper {
+  height: 80px;
+} 
+}

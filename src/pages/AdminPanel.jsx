@@ -21,17 +21,6 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-// ===== Firebase config =====
-const firebaseConfig = {
-  apiKey: "AIzaSyD2rkpPXqqwYQ4JctT8Gu6E6mIytoJqPGo",
-  authDomain: "bove-948cf.firebaseapp.com",
-  projectId: "bove-948cf",
-  storageBucket: "bove-948cf.firebasestorage.app",
-  messagingSenderId: "36414468939",
-  appId: "1:36414468939:web:2907567ba0986373482ece",
-  measurementId: "G-QH31QNJXWF",
-};
-
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
@@ -286,6 +275,9 @@ const AdminPanel = () => {
                     <option value="Kis">Kis</option>
                     <option value="Tempting">Tempting</option>
                     <option value="Viart">Viart</option>
+                    <option value="Viart">Tangle Teezer</option>
+                    <option value="Viart">Keune</option>
+                    <option value="Viart">Medavita</option>
                   </select>
                 </label>
 

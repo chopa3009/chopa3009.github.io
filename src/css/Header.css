@@ -351,6 +351,9 @@ a {
   .header-mobile {
     display: flex;
   }
+    .mobile-header {
+ height: 80px;
+}
   
 }
 

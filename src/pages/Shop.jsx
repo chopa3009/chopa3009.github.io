@@ -12,6 +12,7 @@ const RestorationPageSection = ({ openModal }) => {
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [activeBrand, setActiveBrand] = useState(ALL_PRODUCTS);
+  const [isLoading, setIsLoading] = useState(true); // ✅ loading flag
 
   const productsRef = useRef(null);
 
@@ -36,6 +37,8 @@ const RestorationPageSection = ({ openModal }) => {
         setActiveBrand(ALL_PRODUCTS);
       } catch (error) {
         console.error("Error loading products:", error);
+      } finally {
+        setIsLoading(false); // ✅ finished loading
       }
     };
 
@@ -61,6 +64,11 @@ const RestorationPageSection = ({ openModal }) => {
         );
 
   const lang = i18n.language === "en" ? "en" : "ua";
+
+  // ✅ DO NOT RENDER until products are loaded
+  if (isLoading) {
+    return null; // or loader / skeleton
+  }
 
   return (
     <div className={styles["restoration-page-section-element-state"]}>

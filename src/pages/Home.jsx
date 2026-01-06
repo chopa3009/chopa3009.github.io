@@ -20,10 +20,10 @@ import photoMaster from "../assets/photo-master-1.png";
 
 const Home = ({ openModal }) => {
   const { t } = useTranslation();
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1440);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1439);
 
   useEffect(() => {
-    const handleResize = () => setIsSmallScreen(window.innerWidth < 1440);
+    const handleResize = () => setIsSmallScreen(window.innerWidth <= 1439);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -61,7 +61,7 @@ const Home = ({ openModal }) => {
           </div>
         </div>
       </div>
-     {/* <Ticker /> */}
+     <Ticker />
       {/* Services */}
       <div
         className={`${homeStyles["services"]} scroll-services`}
