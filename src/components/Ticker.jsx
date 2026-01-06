@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState, useMemo } from "react";
+// Ticker.jsx
+import React, { useRef, useEffect, useMemo, useState } from "react";
 import styles from "../css/Ticker.module.css";
 
 import img1 from "../assets/Dyson.png";
@@ -9,27 +10,10 @@ import img5 from "../assets/JRL.png";
 import img6 from "../assets/Keune.png";
 import img7 from "../assets/Medavita.png";
 
-const ImageTicker = ({
-  speed = 20,
-  containerHeight = 100,
-  imageHeight = 50,
-  gap = 80,
-}) => {
+const ImageTicker = ({ speed = 50 }) => {
   const containerRef = useRef(null);
-  const firstCopyRef = useRef(null);
+  const tickerRef = useRef(null);
 
-  const [allImages, setAllImages] = useState([]);
-  const [animationWidth, setAnimationWidth] = useState(0);
-
-  // 🔹 Responsive settings
-  const [settings, setSettings] = useState({
-    speed,
-    containerHeight,
-    imageHeight,
-    gap,
-  });
-
-  // ✅ Images array memoized, щоб useEffect не зациклювався
   const images = useMemo(
     () => [
       { src: img1, opacity: 0.8 },
@@ -43,45 +27,24 @@ const ImageTicker = ({
     []
   );
 
-  // ✅ Responsive logic
+  const [settings, setSettings] = useState({ imageHeight: 50, gap: 80, containerHeight: 100 });
+  const [allImages, setAllImages] = useState([]);
+
+  // Responsive settings
   useEffect(() => {
     const updateSettings = () => {
-      if (window.innerWidth <= 1439) {
-        setSettings({
-          speed: 20,
-          containerHeight: 80,
-          imageHeight: 30,
-          gap: 50,
-        });
+      if (window.innerWidth <= 768) {
+        setSettings({ imageHeight: 30, gap: 50, containerHeight: 80 });
+      } else if (window.innerWidth <= 1439) {
+        setSettings({ imageHeight: 30, gap: 50, containerHeight: 80 });
       } else {
-        setSettings({ speed, containerHeight, imageHeight, gap });
+        setSettings({ imageHeight: 50, gap: 80, containerHeight: 100 });
       }
     };
-
     updateSettings();
     window.addEventListener("resize", updateSettings);
     return () => window.removeEventListener("resize", updateSettings);
-  }, [speed, containerHeight, imageHeight, gap]);
-
-  // ✅ Setup ticker
-  useEffect(() => {
-    const setupTicker = () => {
-      if (!containerRef.current || !firstCopyRef.current) return;
-
-      const containerWidth = containerRef.current.offsetWidth;
-      const firstCopyWidth = firstCopyRef.current.scrollWidth;
-
-      const repeatCount = Math.ceil(containerWidth / firstCopyWidth) + 2;
-
-      setAllImages(Array.from({ length: repeatCount }).flatMap(() => images));
-      setAnimationWidth(firstCopyWidth);
-    };
-
-    setupTicker(); // викликаємо одразу після рендеру
-    window.addEventListener("resize", setupTicker);
-
-    return () => window.removeEventListener("resize", setupTicker);
-  }, [images, settings.gap, settings.imageHeight]);
+  }, []);
 
   const imageStyle = (opacity) => ({
     height: `${settings.imageHeight}px`,
@@ -89,8 +52,56 @@ const ImageTicker = ({
     opacity,
     marginRight: `${settings.gap}px`,
     flexShrink: 0,
-    transition: "opacity 0.3s ease",
+    display: "inline-block",
   });
+
+  // Prepare images for smooth loop
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const containerWidth = containerRef.current.offsetWidth;
+
+    // Estimate width of one sequence
+    const singleWidth = images.reduce((acc, _) => acc + settings.imageHeight + settings.gap, 0);
+    const repeatCount = Math.ceil(containerWidth / singleWidth) + 4;
+
+    const repeated = Array.from({ length: repeatCount }).flatMap(() => images);
+    setAllImages([...repeated, ...repeated]); // two blocks for seamless loop
+  }, [images, settings.imageHeight, settings.gap]);
+
+  // Smooth animation using translateX + reset when first block fully scrolled
+  useEffect(() => {
+    if (!tickerRef.current) return;
+    const ticker = tickerRef.current;
+
+    let pos = 0;
+    let blockWidth = 0;
+    let lastTimestamp = performance.now();
+
+    const updateBlockWidth = () => {
+      // half of the ticker content is one "block"
+      blockWidth = ticker.scrollWidth / 2;
+    };
+    updateBlockWidth();
+    window.addEventListener("resize", updateBlockWidth);
+
+    const animate = (timestamp) => {
+      const delta = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      pos += (speed * delta) / 1000;
+
+      if (pos >= blockWidth) pos -= blockWidth; // reset without jump
+
+      ticker.style.transform = `translate3d(${-pos}px,0,0)`;
+      requestAnimationFrame(animate);
+    };
+
+    const raf = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", updateBlockWidth);
+    };
+  }, [allImages, speed]);
 
   return (
     <div
@@ -100,48 +111,24 @@ const ImageTicker = ({
         height: `${settings.containerHeight}px`,
         overflow: "hidden",
         width: "100%",
-        background: "#f6ecdd",
         display: "flex",
         alignItems: "center",
-        position: "relative",
+        background: "#f6ecdd",
       }}
     >
-      {/* Hidden copy for width measurement */}
       <div
-        ref={firstCopyRef}
-        style={{
-          display: "flex",
-          position: "absolute",
-          visibility: "hidden",
-        }}
-      >
-        {images.map((img, idx) => (
-          <img key={idx} src={img.src} alt="" style={imageStyle(img.opacity)} />
-        ))}
-      </div>
-
-      {/* Animated ticker */}
-      <div
-        className={styles.tickerContent}
+        ref={tickerRef}
         style={{
           display: "flex",
           alignItems: "center",
-          animation: animationWidth
-            ? `scrollLeft ${settings.speed}s linear infinite`
-            : "none",
+          whiteSpace: "nowrap",
+          willChange: "transform",
         }}
       >
         {allImages.map((img, idx) => (
           <img key={idx} src={img.src} alt="" style={imageStyle(img.opacity)} />
         ))}
       </div>
-
-      <style>{`
-        @keyframes scrollLeft {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-${animationWidth}px); }
-        }
-      `}</style>
     </div>
   );
 };

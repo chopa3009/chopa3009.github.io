@@ -61,7 +61,7 @@ const Home = ({ openModal }) => {
           </div>
         </div>
       </div>
-     {/* <Ticker /> */}
+     <Ticker />
       {/* Services */}
       <div
         className={`${homeStyles["services"]} scroll-services`}
