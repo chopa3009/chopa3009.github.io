@@ -10,22 +10,14 @@ import img6 from "../assets/Keune.png";
 import img7 from "../assets/Medavita.png";
 
 const ImageTicker = ({
-  speed = 20,
+  speed = 50,
   containerHeight = 100,
   imageHeight = 50,
   gap = 80,
 }) => {
   const containerRef = useRef(null);
-  const firstCopyRef = useRef(null);
+  const [allImages, setAllImages] = useState([]);
 
-  const [settings, setSettings] = useState({
-    speed,
-    containerHeight,
-    imageHeight,
-    gap,
-  });
-
-  // мемоізовані зображення
   const images = useMemo(
     () => [
       { src: img1, opacity: 0.8 },
@@ -39,68 +31,54 @@ const ImageTicker = ({
     []
   );
 
-  // 🔹 Responsive
-  useEffect(() => {
-    const updateSettings = () => {
-      if (window.innerWidth <= 1439) {
-        setSettings({
-          speed: 20,
-          containerHeight: 80,
-          imageHeight: 30,
-          gap: 50,
-        });
-      } else {
-        setSettings({ speed, containerHeight, imageHeight, gap });
-      }
-    };
-
-    updateSettings();
-    window.addEventListener("resize", updateSettings);
-    return () => window.removeEventListener("resize", updateSettings);
-  }, [speed, containerHeight, imageHeight, gap]);
-
-  // 🔹 Width and repeat count
-  const [repeatCount, setRepeatCount] = useState(1);
-  const [animationWidth, setAnimationWidth] = useState(0);
-
-  useEffect(() => {
-    const setupTicker = () => {
-      if (!containerRef.current || !firstCopyRef.current) return;
-
-      const containerWidth = containerRef.current.offsetWidth;
-      const firstCopyWidth = firstCopyRef.current.scrollWidth;
-
-      const repeats = Math.ceil(containerWidth / firstCopyWidth) + 1;
-      setRepeatCount(repeats);
-      setAnimationWidth(firstCopyWidth);
-    };
-
-    setupTicker();
-    window.addEventListener("resize", setupTicker);
-    return () => window.removeEventListener("resize", setupTicker);
-  }, [images, settings.gap, settings.imageHeight]);
-
   const imageStyle = (opacity) => ({
-    height: `${settings.imageHeight}px`,
+    height: `${imageHeight}px`,
     width: "auto",
     opacity,
-    marginRight: `${settings.gap}px`,
+    marginRight: `${gap}px`,
     flexShrink: 0,
-    transition: "opacity 0.3s ease",
   });
 
-  // 🔹 Подвійне дублювання для seamless анімації
-  const displayImages = [];
-  for (let i = 0; i < repeatCount; i++) {
-    displayImages.push(...images);
-  }
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const containerWidth = containerRef.current.offsetWidth;
+    const singleWidth = images.reduce(
+      (acc, img) => acc + imageHeight + gap, // приблизна ширина одного елементу
+      0
+    );
+
+    const repeatCount = Math.ceil(containerWidth / singleWidth) + 2;
+    setAllImages(Array.from({ length: repeatCount }).flatMap(() => images));
+  }, [images, containerRef.current, gap, imageHeight]);
+
+  // Анімація requestAnimationFrame
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ticker = containerRef.current.querySelector("div");
+    let pos = 0;
+    let req;
+
+    const totalWidth = ticker.scrollWidth / 2;
+
+    const animate = () => {
+      pos += speed / 60; // приблизно px/frame
+      if (pos >= totalWidth) pos = 0;
+      ticker.style.transform = `translate3d(${-pos}px,0,0)`;
+      req = requestAnimationFrame(animate);
+    };
+
+    req = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(req);
+  }, [allImages, speed]);
 
   return (
     <div
       ref={containerRef}
       className={styles.tickerWrapper}
       style={{
-        height: `${settings.containerHeight}px`,
+        height: `${containerHeight}px`,
         overflow: "hidden",
         width: "100%",
         background: "#f6ecdd",
@@ -109,43 +87,11 @@ const ImageTicker = ({
         position: "relative",
       }}
     >
-      {/* hidden copy для вимірювання */}
-      <div
-        ref={firstCopyRef}
-        style={{
-          display: "flex",
-          position: "absolute",
-          visibility: "hidden",
-        }}
-      >
-        {images.map((img, idx) => (
+      <div style={{ display: "flex", alignItems: "center", willChange: "transform" }}>
+        {allImages.map((img, idx) => (
           <img key={idx} src={img.src} alt="" style={imageStyle(img.opacity)} />
         ))}
       </div>
-
-      {/* анімований ticker */}
-      <div
-        className={styles.tickerContent}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          animation: animationWidth
-            ? `scrollLeft ${settings.speed}s linear infinite`
-            : "none",
-          willChange: "transform",
-        }}
-      >
-        {displayImages.map((img, idx) => (
-          <img key={idx} src={img.src} alt="" style={imageStyle(img.opacity)} />
-        ))}
-      </div>
-
-      <style>{`
-        @keyframes scrollLeft {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-${animationWidth}px, 0, 0); }
-        }
-      `}</style>
     </div>
   );
 };
