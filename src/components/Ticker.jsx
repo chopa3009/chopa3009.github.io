@@ -10,7 +10,7 @@ import img5 from "../assets/JRL.png";
 import img6 from "../assets/Keune.png";
 import img7 from "../assets/Medavita.png";
 
-const ImageTicker = ({ speed = 50 }) => {
+const ImageTicker = ({ speed = 70 }) => {
   const containerRef = useRef(null);
   const tickerRef = useRef(null);
 

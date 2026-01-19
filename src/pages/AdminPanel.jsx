@@ -1,7 +1,18 @@
 // AdminPanel.jsx
 import React, { useState, useEffect, useRef } from "react";
+
+import EyeIcon from "../assets/open_eye.svg";
+import EyeOffIcon from "../assets/crossed_eye.svg";
+
 import styles from "../css/AdminPanel.module.css";
-import Ticker from "../components/Ticker";
+import Sidebar from "../components/AdminSideBar";
+import Header from "../components/AdminHeader";
+import MainContent from "../components/AdminMainContent";
+import BrandModal from "../components/BrandModal";
+import ProductModal from "../components/ProductModal";
+import ConfirmModal from "../components/ConfirmModal";
+import ErrorModal from "../components/ErrorModal";
+
 import { db } from "../js/firebase";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
@@ -26,21 +37,93 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
 const AdminPanel = () => {
+  const [activeSection, setActiveSection] = useState("brands");
+
+  const [search, setSearch] = useState("");
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [editingId, setEditingId] = useState(null);
-
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [formData, setFormData] = useState({
+
+  const [brands, setBrands] = useState([]);
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [brandName, setBrandName] = useState("");
+  const [editingBrandId, setEditingBrandId] = useState(null);
+  const [brandToDelete, setBrandToDelete] = useState(null);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
+    useState(false);
+
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+const [errorText, setErrorText] = useState("");
+
+  // product form
+  const [productForm, setProductForm] = useState({
     title: "",
+     price: "",
+    sku: "",
+    comment: "",
     description: "",
     descriptionEn: "",
     brand: "",
-    image: null,
-    imagePreview: null,
+    imageBase64: "",
   });
 
   const dropRef = useRef();
+
+  // ===== Open Add Brands Modal =====
+  const openAddBrandModal = () => {
+    setEditingBrandId(null);
+    setBrandName("");
+    setIsBrandModalOpen(true);
+  };
+  // ===== Open Edit Brands Modal =====
+  const openEditBrandModal = (brand) => {
+    setEditingBrandId(brand.id);
+    setBrandName(brand.name);
+    setIsBrandModalOpen(true);
+  };
+  // ===== Close Brands Modal =====
+  const closeBrandModal = () => {
+    setIsBrandModalOpen(false);
+    setBrandName("");
+    setEditingBrandId(null);
+  };
+  // ===== Open Add Products Modal =====
+  const openAddProductModal = () => {
+    setEditingProductId(null);
+    setProductForm({
+      title: "",
+       price: "",
+  sku: "",
+  comment: "",
+      description: "",
+      descriptionEn: "",
+      brand: "",
+      imageBase64: "",
+    });
+    setIsProductModalOpen(true);
+  };
+  // ===== Open Edit Products Modal =====
+  const openEditProductModal = (product) => {
+    setEditingProductId(product.id);
+    setProductForm({
+      ...product,
+      image: null, // новий файл ще не вибраний
+      imagePreview: product.imageBase64 || null, // беремо існуючу картинку
+    });
+    setIsProductModalOpen(true);
+  };
+  // ===== Close Products Modal =====
+  const closeProductModal = () => {
+    setIsProductModalOpen(false);
+    setEditingProductId(null);
+  };
 
   // ===== Auth listener =====
   useEffect(() => {
@@ -48,57 +131,48 @@ const AdminPanel = () => {
       if (u) {
         setUser(u);
         loadProducts();
+        loadBrands();
       } else {
         setUser(null);
         setProducts([]);
+        setBrands([]);
       }
     });
     return () => unsubscribe();
   }, []);
 
   // ===== Handle login =====
+  const [loginError, setLoginError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoginError(""); // reset previous errors
     try {
-      await signInWithEmailAndPassword(auth, loginData.email, loginData.password);
+      await signInWithEmailAndPassword(
+        auth,
+        loginData.email,
+        loginData.password
+      );
       setLoginData({ email: "", password: "" });
     } catch (err) {
-      alert(err.message);
+      // Map Firebase errors to friendly messages
+      switch (err.code) {
+        case "auth/wrong-password":
+          setLoginError("Невірний пароль");
+          break;
+        case "auth/user-not-found":
+          setLoginError("Користувача з таким email не знайдено");
+          break;
+        case "auth/invalid-email":
+          setLoginError("Невірний формат email");
+          break;
+        case "auth/invalid-credential":
+          setLoginError("Невірні облікові дані");
+          break;
+        default:
+          setLoginError(err.message);
+      }
     }
-  };
-
-  const handleLogout = () => signOut(auth);
-
-  // ===== Drag & Drop =====
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    dropRef.current.classList.add(styles.dragOver);
-  };
-  const handleDragLeave = () => {
-    dropRef.current.classList.remove(styles.dragOver);
-  };
-  const handleDrop = (e) => {
-    e.preventDefault();
-    dropRef.current.classList.remove(styles.dragOver);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) handleImageFile(file);
-  };
-
-  const handleImageFile = (file) => {
-    const maxSizeMB = 1;
-    if (file.size > maxSizeMB * 1024 * 1024) {
-      return alert(`Image size should not exceed ${maxSizeMB} MB`);
-    }
-    const reader = new FileReader();
-    reader.onload = () =>
-      setFormData((prev) => ({ ...prev, image: file, imagePreview: reader.result }));
-    reader.readAsDataURL(file);
-  };
-
-  const handleChange = (e) => {
-    const { id, value, files } = e.target;
-    if (id === "image" && files[0]) handleImageFile(files[0]);
-    else setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
   const imageToBase64 = (file) =>
@@ -109,248 +183,327 @@ const AdminPanel = () => {
       reader.readAsDataURL(file);
     });
 
-  // ===== Add / Edit product =====
-  const handleProductSubmit = async (e) => {
-    e.preventDefault();
-    const { title, description, descriptionEn, brand, image } = formData;
-    if (!title || !description || !brand) return alert("Please fill required fields");
+  // ===== Load Brands =====
+  const loadBrands = async () => {
+    try {
+      const q = query(collection(db, "brands"), orderBy("createdAt", "asc"));
+      const snapshot = await getDocs(q);
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setBrands(data);
+    } catch (err) {
+      console.error("Error loading brands:", err);
+    }
+  };
 
-    let imageBase64 = formData.imagePreview;
-    if (image && !imageBase64) imageBase64 = await imageToBase64(image);
+  // ===== Add Brand =====
+  const addBrand = async () => {
+    if (!brandName.trim()){
+    setErrorText("Введіть назву бренду");
+    setErrorModalOpen(true);
+    return;
+  }
 
     try {
-      const productData = {
-        title: title.slice(0, 50),
-        brand: brand.slice(0, 30),
-        description: description.slice(0, 400),
-        descriptionEn: descriptionEn.slice(0, 400),
-        imageBase64,
-      };
-
-      if (editingId) {
-        if (!window.confirm("Are you sure you want to update this product?")) return;
-        const docRef = doc(db, "products", editingId);
-        await updateDoc(docRef, productData);
-        setEditingId(null);
-      } else {
-        if (!imageBase64) return alert("Please select an image for new product");
-        await addDoc(collection(db, "products"), { ...productData, createdAt: serverTimestamp() });
-      }
-
-      setFormData({
-        title: "",
-        description: "",
-        descriptionEn: "",
-        brand: "",
-        image: null,
-        imagePreview: null,
+      await addDoc(collection(db, "brands"), {
+        name: brandName.trim(),
+        createdAt: serverTimestamp(),
       });
-      loadProducts();
+
+      setBrandName("");
+      loadBrands();
+      closeBrandModal();
     } catch (err) {
       console.error(err);
-      alert("Error saving product");
+      alert("Error adding brand");
     }
+  };
+
+  // ===== Save Editing Brand =====
+  const updateBrand = async () => {
+    if (!brandName.trim()) {
+    setErrorText("Введіть назву бренду");
+    setErrorModalOpen(true);
+    return;
+  }
+
+    try {
+      const brandRef = doc(db, "brands", editingBrandId);
+      await updateDoc(brandRef, {
+        name: brandName.trim(),
+      });
+
+      setEditingBrandId(null);
+      setBrandName("");
+      loadBrands();
+      closeBrandModal();
+    } catch (err) {
+      console.error(err);
+      alert("Error updating brand");
+    }
+  };
+
+  // ===== Delete Brand =====
+  const requestDeleteBrand = (id) => {
+    setBrandToDelete(id);
+    setIsDeleteModalOpen(true);
+  };
+  const confirmDeleteBrand = async () => {
+    try {
+      await deleteDoc(doc(db, "brands", brandToDelete));
+      loadBrands();
+      closeDeleteModal();
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting brand");
+    }
+  };
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setBrandToDelete(null);
+  };
+
+// ===== Add Product =====
+const addProduct = async () => {
+  const { title, description, descriptionEn, brand, status, imageBase64, price, comment, sku } = productForm;
+
+  if (!title || !brand || !imageBase64 || !description || !descriptionEn || !status) {
+    setErrorText("Заповніть всі поля та додайте картинку");
+    setErrorModalOpen(true);
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "products"), {
+      title,
+       price,
+  sku,
+  comment,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64, // save preview as imageBase64
+      createdAt: serverTimestamp(),
+    });
+
+    // Reset form
+    setProductForm({
+      title: "",
+       price: "",
+  sku: "",
+  comment: "",
+      description: "",
+      descriptionEn: "",
+      brand: "",
+      status: "",
+      image: null,
+      imagePreview: null,
+      imageBase64: "",
+    });
+
+    loadProducts();
+    closeProductModal();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// ===== Update Product =====
+const updateProduct = async () => {
+  const { title, description, descriptionEn, brand, status, price, sku, comment, imagePreview, imageBase64 } = productForm;
+
+    if (!title || !brand || !imageBase64 || !description || !descriptionEn || !status) {
+    setErrorText("Заповніть всі поля та додайте картинку");
+    setErrorModalOpen(true);
+    return;
+  }
+
+  try {
+    await updateDoc(doc(db, "products", editingProductId), {
+      title,
+      price,
+      sku,
+      comment,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64: imagePreview || imageBase64, // keep old image if no new one selected
+    });
+
+    // Reset form
+    setProductForm({
+      title: "",
+       price: "",
+  sku: "",
+  comment: "",
+      description: "",
+      descriptionEn: "",
+      brand: "",
+      status: "",
+      image: null,
+      imagePreview: null,
+      imageBase64: "",
+    });
+
+    loadProducts();
+    closeProductModal();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+
+
+  // ===== Delete Product =====
+  const requestDeleteProduct = (id) => {
+    setProductToDelete(id);
+    setIsDeleteProductModalOpen(true);
+  };
+
+  const confirmDeleteProduct = async () => {
+    try {
+      await deleteDoc(doc(db, "products", productToDelete));
+      loadProducts();
+      closeDeleteProductModal();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const closeDeleteProductModal = () => {
+    setIsDeleteProductModalOpen(false);
+    setProductToDelete(null);
   };
 
   // ===== Load Products =====
   const loadProducts = async () => {
     const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
     const snapshot = await getDocs(q);
-    const grouped = {};
-    snapshot.forEach((docSnap) => {
-      const product = docSnap.data();
-      const brand = product.brand || "No Brand";
-      if (!grouped[brand]) grouped[brand] = [];
-      grouped[brand].push({ id: docSnap.id, ...product });
-    });
-    setProducts(grouped);
-  };
 
-  // ===== Edit / Delete =====
-  const editProduct = (id, product) => {
-    if (!window.confirm("Are you sure you want to edit this product?")) return;
-    setEditingId(id);
-    setFormData({
-      title: product.title,
-      description: product.description,
-      descriptionEn: product.descriptionEn || "",
-      brand: product.brand,
-      image: null,
-      imagePreview: product.imageBase64,
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
-  const deleteProduct = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
-    try {
-      await deleteDoc(doc(db, "products", id));
-      loadProducts();
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting product");
-    }
+    setProducts(data); // ✅ array
   };
 
   return (
     <>
-      <h1>Admin Panel / Адмін панель</h1>
       <div className={styles.adminPanel}>
         {!user && (
           <div id="loginDiv" className={styles.loginDiv}>
             <form id="loginForm" onSubmit={handleLogin}>
-              <input
-                type="email"
-                id="email"
-                placeholder="Email"
-                required
-                value={loginData.email}
-                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-              />
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                required
-                value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-              />
-              <button type="submit">Login / Логін</button>
+              <h1 className={styles.h1}>Log in</h1>
+              <label className={styles.required}>
+                Email
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Введіть свій email"
+                  required
+                  value={loginData.email}
+                  onChange={(e) =>
+                    setLoginData({ ...loginData, email: e.target.value })
+                  }
+                />
+              </label>
+              <label className={styles.required}>
+                Password
+                <div className={styles.passwordWrapper}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    placeholder="Введіть свій пароль"
+                    required
+                    value={loginData.password}
+                    onChange={(e) =>
+                      setLoginData({ ...loginData, password: e.target.value })
+                    }
+                  />
+                  <span
+                    className={styles.passwordToggle}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <img
+                      src={showPassword ? EyeOffIcon : EyeIcon} // imported from assets
+                      alt={showPassword ? "Hide password" : "Show password"}
+                    />
+                  </span>
+                </div>
+              </label>
+
+              <button type="submit">Login</button>
+
+              {loginError && <p className={styles.loginError}>{loginError}</p>}
             </form>
           </div>
         )}
 
         {user && (
-          <div id="adminDiv" className={styles.adminDiv}>
-            <h2>Add / Edit Product / Додати / Відредагувати продукт</h2>
-            <form id="productForm" onSubmit={handleProductSubmit}>
-              <label>
-                Title (EN) / Назва: <small>*Max 50 characters</small>
-                <input
-                  type="text"
-                  id="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                  maxLength={50}
-                />
-              </label>
+          <>
+            <Sidebar
+              activeSection={activeSection}
+              setActiveSection={setActiveSection}
+            />
+            <Header search={search} setSearch={setSearch} />
+            <MainContent
+              search={search}
+              brands={brands}
+              activeSection={activeSection}
+              onAddBrand={openAddBrandModal}
+              onEditBrand={openEditBrandModal}
+              onDeleteBrand={requestDeleteBrand}
+              brandName={brandName}
+              setBrandName={setBrandName}
+              editingBrandId={editingBrandId}
+              products={products}
+              onAddProduct={openAddProductModal}
+              onEditProduct={openEditProductModal}
+              onDeleteProduct={requestDeleteProduct}
+            />
+            <BrandModal
+              isOpen={isBrandModalOpen}
+              brandName={brandName}
+              setBrandName={setBrandName}
+              onClose={closeBrandModal}
+              onSave={editingBrandId ? updateBrand : addBrand}
+              isEditing={!!editingBrandId}
+            />
+            <ConfirmModal
+              isOpen={isDeleteModalOpen}
+              title="Видалити бренд?"
+              text="Ви впевнені, що хочете видалити цей бренд? Цю дію неможливо скасувати."
+              onCancel={closeDeleteModal}
+              onConfirm={confirmDeleteBrand}
+            />
+            <ProductModal
+              isOpen={isProductModalOpen}
+              productForm={productForm}
+              setProductForm={setProductForm}
+              onSave={editingProductId ? updateProduct : addProduct}
+              onClose={closeProductModal}
+              isEditing={!!editingProductId}
+              brands={brands}
+            />
 
-              <label>
-                Description (UA) / Опис українською: <small>*Max 400 characters</small>
-                <textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                  maxLength={400}
-                />
-              </label>
-
-              <label>
-                Description (EN) / Опис англійською: <small>*Max 400 characters</small>
-                <textarea
-                  id="descriptionEn"
-                  value={formData.descriptionEn}
-                  onChange={handleChange}
-                  required
-                  maxLength={400}
-                />
-              </label>
-
-              {/* --- Обгортка для бренду та прев'ю --- */}
-              <div className={styles.formGroup}>
-                <label>
-                  Brand / Бренд: <small>*Choose one brand</small>
-                  <select
-                    id="brand"
-                    value={formData.brand}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Select Brand
-                    </option>
-                    <option value="Brae">Brae</option>
-                    <option value="Dr. Sorbie">Dr. Sorbie</option>
-                    <option value="Kis">Kis</option>
-                    <option value="Tempting">Tempting</option>
-                    <option value="Viart">Viart</option>
-                    <option value="Viart">Tangle Teezer</option>
-                    <option value="Viart">Keune</option>
-                    <option value="Viart">Medavita</option>
-                  </select>
-                </label>
-
-                <label
-                  ref={dropRef}
-                  className={styles.dropZone}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                >
-                  {formData.imagePreview ? (
-                    <img
-                      src={formData.imagePreview}
-                      alt="Preview"
-                      className={styles.previewImg}
-                    />
-                  ) : (
-                    "Drag & Drop Image Here / або виберіть файл"
-                  )}
-                  <input
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                    onChange={handleChange}
-                  />
-                </label>
-              </div>
-
-              <button type="submit">Save Product / Зберегти продукт</button>
-            </form>
-
-            <h2>Products / Продукти</h2>
-            <div id="productsContainer" className={styles.productsContainer}>
-              {Object.entries(products).map(([brand, items]) => (
-                <div key={brand} className={styles.brandGroup}>
-                  <h3>{brand}</h3>
-                  <div className={styles.productsGrid}>
-                    {items.map((p) => (
-                      <div key={p.id} className={styles.product}>
-                        {p.imageBase64 && (
-                          <img src={p.imageBase64} alt={p.title} width={100} />
-                        )}
-                        <h4>{p.title}</h4>
-                        <p className={styles.descUa}>
-                          <strong>UA:</strong> {p.description}
-                        </p>
-                        <p className={styles.descEn}>
-                          <strong>EN:</strong> {p.descriptionEn}
-                        </p>
-                        <button
-                          className={styles.editBtn}
-                          onClick={() => editProduct(p.id, p)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className={styles.deleteBtn}
-                          onClick={() => deleteProduct(p.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button id="logoutBtn" onClick={handleLogout}>
-              Logout / Вийти
-            </button>
-          </div>
+            <ConfirmModal
+              isOpen={isDeleteProductModalOpen}
+              title="Видалити продукт?"
+              text="Ви впевнені, що хочете видалити продукт? Цю дію неможливо скасувати."
+              onCancel={closeDeleteProductModal}
+              onConfirm={confirmDeleteProduct}
+            />
+            <ErrorModal
+  isOpen={errorModalOpen}
+  text={errorText}
+  onClose={() => setErrorModalOpen(false)}
+/>
+          </>
         )}
       </div>
     </>
