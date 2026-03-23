@@ -82,6 +82,7 @@ const Header = ({ onCartOpen }) => {
               </div>
             </div>
 
+            <Link to="/shop"><div className="text-navbar">{t('shop')}</div></Link>
             <Link to="/about"><div className="text-navbar">{t('about')}</div></Link>
             <Link to="/courses"><div className="text-navbar">{t('courses')}</div></Link>
             <Link to="/cosmetics"><div className="text-navbar">{t('cosmetics')}</div></Link>
@@ -141,5 +142,4 @@ const Header = ({ onCartOpen }) => {
 };
 
 export default Header;
-
 
