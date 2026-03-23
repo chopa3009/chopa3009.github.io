@@ -72,7 +72,7 @@ const Header = () => {
                 <img src={arrow} alt="arrow" className="dropdown-arrow" />
               </div>
               <div className="dropdown-content">
-                {['haircut','coloring','restoration','shop'].map((item) => (
+                {['haircut','coloring','restoration'].map((item) => (
                   <Link key={item} to={`/${item}`} onClick={() => setIsDropdownOpen(false)}>
                     {t(item)}
                   </Link>
@@ -80,6 +80,7 @@ const Header = () => {
               </div>
             </div>
 
+            <Link to="/shop"><div className="text-navbar">{t('shop')}</div></Link>
             <Link to="/about"><div className="text-navbar">{t('about')}</div></Link>
             <Link to="/courses"><div className="text-navbar">{t('courses')}</div></Link>
             <Link to="/cosmetics"><div className="text-navbar">{t('cosmetics')}</div></Link>

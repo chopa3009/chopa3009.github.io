@@ -43,7 +43,8 @@ html[lang="en"] .s-action {
 
 .main_-logo-action {
     align-items: center;
-    background-color: #2b2b2b;
+    background-color: rgba(43, 43, 43, 0.75);
+    border: 1px solid #f6ecdd;
     display: inline-flex;
     flex-direction: column;
     gap: 4.375rem;
@@ -70,6 +71,7 @@ html[lang="en"] .s-action {
 
 .button-white {
     align-items: center;
+    background-color: #ffffff;
     border: 0.0625rem solid;
     /* 1px */
     display: inline-flex;
@@ -113,6 +115,10 @@ html[lang="en"] .s-action {
     text-align: center;
     white-space: nowrap;
     width: fit-content;
+}
+
+.main_-logo-action .text-button-white {
+    color: #0B0B0B;
 }
 
 .services {
@@ -174,7 +180,7 @@ html[lang="en"] .s-action {
 
 .about-us {
     align-items: center;
-    background-color: var(--backgrounddefaultdark);
+    background-color: rgba(33, 33, 33, 0.9);
     display: flex;
     gap: 6.5rem;
     /* 104px */
@@ -399,7 +405,7 @@ html[lang="en"] .s-action {
 
 .masters {
     align-items: center;
-    background-color: var(--backgrounddefaultdark);
+    background-color: rgba(33, 33, 33, 0.9);
     gap: 8.5rem;
     /* 136px */
     padding: 0 7rem;

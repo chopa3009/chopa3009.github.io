@@ -32,7 +32,7 @@ a {
 .header-logo {
   height: 2.5rem;
   /* 40px */
-  width: 6.5rem;
+  width: 2.5rem;
   /* 104px */
   position: relative;
 }
@@ -235,7 +235,7 @@ a {
 
 .mobile-header .bove-logo {
   position: relative;
-  width: 6.625rem;
+  width: 60px;
   /* 106px */
 }
 
@@ -339,7 +339,7 @@ a {
  height: 110px;
 }
 .mobile-header .bove-logo {
-  width: 170px;
+  width: 80px;
 }
 }
 
