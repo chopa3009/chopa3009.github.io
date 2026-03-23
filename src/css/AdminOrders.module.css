@@ -1,0 +1,71 @@
+.orders {
+  background-color: var(--backgrounddefaultbeige);
+  padding: 55px 112px 30px 32px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  margin-left: 288px; /* space for sidebar */
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 30px;
+  font-family: var(--font-family-raleway);
+}
+
+.orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  padding: 30px;
+}
+
+.orders .tableWrapper {
+  background-color: #fff;
+  padding: 30px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.orders thead {
+  background-color: #fff;
+  border: 1px solid rgba(21, 21, 21, 0.4);
+  width: 100%;
+}
+
+.orders th {
+  background-color: #fff;
+  color: #212121;
+  font-weight: 400;
+  border: none;
+  text-align: left;
+  padding: 12px 0px;
+  font-size: 16px;
+  font-family: var(--font-family-raleway);
+}
+
+.orders td {
+  text-align: left;
+  padding: 10px 0px 0px 0px;
+  font-size: 16px;
+  font-family: var(--font-family-raleway);
+}
+
+.orders tbody tr:hover {
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+
+.tableWrapper table th:first-child,
+.tableWrapper table td:first-child {
+  width: 69px;
+  min-width: 69px;
+  max-width: 69px;
+  text-align: center;
+}

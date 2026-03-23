@@ -26,7 +26,13 @@ const AdminSideBar = ({ activeSection, setActiveSection }) => {
         >
           Замовлення
         </li>
-      </ul>
+          <li
+            className={activeSection === "portfolio" ? styles.active : ""}
+            onClick={() => setActiveSection("portfolio")}
+          >
+            Портфоліо
+          </li>
+        </ul>
     </nav>
   );
 };

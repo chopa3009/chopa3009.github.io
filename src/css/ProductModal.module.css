@@ -8,9 +8,31 @@
   z-index: 1000;
 }
 
+.imageColumn {
+  display: flex;
+  flex-direction: column;
+}
+.hitCheckbox {
+  margin-top: 35px; /* ← вирівнює з "Коментар англійською" */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-family: var(--font-family-raleway);
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+}
+
+.hitCheckbox input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
 .modal {
   width: 908px;
-  height: 600px;
+  height: 680px;
   background: #fff;
   padding: 32px;
   box-sizing: border-box;

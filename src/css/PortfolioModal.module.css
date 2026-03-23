@@ -1,0 +1,136 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 908px;
+  background: #fff;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  font-family: var(--font-family-raleway);
+}
+
+.imagesRow {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.imageBox {
+  width: 210px;
+  height: 294px;
+  cursor: pointer;
+}
+
+.image {
+  width: 210px;
+  height: 294px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.imagePlaceholder {
+  width: 210px;
+  height: 294px;
+  border: 1px dashed #bbb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  text-align: center;
+  gap: 6px;
+  font-family: var(--font-family-raleway);
+  font-size: 20px;
+}
+
+.uploadText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-family-raleway);
+  font-size: 20px;
+  line-height: 18px;
+  color: #666;
+  text-align: center;
+}
+
+.hiddenFileInput {
+  display: none;
+}
+
+.descriptionRow {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  justify-content: space-between;
+}
+
+.titleRow {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  justify-content: space-between;
+}
+
+.inputWide {
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+  width: 406px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.description {
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+  width: 406px;
+  height: 200px;
+  padding: 12px;
+  resize: none;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.buttonGroup {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 32px;
+}
+
+.cancel {
+  width: 187px;
+  height: 40px;
+  border: 1px solid;
+  background: white;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+}
+
+.save {
+  width: 187px;
+  height: 40px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+}

@@ -27,6 +27,50 @@ a {
   max-width: 90rem;
   /* ~1440px */
   margin: 0 auto;
+  height: 60px;
+}
+
+.order-header {
+  background-color: #000;
+  padding: 16px 112px;
+  max-width: none;
+  margin: 0;
+}
+
+.order-header .logo-default {
+  display: none;
+}
+
+.order-header .logo-shop {
+  display: block;
+}
+
+.order-header .order-phone {
+  display: flex;
+  align-items: center;
+}
+
+.order-header .phone-icon {
+  width: 24px;
+  height: 24px;
+}
+body.shop-page .header {
+  background-color: var(--black);
+}
+
+body.shop-page .lang-link.active {
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    padding: 3px;
+}
+body.shop-page .en{
+  color: white;
+    background-color: black;
+}
+body.shop-page .ua{
+  color: white;
+    background-color: black;
 }
 
 .header-logo {
@@ -36,6 +80,23 @@ a {
   /* 104px */
   position: relative;
 }
+
+
+
+/* default */
+.logo-shop {
+  display: none;
+}
+
+/* shop */
+body.shop-page .logo-default {
+  display: none;
+}
+
+body.shop-page .logo-shop {
+  display: block;
+}
+
 
 .navbar {
   align-items: center;
@@ -58,13 +119,28 @@ a {
   user-select: none;
 }
 
+body.shop-page .text-navbar {
+  color: var(--textprimarylight);
+}
+
 .header-actions {
-  width: 13rem;
-  /* 208px */
-  height: 1.9rem;
-  /* 30px */
-  position: relative;
-  user-select: none;
+  display: flex;
+  align-items: center;       /* вертикальне центрування всіх елементів */
+  justify-content: flex-end; /* мови зліва, іконки справа */
+  gap: 24px;                 /* відстань між мовним блоком і іконками */
+  height: 30px;              /* по потребі */
+}
+
+.header-action-language {
+  display: flex;
+  gap: 8px;                  /* відстань між кнопками мов */
+  align-items: center;
+}
+
+
+.communication-phone-1 {
+  display: flex;
+  align-items: center;
 }
 
 .header-action-language {
@@ -119,15 +195,35 @@ a {
   cursor: pointer;
 }
 
+
 .header-action-icon {
-  display: inline-flex;
-  gap: 0.5rem;
-  /* 8px */
-  position: absolute;
-  top: 0;
-  left: 4rem;
-  /* 64px */
+  display: flex;
+  align-items: center;
+  gap: 20px;               /* phone ↔ cart */
 }
+
+.communication-phone-1 {
+  display: flex;
+  align-items: center;
+}
+
+.header-action-icon img,
+.header-action-icon svg {
+  display: block;
+}
+
+/* header icons on white background */
+.header-action-icon img,
+.mobile-header .phone-icon,
+.header-cart img {
+  filter: brightness(0) saturate(100%);
+}
+
+body.shop-page .header .header-action-icon img,
+body.shop-page .header .header-cart img {
+  filter: brightness(0) saturate(100%) invert(1);
+}
+
 
 .instagram-outline {
   align-items: center;
@@ -199,9 +295,16 @@ a {
   position: relative;
 }
 
+.phone1{
+width: 23px;
+height:23px;
+  display: flex;
+  align-items: center;
+}
+
 .header-action {
   align-items: center;
-  position: absolute;
+  position: static;
 }
 
 
@@ -240,18 +343,19 @@ a {
 }
 
 .mobile-header .communication-phone-1 {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  /* 10px */
-  justify-content: center;
-  padding: 0.75rem;
-  /* 12px */
-  position: relative;
-  width: 3rem;
-  /* 48px */
-}
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    /* 10px */
+    justify-content: center;
+    padding: 0.75rem;
+    /* 12px */
+    position: relative;
+    width: 3rem;
+    /* 48px */
+  }
+
 
 .mobile-header .phone-icon {
   aspect-ratio: 1;
@@ -326,6 +430,10 @@ a {
     transform: rotate(180deg);
 }
 
+body.shop-page .dropdown-arrow {
+  filter: brightness(0) saturate(100%) invert(1);
+}
+
 
 @media screen and (max-width: 767px) {
   .header {
@@ -353,6 +461,12 @@ a {
   }
     .mobile-header {
  height: 80px;
+}
+
+@media screen and (max-width: 1439px) {
+  .order-header {
+    display: flex;
+  }
 }
   
 }

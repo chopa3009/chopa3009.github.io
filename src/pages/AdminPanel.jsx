@@ -10,15 +10,15 @@ import Header from "../components/AdminHeader";
 import MainContent from "../components/AdminMainContent";
 import BrandModal from "../components/BrandModal";
 import ProductModal from "../components/ProductModal";
+import PortfolioModal from "../components/PortfolioModal";
 import ConfirmModal from "../components/ConfirmModal";
 import ErrorModal from "../components/ErrorModal";
 
-import { db } from "../js/firebase";
+import { db} from "../js/firebase";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
   getAuth,
   signInWithEmailAndPassword,
-  signOut,
   onAuthStateChanged,
 } from "firebase/auth";
 import {
@@ -33,120 +33,105 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
+/* ================= Firebase ================= */
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
+/* ================= Component ================= */
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState("brands");
-
   const [search, setSearch] = useState("");
   const [user, setUser] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [editingId, setEditingId] = useState(null);
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
 
+  const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [portfolioItems, setPortfolioItems] = useState([]);
+
+  /* ---------- Auth ---------- */
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loginError, setLoginError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  /* ---------- Brand modal ---------- */
   const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
   const [brandName, setBrandName] = useState("");
   const [editingBrandId, setEditingBrandId] = useState(null);
   const [brandToDelete, setBrandToDelete] = useState(null);
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
+  /* ---------- Product modal ---------- */
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState(null);
   const [productToDelete, setProductToDelete] = useState(null);
   const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
     useState(false);
 
-    const [errorModalOpen, setErrorModalOpen] = useState(false);
-const [errorText, setErrorText] = useState("");
+  /* ---------- Portfolio modal ---------- */
+  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
+  const [editingPortfolioId, setEditingPortfolioId] = useState(null);
+  const [portfolioToDelete, setPortfolioToDelete] = useState(null);
+  const [isDeletePortfolioModalOpen, setIsDeletePortfolioModalOpen] =
+    useState(false);
 
-  // product form
+  /* ---------- Error modal ---------- */
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorText, setErrorText] = useState("");
+
+  /* ---------- Product form ---------- */
   const [productForm, setProductForm] = useState({
     title: "",
-     price: "",
+    price: "",
     sku: "",
     comment: "",
+    commentEn: "",
+    isHit: false,
     description: "",
     descriptionEn: "",
     brand: "",
+    status: "",
     imageBase64: "",
+    imagePreview: null,
   });
 
-  const dropRef = useRef();
+  /* ---------- Portfolio form ---------- */
+  const [portfolioForm, setPortfolioForm] = useState({
+    beforeBase64: "",
+    afterBase64: "",
+    title: "",
+    titleEn: "",
+    description: "",
+    descriptionEn: "",
+  });
 
-  // ===== Open Add Brands Modal =====
-  const openAddBrandModal = () => {
-    setEditingBrandId(null);
-    setBrandName("");
-    setIsBrandModalOpen(true);
-  };
-  // ===== Open Edit Brands Modal =====
-  const openEditBrandModal = (brand) => {
-    setEditingBrandId(brand.id);
-    setBrandName(brand.name);
-    setIsBrandModalOpen(true);
-  };
-  // ===== Close Brands Modal =====
-  const closeBrandModal = () => {
-    setIsBrandModalOpen(false);
-    setBrandName("");
-    setEditingBrandId(null);
-  };
-  // ===== Open Add Products Modal =====
-  const openAddProductModal = () => {
-    setEditingProductId(null);
-    setProductForm({
-      title: "",
-       price: "",
-  sku: "",
-  comment: "",
-      description: "",
-      descriptionEn: "",
-      brand: "",
-      imageBase64: "",
-    });
-    setIsProductModalOpen(true);
-  };
-  // ===== Open Edit Products Modal =====
-  const openEditProductModal = (product) => {
-    setEditingProductId(product.id);
-    setProductForm({
-      ...product,
-      image: null, // новий файл ще не вибраний
-      imagePreview: product.imageBase64 || null, // беремо існуючу картинку
-    });
-    setIsProductModalOpen(true);
-  };
-  // ===== Close Products Modal =====
-  const closeProductModal = () => {
-    setIsProductModalOpen(false);
-    setEditingProductId(null);
-  };
+  const PORTFOLIO_CACHE_KEY = "admin_portfolio_cache";
+  const PORTFOLIO_CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
-  // ===== Auth listener =====
+  /* ================= Auth listener ================= */
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
+    const unsub = onAuthStateChanged(auth, (u) => {
       if (u) {
         setUser(u);
         loadProducts();
         loadBrands();
+        loadPortfolio();
+        loadOrders();
       } else {
         setUser(null);
         setProducts([]);
         setBrands([]);
+        setPortfolioItems([]);
+        setOrders([]);
       }
     });
-    return () => unsubscribe();
+    return () => unsub();
   }, []);
 
-  // ===== Handle login =====
-  const [loginError, setLoginError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  /* ================= Auth ================= */
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoginError(""); // reset previous errors
+    setLoginError("");
+
     try {
       await signInWithEmailAndPassword(
         auth,
@@ -155,358 +140,481 @@ const [errorText, setErrorText] = useState("");
       );
       setLoginData({ email: "", password: "" });
     } catch (err) {
-      // Map Firebase errors to friendly messages
-      switch (err.code) {
-        case "auth/wrong-password":
-          setLoginError("Невірний пароль");
-          break;
-        case "auth/user-not-found":
-          setLoginError("Користувача з таким email не знайдено");
-          break;
-        case "auth/invalid-email":
-          setLoginError("Невірний формат email");
-          break;
-        case "auth/invalid-credential":
-          setLoginError("Невірні облікові дані");
-          break;
-        default:
-          setLoginError(err.message);
-      }
+      const map = {
+        "auth/wrong-password": "Невірний пароль",
+        "auth/user-not-found": "Користувача не знайдено",
+        "auth/invalid-email": "Невірний email",
+        "auth/invalid-credential": "Невірні облікові дані",
+      };
+      setLoginError(map[err.code] || err.message);
     }
   };
 
-  const imageToBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (err) => reject(err);
-      reader.readAsDataURL(file);
-    });
-
-  // ===== Load Brands =====
+  /* ================= Load data ================= */
   const loadBrands = async () => {
+    const q = query(collection(db, "brands"), orderBy("createdAt", "asc"));
+    const snap = await getDocs(q);
+    setBrands(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+  };
+
+  const loadProducts = async () => {
+    const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    setProducts(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+  };
+
+  const loadOrders = async () => {
+    const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    setOrders(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+  };
+
+  /* ================= Portfolio (cache + load) ================= */
+  const getCachedPortfolio = () => {
     try {
-      const q = query(collection(db, "brands"), orderBy("createdAt", "asc"));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setBrands(data);
-    } catch (err) {
-      console.error("Error loading brands:", err);
+      const cached = localStorage.getItem(PORTFOLIO_CACHE_KEY);
+      if (!cached) return null;
+      const { data, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp > PORTFOLIO_CACHE_TTL) {
+        localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+        return null;
+      }
+      return data;
+    } catch {
+      return null;
     }
   };
 
-  // ===== Add Brand =====
+  const setCachedPortfolio = (data) => {
+    localStorage.setItem(
+      PORTFOLIO_CACHE_KEY,
+      JSON.stringify({ data, timestamp: Date.now() })
+    );
+  };
+
+  const loadPortfolio = async () => {
+    const cached = getCachedPortfolio();
+    if (cached) {
+      setPortfolioItems(cached);
+      return;
+    }
+
+    const q = query(collection(db, "portfolio"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    setPortfolioItems(items);
+    setCachedPortfolio(items);
+  };
+
+  /* ================= Brands ================= */
+  const openAddBrandModal = () => {
+    setEditingBrandId(null);
+    setBrandName("");
+    setIsBrandModalOpen(true);
+  };
+
+  const openEditBrandModal = (brand) => {
+    setEditingBrandId(brand.id);
+    setBrandName(brand.name);
+    setIsBrandModalOpen(true);
+  };
+
   const addBrand = async () => {
-    if (!brandName.trim()){
-    setErrorText("Введіть назву бренду");
-    setErrorModalOpen(true);
-    return;
-  }
-
-    try {
-      await addDoc(collection(db, "brands"), {
-        name: brandName.trim(),
-        createdAt: serverTimestamp(),
-      });
-
-      setBrandName("");
-      loadBrands();
-      closeBrandModal();
-    } catch (err) {
-      console.error(err);
-      alert("Error adding brand");
-    }
-  };
-
-  // ===== Save Editing Brand =====
-  const updateBrand = async () => {
     if (!brandName.trim()) {
-    setErrorText("Введіть назву бренду");
-    setErrorModalOpen(true);
-    return;
-  }
-
-    try {
-      const brandRef = doc(db, "brands", editingBrandId);
-      await updateDoc(brandRef, {
-        name: brandName.trim(),
-      });
-
-      setEditingBrandId(null);
-      setBrandName("");
-      loadBrands();
-      closeBrandModal();
-    } catch (err) {
-      console.error(err);
-      alert("Error updating brand");
+      setErrorText("Введіть назву бренду");
+      setErrorModalOpen(true);
+      return;
     }
-  };
 
-  // ===== Delete Brand =====
-  const requestDeleteBrand = (id) => {
-    setBrandToDelete(id);
-    setIsDeleteModalOpen(true);
-  };
-  const confirmDeleteBrand = async () => {
-    try {
-      await deleteDoc(doc(db, "brands", brandToDelete));
-      loadBrands();
-      closeDeleteModal();
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting brand");
-    }
-  };
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-    setBrandToDelete(null);
-  };
-
-// ===== Add Product =====
-const addProduct = async () => {
-  const { title, description, descriptionEn, brand, status, imageBase64, price, comment, sku } = productForm;
-
-  if (!title || !brand || !imageBase64 || !description || !descriptionEn || !status) {
-    setErrorText("Заповніть всі поля та додайте картинку");
-    setErrorModalOpen(true);
-    return;
-  }
-
-  try {
-    await addDoc(collection(db, "products"), {
-      title,
-       price,
-  sku,
-  comment,
-      description,
-      descriptionEn,
-      brand,
-      status,
-      imageBase64, // save preview as imageBase64
+    await addDoc(collection(db, "brands"), {
+      name: brandName.trim(),
       createdAt: serverTimestamp(),
     });
 
-    // Reset form
+    loadBrands();
+    setIsBrandModalOpen(false);
+  };
+
+  const updateBrand = async () => {
+    if (!brandName.trim()) {
+      setErrorText("Введіть назву бренду");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await updateDoc(doc(db, "brands", editingBrandId), {
+      name: brandName.trim(),
+    });
+
+    loadBrands();
+    setIsBrandModalOpen(false);
+  };
+
+  const confirmDeleteBrand = async () => {
+    await deleteDoc(doc(db, "brands", brandToDelete));
+    loadBrands();
+    setIsDeleteModalOpen(false);
+  };
+
+  /* ================= Products ================= */
+  const openAddProductModal = () => {
+    setEditingProductId(null);
     setProductForm({
       title: "",
-       price: "",
-  sku: "",
-  comment: "",
+      price: "",
+      sku: "",
+      comment: "",
+      commentEn: "",
+      isHit: false,
       description: "",
       descriptionEn: "",
       brand: "",
       status: "",
-      image: null,
-      imagePreview: null,
       imageBase64: "",
+      imagePreview: null,
     });
+    setIsProductModalOpen(true);
+  };
 
-    loadProducts();
-    closeProductModal();
-  } catch (e) {
-    console.error(e);
-  }
-};
+  const openEditProductModal = (product) => {
+    setEditingProductId(product.id);
+    setProductForm({
+      ...product,
+      price: product.price ?? "",
+      sku: product.sku ?? "",
+      comment: product.comment ?? "",
+      commentEn: product.commentEn ?? "",
+      isHit: product.isHit ?? false,
+      imagePreview: product.imageBase64,
+    });
+    setIsProductModalOpen(true);
+  };
 
-// ===== Update Product =====
-const updateProduct = async () => {
-  const { title, description, descriptionEn, brand, status, price, sku, comment, imagePreview, imageBase64 } = productForm;
-
-    if (!title || !brand || !imageBase64 || !description || !descriptionEn || !status) {
-    setErrorText("Заповніть всі поля та додайте картинку");
-    setErrorModalOpen(true);
-    return;
-  }
-
-  try {
-    await updateDoc(doc(db, "products", editingProductId), {
+  const addProduct = async () => {
+    const {
       title,
-      price,
-      sku,
-      comment,
       description,
       descriptionEn,
       brand,
       status,
-      imageBase64: imagePreview || imageBase64, // keep old image if no new one selected
-    });
+      imageBase64,
+      price,
+      sku,
+      comment,
+      commentEn,
+      isHit,
+    } = productForm;
 
-    // Reset form
-    setProductForm({
-      title: "",
-       price: "",
-  sku: "",
-  comment: "",
-      description: "",
-      descriptionEn: "",
-      brand: "",
-      status: "",
-      image: null,
-      imagePreview: null,
-      imageBase64: "",
+    if (!title || !brand || !description || !descriptionEn || !status || !imageBase64) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await addDoc(collection(db, "products"), {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64,
+      price: price ?? "",
+      sku: sku ?? "",
+      comment: comment ?? "",
+      commentEn: commentEn ?? "",
+      isHit: isHit ?? false,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
     });
 
     loadProducts();
-    closeProductModal();
-  } catch (e) {
-    console.error(e);
-  }
-};
+    setIsProductModalOpen(false);
+  };
 
+  const updateProduct = async () => {
+    const {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64,
+      imagePreview,
+      price,
+      sku,
+      comment,
+      commentEn,
+      isHit,
+    } = productForm;
 
-
-  // ===== Delete Product =====
-  const requestDeleteProduct = (id) => {
-    setProductToDelete(id);
-    setIsDeleteProductModalOpen(true);
+    if (!title || !brand || !description || !descriptionEn || !status) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+console.log("editingProductId:", editingProductId);
+    await updateDoc(doc(db, "products", editingProductId), {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64: imagePreview || imageBase64,
+      price: price ?? "",
+      sku: sku ?? "",
+      comment: comment ?? "",
+      commentEn: commentEn ?? "",
+      isHit: isHit ?? false,
+      updatedAt: serverTimestamp(),
+    });
+console.log(brand);
+    loadProducts();
+    setIsProductModalOpen(false);
   };
 
   const confirmDeleteProduct = async () => {
-    try {
-      await deleteDoc(doc(db, "products", productToDelete));
-      loadProducts();
-      closeDeleteProductModal();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const closeDeleteProductModal = () => {
+    await deleteDoc(doc(db, "products", productToDelete));
+    loadProducts();
     setIsDeleteProductModalOpen(false);
-    setProductToDelete(null);
   };
 
-  // ===== Load Products =====
-  const loadProducts = async () => {
-    const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
-
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    setProducts(data); // ✅ array
+  /* ================= Portfolio ================= */
+  const openAddPortfolioModal = () => {
+    setEditingPortfolioId(null);
+    setPortfolioForm({
+      beforeBase64: "",
+      afterBase64: "",
+      title: "",
+      titleEn: "",
+      description: "",
+      descriptionEn: "",
+    });
+    setIsPortfolioModalOpen(true);
   };
 
+  const openEditPortfolioModal = (item) => {
+    setEditingPortfolioId(item.id);
+    setPortfolioForm({
+      beforeBase64: item.beforeBase64 || "",
+      afterBase64: item.afterBase64 || "",
+      title: item.title || "",
+      titleEn: item.titleEn || "",
+      description: item.description || "",
+      descriptionEn: item.descriptionEn || "",
+    });
+    setIsPortfolioModalOpen(true);
+  };
+
+  const addPortfolio = async () => {
+    const { beforeBase64, afterBase64, title, titleEn, description, descriptionEn } =
+      portfolioForm;
+
+    if (
+      !beforeBase64 ||
+      !afterBase64 ||
+      !title ||
+      !titleEn ||
+      !description ||
+      !descriptionEn
+    ) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await addDoc(collection(db, "portfolio"), {
+      beforeBase64,
+      afterBase64,
+      title,
+      titleEn,
+      description,
+      descriptionEn,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+
+    localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+    loadPortfolio();
+    setIsPortfolioModalOpen(false);
+  };
+
+  const updatePortfolio = async () => {
+    const { beforeBase64, afterBase64, title, titleEn, description, descriptionEn } =
+      portfolioForm;
+
+    if (
+      !beforeBase64 ||
+      !afterBase64 ||
+      !title ||
+      !titleEn ||
+      !description ||
+      !descriptionEn
+    ) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await updateDoc(doc(db, "portfolio", editingPortfolioId), {
+      beforeBase64,
+      afterBase64,
+      title,
+      titleEn,
+      description,
+      descriptionEn,
+      updatedAt: serverTimestamp(),
+    });
+
+    localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+    loadPortfolio();
+    setIsPortfolioModalOpen(false);
+  };
+
+  const confirmDeletePortfolio = async () => {
+    await deleteDoc(doc(db, "portfolio", portfolioToDelete));
+    localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+    loadPortfolio();
+    setIsDeletePortfolioModalOpen(false);
+  };
+
+  /* ================= Render ================= */
   return (
-    <>
-      <div className={styles.adminPanel}>
-        {!user && (
-          <div id="loginDiv" className={styles.loginDiv}>
-            <form id="loginForm" onSubmit={handleLogin}>
-              <h1 className={styles.h1}>Log in</h1>
-              <label className={styles.required}>
-                Email
+    <div className={styles.adminPanel}>
+      {!user && (
+        <div className={styles.loginDiv}>
+          <form onSubmit={handleLogin}>
+            <h1>Log in</h1>
+
+            <label className={styles.required}>
+              Email
+              <input
+                type="email"
+                placeholder="Email"
+                required
+                value={loginData.email}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, email: e.target.value })
+                }
+              />
+            </label>
+
+            <label className={styles.required}>
+              Password
+              <div className={styles.passwordWrapper}>
                 <input
-                  type="email"
-                  id="email"
-                  placeholder="Введіть свій email"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
                   required
-                  value={loginData.email}
+                  value={loginData.password}
                   onChange={(e) =>
-                    setLoginData({ ...loginData, email: e.target.value })
+                    setLoginData({ ...loginData, password: e.target.value })
                   }
                 />
-              </label>
-              <label className={styles.required}>
-                Password
-                <div className={styles.passwordWrapper}>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    placeholder="Введіть свій пароль"
-                    required
-                    value={loginData.password}
-                    onChange={(e) =>
-                      setLoginData({ ...loginData, password: e.target.value })
-                    }
-                  />
-                  <span
-                    className={styles.passwordToggle}
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    <img
-                      src={showPassword ? EyeOffIcon : EyeIcon} // imported from assets
-                      alt={showPassword ? "Hide password" : "Show password"}
-                    />
-                  </span>
-                </div>
-              </label>
+                <img
+                  className={styles.passwordToggle}
+                  src={showPassword ? EyeOffIcon : EyeIcon}
+                  onClick={() => setShowPassword(!showPassword)}
+                  alt=""
+                />
+              </div>
+            </label>
 
-              <button type="submit">Login</button>
+            <button type="submit">Login</button>
+            {loginError && <p>{loginError}</p>}
+          </form>
+        </div>
+      )}
 
-              {loginError && <p className={styles.loginError}>{loginError}</p>}
-            </form>
-          </div>
-        )}
+      {user && (
+        <>
+          <Sidebar
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
+          <Header search={search} setSearch={setSearch} />
 
-        {user && (
-          <>
-            <Sidebar
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-            />
-            <Header search={search} setSearch={setSearch} />
-            <MainContent
-              search={search}
-              brands={brands}
-              activeSection={activeSection}
-              onAddBrand={openAddBrandModal}
-              onEditBrand={openEditBrandModal}
-              onDeleteBrand={requestDeleteBrand}
-              brandName={brandName}
-              setBrandName={setBrandName}
-              editingBrandId={editingBrandId}
-              products={products}
-              onAddProduct={openAddProductModal}
-              onEditProduct={openEditProductModal}
-              onDeleteProduct={requestDeleteProduct}
-            />
-            <BrandModal
-              isOpen={isBrandModalOpen}
-              brandName={brandName}
-              setBrandName={setBrandName}
-              onClose={closeBrandModal}
-              onSave={editingBrandId ? updateBrand : addBrand}
-              isEditing={!!editingBrandId}
-            />
-            <ConfirmModal
-              isOpen={isDeleteModalOpen}
-              title="Видалити бренд?"
-              text="Ви впевнені, що хочете видалити цей бренд? Цю дію неможливо скасувати."
-              onCancel={closeDeleteModal}
-              onConfirm={confirmDeleteBrand}
-            />
-            <ProductModal
-              isOpen={isProductModalOpen}
-              productForm={productForm}
-              setProductForm={setProductForm}
-              onSave={editingProductId ? updateProduct : addProduct}
-              onClose={closeProductModal}
-              isEditing={!!editingProductId}
-              brands={brands}
-            />
+          <MainContent
+            search={search}
+            brands={brands}
+            products={products}
+            portfolioItems={portfolioItems}
+            orders={orders}
+            activeSection={activeSection}
+            onAddBrand={openAddBrandModal}
+            onEditBrand={openEditBrandModal}
+            onDeleteBrand={(id) => {
+              setBrandToDelete(id);
+              setIsDeleteModalOpen(true);
+            }}
+            onAddProduct={openAddProductModal}
+            onEditProduct={openEditProductModal}
+            onDeleteProduct={(id) => {
+              setProductToDelete(id);
+              setIsDeleteProductModalOpen(true);
+            }}
+            onAddPortfolio={openAddPortfolioModal}
+            onEditPortfolio={openEditPortfolioModal}
+            onDeletePortfolio={(id) => {
+              setPortfolioToDelete(id);
+              setIsDeletePortfolioModalOpen(true);
+            }}
+          />
 
-            <ConfirmModal
-              isOpen={isDeleteProductModalOpen}
-              title="Видалити продукт?"
-              text="Ви впевнені, що хочете видалити продукт? Цю дію неможливо скасувати."
-              onCancel={closeDeleteProductModal}
-              onConfirm={confirmDeleteProduct}
-            />
-            <ErrorModal
-  isOpen={errorModalOpen}
-  text={errorText}
-  onClose={() => setErrorModalOpen(false)}
-/>
-          </>
-        )}
-      </div>
-    </>
+          <BrandModal
+            isOpen={isBrandModalOpen}
+            brandName={brandName}
+            setBrandName={setBrandName}
+            onSave={editingBrandId ? updateBrand : addBrand}
+            onClose={() => setIsBrandModalOpen(false)}
+          />
+
+          <ProductModal
+            isOpen={isProductModalOpen}
+            productForm={productForm}
+            setProductForm={setProductForm}
+            onSave={editingProductId ? updateProduct : addProduct}
+            onClose={() => setIsProductModalOpen(false)}
+            brands={brands}
+          />
+
+          <PortfolioModal
+            isOpen={isPortfolioModalOpen}
+            portfolioForm={portfolioForm}
+            setPortfolioForm={setPortfolioForm}
+            onSave={editingPortfolioId ? updatePortfolio : addPortfolio}
+            onClose={() => setIsPortfolioModalOpen(false)}
+            isEditing={Boolean(editingPortfolioId)}
+          />
+
+          <ConfirmModal
+            isOpen={isDeleteModalOpen}
+            title="Видалити бренд?"
+            onConfirm={confirmDeleteBrand}
+            onCancel={() => setIsDeleteModalOpen(false)}
+          />
+
+          <ConfirmModal
+            isOpen={isDeleteProductModalOpen}
+            title="Видалити продукт?"
+            onConfirm={confirmDeleteProduct}
+            onCancel={() => setIsDeleteProductModalOpen(false)}
+          />
+
+          <ConfirmModal
+            isOpen={isDeletePortfolioModalOpen}
+            title="Видалити запис портфоліо?"
+            onConfirm={confirmDeletePortfolio}
+            onCancel={() => setIsDeletePortfolioModalOpen(false)}
+          />
+
+          <ErrorModal
+            isOpen={errorModalOpen}
+            text={errorText}
+            onClose={() => setErrorModalOpen(false)}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

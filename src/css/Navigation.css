@@ -8,6 +8,20 @@
   margin: 0 auto;
 }
 
+.shop-page .page-navigation {
+    align-items: center;
+  display: flex;
+  gap: 5px;
+  padding: 15px 1073px 36px 112px;
+  position: relative;
+  width: 1440px;
+  margin: 0 auto;
+}
+
+.product-page-navigation {
+  padding-bottom: 50px;
+}
+
  .text-disabled {
   color: var(--borderdisabled);
   font-weight: 400;
@@ -40,4 +54,10 @@
     display: none;
  }
    }
+
+@media screen and (max-width: 1439px) {
+  body.shop-page .page-navigation {
+    display: none;
+  }
+}
 

@@ -1,20 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "../css/Header.css";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
 
 import BurgerMenu from "./Burger_Menu";
+import CartBadge from "./CartBadge";
 
 import logo from '../assets/Logo.svg';
+import logoShop from '../assets/white_logo.svg';
 import arrow from '../assets/Arrow.svg';
-import instagram from '../assets/vector-7.svg';
-import viber from '../assets/vector-8.svg';
-import telegram from '../assets/Telegram Outline.svg';
-import whatsapp from '../assets/whatsapp-outline.svg';
+import phone1 from '../assets/Phone1.svg';
 import burger from '../assets/burger.svg';
 import phone from '../assets/communication-phone.svg';
 
-const Header = () => {
+const Header = ({ onCartOpen }) => {
   const { t, i18n } = useTranslation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -62,7 +61,10 @@ const Header = () => {
       {isDesktop ? (
         <header className="header">
           <div className="header-logo">
-            <Link to="/"><img src={logo} alt="Logo" /></Link>
+            <Link to="/">
+              <img src={logo} alt="Logo" className="logo-default" />
+              <img src={logoShop} alt="Logo" className="logo-shop" />
+            </Link>
           </div>
 
           <nav className="navbar mobtext16bove">
@@ -72,7 +74,7 @@ const Header = () => {
                 <img src={arrow} alt="arrow" className="dropdown-arrow" />
               </div>
               <div className="dropdown-content">
-                {['haircut','coloring','restoration','shop'].map((item) => (
+                {['haircut', 'coloring', 'restoration', 'shop'].map((item) => (
                   <Link key={item} to={`/${item}`} onClick={() => setIsDropdownOpen(false)}>
                     {t(item)}
                   </Link>
@@ -90,10 +92,10 @@ const Header = () => {
 
           <div className="header-actions">
             <div className="header-action-language header-action">
-              {['en','ua'].map(lang => (
-                <div 
+              {['en', 'ua'].map(lang => (
+                <div
                   key={lang}
-                  className={`lang-link ${lang} mobtext16bove ${i18n.language === lang ? 'active' : ''}`} 
+                  className={`lang-link ${lang} mobtext16bove ${i18n.language === lang ? 'active' : ''}`}
                   onClick={() => changeLanguage(lang)}
                 >
                   {lang.toUpperCase()}
@@ -102,19 +104,14 @@ const Header = () => {
             </div>
 
             <div className="header-action-icon header-action">
-              <a href="https://instagram.com/_valentina_bodnaruk_" target="_blank" rel="noreferrer">
-                <img src={instagram} alt="Instagram" />
+              <a href="tel:+380961744378">
+                <div className="phone1">
+                  <img className="phone-icon" src={phone1} alt="Phone" />
+                </div>
               </a>
-              <a href="https://wa.me/380961744378">
-                <img src={whatsapp} alt="WhatsApp" />
-              </a>
-              <a href="https://t.me/+380961744378">
-                <img src={telegram} alt="Telegram" />
-              </a>
-              <a href="viber://chat?number=%2B380961744378">
-                <img src={viber} alt="Viber" />
-              </a>
+              <CartBadge onOpen={onCartOpen} />
             </div>
+
           </div>
         </header>
       ) : (
@@ -144,3 +141,5 @@ const Header = () => {
 };
 
 export default Header;
+
+

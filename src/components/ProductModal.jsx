@@ -39,34 +39,44 @@ const ProductModal = ({
 
         {/* TOP */}
         <div className={styles.topSection}>
-          {/* IMAGE */}
-          <div className={styles.imageBox} onClick={handleImageClick}>
-            {productForm.imageBase64 ? (
-              <img
-                src={productForm.imageBase64}
-                alt="Preview"
-                className={styles.image}
-              />
-            ) : (
-              <div className={styles.imagePlaceholder}>
-                <span className={styles.uploadText}>Завантажити</span>
-                <span className={styles.uploadText}>фото</span>
-                <img
-    src={arrow} // твій SVG імпортованого файлу
-    alt="Upload"
-    className={styles.uploadIcon}
-  />
-              </div>
-            )}
+{/* IMAGE + HIT */}
+<div className={styles.imageColumn}>
+  <div className={styles.imageBox} onClick={handleImageClick}>
+    {productForm.imageBase64 ? (
+      <img
+        src={productForm.imageBase64}
+        alt="Preview"
+        className={styles.image}
+      />
+    ) : (
+      <div className={styles.imagePlaceholder}>
+        <span className={styles.uploadText}>Завантажити</span>
+        <span className={styles.uploadText}>фото</span>
+        <img src={arrow} alt="Upload" className={styles.uploadIcon} />
+      </div>
+    )}
 
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className={styles.hiddenFileInput}
-              onChange={handleImageChange}
-            />
-          </div>
+    <input
+      ref={fileInputRef}
+      type="file"
+      accept="image/*"
+      className={styles.hiddenFileInput}
+      onChange={handleImageChange}
+    />
+  </div>
+
+  {/* HIT CHECKBOX */}
+  <label className={styles.hitCheckbox}>
+    <input
+      type="checkbox"
+      checked={productForm.isHit || false}
+      onChange={(e) =>
+        setProductForm({ ...productForm, isHit: e.target.checked })
+      }
+    />
+    Хіт продажів
+  </label>
+</div>
 
           {/* RIGHT FORM */}
           <div className={styles.rightForm}>
@@ -135,6 +145,14 @@ const ProductModal = ({
               value={productForm.comment || ""}
               onChange={(e) =>
                 setProductForm({ ...productForm, comment: e.target.value })
+              }
+            />
+                        <input
+              className={styles.inputWide}
+              placeholder="Коментар англійською"
+              value={productForm.commentEn || ""}
+              onChange={(e) =>
+                setProductForm({ ...productForm, commentEn: e.target.value })
               }
             />
           </div>

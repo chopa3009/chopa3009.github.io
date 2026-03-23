@@ -191,8 +191,10 @@ restorationContact: "*For details on service duration and price, please contact 
       brandsFootnote: "*For details about ordering and pricing, please contact us by phone.",
       allProducts: "All Products",
       shopModalTitle: "Order Information",
-      courseSignUp: "Enroll now"
-
+      courseSignUp: "Enroll now",
+      hitSalesTitle: "Hit Sales",
+      priceTitle: "Сontract price",
+      catalogTitle: "Product catalog"
 
     }
   },
@@ -387,7 +389,10 @@ restorationContact: "*Деталі щодо тривалості процеду�
       brandsFootnote: "*Деталі щодо замовлення та ціни ви можете дізнатися за телефоном.",
       allProducts: "Всі продукти",
       shopModalTitle: "Інформація щодо замовлення",
-      courseSignUp: "Записатись на курс"
+      courseSignUp: "Записатись на курс",
+      hitSalesTitle: "Хіт Продажу",
+      priceTitle: "Ціна договірна",
+      catalogTitle: "Каталог товарів"
     }
   }
 };

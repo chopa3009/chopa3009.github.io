@@ -477,11 +477,184 @@ html[lang="en"] .s-action {
 
 }
 
- .photo_after_1 {
+.photo_after_1 {
   aspect-ratio: 0.93;
   height: 523px;
   position: relative;
   width: 488px;
+}
+
+/* ===== Portfolio (Figma layout) ===== */
+.portfolioBlock {
+  padding: 120px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.portfolioCard {
+  width: 1216px;
+  height: 560px;
+  background: #efe6d7;
+  padding: 70px 72px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.portfolioImages {
+  display: flex;
+  gap: 14px;
+}
+
+.portfolioImage {
+  width: 300px;
+  height: 420px;
+  object-fit: cover;
+  background: #e6dccb;
+}
+
+.portfolioText {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 398px;
+}
+
+.portfolioTitle {
+  font-family: var(--font-family-prata);
+  font-size: 24px;
+  line-height: 32px;
+  color: #1f1f1f;
+}
+
+.portfolioDescription {
+  font-family: var(--font-family-raleway);
+  font-size: 20px;
+  line-height: 30px;
+  color: #1f1f1f;
+}
+
+.portfolioArrows {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+  grid-column: 1 / -1;
+}
+
+.portfolioArrow {
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.portfolioArrow img {
+  display: block;
+  width: 21px;
+  height: 18px;
+  transition: opacity 0.2s ease;
+}
+
+.portfolioArrowLeft img {
+  transform: rotate(180deg);
+}
+
+.portfolioArrow:not(:disabled):hover {
+  transform: scale(1.1);
+}
+
+.portfolioArrow:disabled {
+  cursor: default;
+}
+
+.portfolioArrow:disabled img {
+  opacity: 0.3;
+}
+
+@media (max-width: 1200px) {
+  .portfolioCard {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1440px) and (min-width: 769px) {
+  .portfolioCard {
+    width: 92%;
+    height: auto;
+    padding: 48px 40px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .portfolioImages {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .portfolioImage {
+    width: 220px;
+    height: 300px;
+  }
+
+  .portfolioText {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolioBlock {
+    padding: 70px 0;
+  }
+
+  .portfolioCard {
+    width: 92%;
+    height: auto;
+    grid-template-columns: 1fr;
+    padding: 36px 24px;
+    gap: 28px;
+  }
+
+  .portfolioImages {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .portfolioImage {
+    width: 45vw;
+    max-width: 260px;
+    height: 62vw;
+    max-height: 360px;
+  }
+
+  .portfolioText {
+    max-width: 100%;
+  }
+
+  .portfolioArrows {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .portfolioImages {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .portfolioImage {
+    width: 72vw;
+    height: 100vw;
+    max-width: 300px;
+    max-height: 420px;
+  }
 }
 
  .portfolio_1-action {

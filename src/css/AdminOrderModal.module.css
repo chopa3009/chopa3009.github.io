@@ -1,0 +1,104 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 860px;
+  max-width: 92vw;
+  background: #fff;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header h3 {
+  margin: 0;
+  font-family: var(--font-family-raleway);
+  font-size: 20px;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-bottom: 16px;
+  font-family: var(--font-family-raleway);
+  font-size: 16px;
+}
+
+.itemsTitle {
+  font-family: var(--font-family-raleway);
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.itemRow {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px;
+  gap: 12px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.itemRow img {
+  width: 60px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-family-raleway);
+}
+
+.itemBrand {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.itemTitle {
+  font-size: 14px;
+}
+
+.itemQty {
+  font-size: 12px;
+  color: #777;
+}
+
+.itemPrice {
+  text-align: right;
+  font-family: var(--font-family-raleway);
+  font-size: 14px;
+}

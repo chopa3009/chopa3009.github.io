@@ -1,10 +1,239 @@
+ .h2Header{
+  font-size: 36px;
+  font-family: var(--font-family-prata);
+
+ }
+  .h2HeaderCatalog{
+  font-size: 36px;
+  font-family: var(--font-family-prata);
+  width: 100%;
+  max-width: 1440px;
+  padding: 0 112px;
+  margin: 0 auto 30px;
+ }
+.hitHeader {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto 24px;
+  padding: 0 112px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+ 
+.hitSection {
+  display: flex;
+  gap: 24px;
+
+ overflow-x: auto;
+ overflow-y: visible;
+
+  padding-bottom: 16px;
+  margin-bottom: 60px;
+
+ /* margin: 0 auto; */
+
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+
+.arrows {
+  display: flex;
+  gap: 12px;
+}
+
+.arrows {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* кнопка */
+.arrow {
+  width: 36px;
+  height: 36px;
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+/* svg */
+.arrow img {
+  display: block;
+  width: 21px;
+  height: 18px;
+  transition: opacity 0.2s ease;
+}
+
+/* ліва стрілка — розворот */
+.arrow.left img {
+  transform: rotate(180deg);
+}
+
+/* hover тільки для активних */
+.arrow:not(:disabled):hover {
+  transform: scale(1.1);
+}
+
+/* disabled */
+.arrow:disabled {
+  cursor: default;
+}
+
+.arrow:disabled img {
+  opacity: 0.3;
+}
+
+
+
+.hitSection::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+.hitViewport {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 112px;
+  overflow: hidden;
+}
+
+
+.hitProduct {
+  min-width: 280px;
+  max-width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 280px;
+  padding: 10px 10px 20px 10px;
+  justify-content: space-between;
+
+}
+
+.hitProduct img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+
+.status {
+  font-size: 16px;
+  font-family: var(--font-family-raleway);
+  font-weight: 500;
+}
+
+.hitProduct .inStock {
+  color: #0EA982;
+}
+
+.product .preOrder {
+  color: #FF930F;
+}
+.product .inStock {
+  color: #0EA982;
+}
+
+.hitProduct .preOrder {
+  color: #FF930F;
+}
+
+
+.hitProduct .price{
+  font-size: 24px;
+  font-family: var(--font-family-raleway);
+  
+ 
+  display:flex;
+}
+.hitProduct .contractPrice {
+  font-size: 16px;
+  color: #212121;
+   opacity: 40%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product .price{
+  font-size: 24px;
+  font-family: var(--font-family-raleway);
+  
+ 
+  display:flex;
+}
+.product .contractPrice {
+  font-size: 16px;
+  color: #212121;
+   opacity: 40%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.cartBtn {
+  background: black;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+    width: 51px;
+  height: 50px;
+}
+.cartBtn img{
+  width: 25px;
+  height: 22px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* прибираємо gap між брендом і назвою */
+}
+
+.hitProduct,
+.product {
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.hitProduct:hover,
+.product:hover {
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+ 
  .restoration-page-section-element-state {
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
   padding: 0px 112px 150px 112px;
   position: relative;
-  width: 1440px;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -92,7 +321,7 @@ position:sticky;
   cursor: pointer;
 }
 
-  .price {
+  /*.price {
   color: var(--textprimarydark);
   font-weight: 400;
   line-height: 30px;
@@ -104,7 +333,7 @@ position:sticky;
       font-variant-numeric: lining-nums;
       display: none;
 }
-
+ */
   .buttons {
   align-items: center;
   align-self: stretch;
@@ -167,7 +396,7 @@ position:sticky;
         transform: scale(0.95);
     }
 .products-section {
-    padding: 0 0 0 32px;
+    padding: 0 0 0 24px;
     width: 1260px;
 }
 
@@ -179,12 +408,74 @@ position:sticky;
 
 .productsContainer {
 display: grid;
-grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-gap: 32px;
+grid-template-columns: repeat(3, 280px);;
+gap: 24px; 
 }
 
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ховаємо стандартний чекбокс */
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* кастомний квадрат */
+.checkmark {
+  width: 18px;
+  height: 18px;
+border: 2px solid rgba(33, 33, 33, 0.4);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* галочка */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  width: 5px;          /* менша */
+  height: 8px;    
+  border: solid #fff;
+  border-width: 0 2.5px 2.5px 0; /* товстіша */
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+
+
+/* активний стан */
+.checkbox input:checked + .checkmark {
+  background: #1c1c1c;
+  border-color: #1c1c1c;
+}
+
+.checkbox input:checked + .checkmark::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.labelText {
+  font-size: 20px;
+}
+
+
+
 .product {
+  display: flex;
+  flex-direction: column;
   text-align: left;
+  padding: 10px 10px 20px 10px;
+  justify-content: space-between;
+  min-width: 280px;
+    max-width: 280px;
+    gap: 8px;
 }
 
 .product img {
@@ -200,9 +491,32 @@ gap: 32px;
  font-family: var(--font-family-raleway);
  font-weight: 500;
 }
+.hitProduct h3 {
+  font-size: 16px;
+ margin: 5px 0 5px 0;
+ font-family: var(--font-family-raleway);
+ font-weight: 500;
+ flex-direction: column;
+}
+.titleBlock h3 {
+  margin: 0; /* прибираємо margin */
+}
+
+
 
 .product p {
-  font-size: 14px;
+  font-size: 16px;
+  color: #555;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  font-family: var(--font-family-raleway);
+  font-weight: 400;
+}
+.hitProduct p {
+  font-size: 16px;
   color: #555;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -224,7 +538,52 @@ gap: 32px;
 }
 
 @media screen and (max-width: 767px) {
-   .restoration-page-heading-price-action {
+  .h2Header,
+  .h2HeaderCatalog {
+    font-size: 28px;
+  }
+
+  .h2HeaderCatalog {
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto 20px;
+  }
+
+  .hitHeader {
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .hitViewport {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .hitSection {
+    margin-bottom: 40px;
+    gap: 16px;
+  }
+
+  .hitProduct {
+    min-width: 220px;
+    max-width: 220px;
+    flex: 0 0 220px;
+  }
+
+  .hitProduct img {
+    height: 200px;
+  }
+
+  .hitProduct .price,
+  .product .price {
+    font-size: 20px;
+  }
+
+  .restoration-page-heading-price-action {
     gap:20px;
   }
   .restoration-page-section-element-state {
@@ -265,21 +624,66 @@ gap:70px;
 }
 .productsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(157px, 1fr));
+    grid-template-columns: repeat(auto-fill, 157px);
     gap: 21px;
 }
+ .product {
+    min-width: 157px;
+    max-width: 157px;
+ }
+ .product img{
+    height: 157px;
+    width: 157px;
+}
+  .product .contractPrice,
+  .hitProduct .contractPrice {
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: normal;
+  }
  ._-restorations {
     justify-content: center;
 }
 }
 @media screen and (min-width: 768px) and (max-width: 1439px) {
+  .h2HeaderCatalog {
+    width: 100%;
+    padding: 0 40px;
+    margin: 0 auto 24px;
+  }
+
+  .hitHeader {
+    width: 100%;
+    padding: 0 40px;
+    margin: 0 auto 20px;
+  }
+
+  .hitViewport {
+    width: 100%;
+    padding: 0 40px;
+  }
+
+  .hitSection {
+    margin-bottom: 50px;
+  }
+
+  .hitProduct {
+    min-width: 240px;
+    max-width: 240px;
+    flex: 0 0 240px;
+  }
+
+  .hitProduct img {
+    height: 220px;
+  }
+
   .restoration-page-section-element-state {
   padding: 100px 40px 100px 40px;
 gap:20px;
-  width: 768px;
+  width: 100%;
    }
    .products-section {
-    width: 768px;
+    width: 100%;
     padding: 0;
 }
 .no-products {
@@ -288,9 +692,17 @@ gap:20px;
 .productsContainer {
     display: grid
 ;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, 180px);
     gap: 28px;
 }
+ .product {
+    min-width: 180px;
+    max-width: 180px;
+ }
+ .product img {
+    width: 180px;
+    height: 180px;
+ }
  .restoration-page-price-action-footnote {
     width: 280px;
            position:sticky;
@@ -317,4 +729,14 @@ gap:20px;
      top: 20px; /* distance from the top of the viewport */
   z-index: 10;
 }
+}
+
+.productLink {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.productLink:visited {
+  color: inherit;
 }
