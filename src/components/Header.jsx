@@ -142,4 +142,3 @@ const Header = ({ onCartOpen }) => {
 };
 
 export default Header;
-
