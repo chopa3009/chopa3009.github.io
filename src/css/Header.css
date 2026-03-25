@@ -368,6 +368,10 @@ height:23px;
   position: relative;
 }
 
+.mobile-header .header-cart {
+  transform: translateX(-10px);
+}
+
     .text-navbar:active,
     .en:active
   .ua:active,

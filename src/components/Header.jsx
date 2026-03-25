@@ -11,7 +11,6 @@ import logoShop from '../assets/white_logo.svg';
 import arrow from '../assets/Arrow.svg';
 import phone1 from '../assets/Phone1.svg';
 import burger from '../assets/burger.svg';
-import phone from '../assets/communication-phone.svg';
 
 const Header = ({ onCartOpen }) => {
   const { t, i18n } = useTranslation();
@@ -63,7 +62,6 @@ const Header = ({ onCartOpen }) => {
           <div className="header-logo">
             <Link to="/">
               <img src={logo} alt="Logo" className="logo-default" />
-              <img src={logoShop} alt="Logo" className="logo-shop" />
             </Link>
           </div>
 
@@ -125,11 +123,7 @@ const Header = ({ onCartOpen }) => {
             <img className="bove-logo" src={logo} alt="Logo" />
           </Link>
 
-          <a href="tel:+380961744378">
-            <div className="communication-phone-1">
-              <img className="phone-icon" src={phone} alt="Phone" />
-            </div>
-          </a>
+          <CartBadge onOpen={onCartOpen} />
         </header>
       )}
 

@@ -7,6 +7,9 @@ import {
   removeFromCart,
 } from "../utils/cart";
 import removeIcon from "../assets/Remove.svg";
+import closeIcon from "../assets/ModalCloseButton.svg";
+import addPlusIcon from "../assets/Add_Plus.svg";
+import removeMinusIcon from "../assets/Remove_Minus.svg";
 
 const CartModal = ({ isOpen, onClose }) => {
   const [items, setItems] = useState(getCart());
@@ -22,6 +25,17 @@ const CartModal = ({ isOpen, onClose }) => {
       window.removeEventListener("storage", sync);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -40,7 +54,7 @@ const CartModal = ({ isOpen, onClose }) => {
         <div className={styles.header}>
           <h2>Кошик</h2>
           <button className={styles.close} onClick={onClose} aria-label="Close">
-            ×
+            <img src={closeIcon} alt="" />
           </button>
         </div>
 
@@ -50,7 +64,7 @@ const CartModal = ({ isOpen, onClose }) => {
           )}
           {items.map((item) => (
             <div key={item.id} className={styles.row}>
-              <img src={item.image} alt={item.title} />
+              <img className={styles.productImage} src={item.image} alt={item.title} />
               <div className={styles.info}>
                 <div className={styles.brand}>{item.brand}</div>
                 <div className={styles.title}>{item.title}</div>
@@ -63,14 +77,14 @@ const CartModal = ({ isOpen, onClose }) => {
                   onClick={() => updateCartItemQty(item.id, -1)}
                   aria-label="Decrease"
                 >
-                  −
+                  <img src={removeMinusIcon} alt="" />
                 </button>
                 <span>{item.qty}</span>
                 <button
                   onClick={() => updateCartItemQty(item.id, 1)}
                   aria-label="Increase"
                 >
-                  +
+                  <img src={addPlusIcon} alt="" />
                 </button>
               </div>
               <div className={styles.price}>
@@ -91,7 +105,7 @@ const CartModal = ({ isOpen, onClose }) => {
 
         <div className={styles.footer}>
           <div className={styles.total}>
-            <span>Сума замовлення:</span>
+            <span className={styles.totalLabel}>Сума замовлення:</span>
             <strong>{totalLabel}</strong>
           </div>
           <a className={styles.checkout} href="#/order" onClick={onClose}>
