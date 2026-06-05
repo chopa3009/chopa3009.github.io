@@ -133,16 +133,16 @@ const RestorationPageSection = ({ openModal }) => {
           </p>
         ) : (
           filteredProducts.map(p => {
-            const description =
+            const comment =
               lang === "en"
-                ? p.descriptionEn || p.description
-                : p.description;
+                ? p.commentEn || p.comment
+                : p.comment;
 
             return (
               <div key={p.id} className={styles.product}>
                 <img src={p.imageBase64} alt={p.title} />
                 <h3>{p.title}</h3>
-                <p>{description}</p>
+                <p>{comment}</p>
               </div>
             );
           })
