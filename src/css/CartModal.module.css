@@ -10,7 +10,8 @@
 
 .modal {
   width: 1216px;
-  height: 593px;
+  height: auto;
+  max-height: min(593px, calc(100vh - 48px));
   max-width: 92vw;
   background: #efe6d7;
   box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.25);
@@ -19,6 +20,7 @@
   display: flex;
   flex-direction: column;
   font-variant-numeric: proportional-nums lining-nums;
+  overflow: hidden;
 }
 
 .header {
@@ -51,13 +53,12 @@
 
 .list {
   background: #fff;
-  height: 348px;
   min-height: 0;
+  overflow: hidden;
 }
 
 .listScroll {
-  height: 348px;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .row {
@@ -184,7 +185,7 @@
   justify-content: center;
   width: 280px;
   height: 51px;
-  background: #000;
+  background: rgba(33, 33, 33, 0.9);
   color: #fff;
   border: none;
   cursor: pointer;
@@ -201,7 +202,7 @@
   font-family: var(--font-family-raleway);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .backdrop {
     box-sizing: border-box;
   }
@@ -216,14 +217,13 @@
 
   .header {
     margin-bottom: 20px;
-    padding:0 20px;
+    padding: 0 20px;
     height: 44px;
   }
 
   .header h2 {
     font-size: 24px;
     line-height: 1;
-
   }
 
   .close {
@@ -237,11 +237,12 @@
     margin-right: -9px;
   }
 
-  .list,
+  .list {
+    overflow: hidden;
+  }
+
   .listScroll {
-    height: auto;
-    max-height: 609px;
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 
   .row {
@@ -337,6 +338,8 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+    margin: 0;
+    transform: translateX(9px);
   }
 
   .remove img {
@@ -367,52 +370,171 @@
   }
 }
 
-@media screen and (min-width: 769px) and (max-width: 1439px) {
+@media screen and (min-width: 768px) and (max-width: 1439px) {
   .backdrop {
     padding: 24px;
     box-sizing: border-box;
   }
 
   .modal {
-    width: 100%;
-    max-width: 100%;
+    width: 688px;
+    max-width: 688px;
     height: auto;
-    max-height: calc(100vh - 48px);
-    padding: 24px;
+    max-height: min(666px, calc(100vh - 48px));
+    padding: 30px 0 30px;
+    overflow: hidden;
   }
 
-  .list,
-  .listScroll {
+  .header {
+    margin-bottom: 30px;
+    padding: 0 30px;
+    line-height: 49px;
+  }
+
+  .header h2 {
+    font-size: 36px;
+  }
+
+  .close {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(9px);
+  }
+
+  .list {
+    background: #fff;
     height: auto;
-    max-height: 420px;
-    overflow-y: auto;
+    max-height: none;
+    overflow: hidden;
+  }
+
+  .listScroll {
+    background: #fff;
+    overflow-y: scroll;
   }
 
   .row {
-    grid-template-columns: 120px minmax(0, 1fr) 108px 120px 32px;
-    gap: 20px;
+    grid-template-columns: 120px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "image info remove"
+      "image price qty";
+    row-gap: 15px;
+    column-gap: 22px;
     width: 100%;
-    height: auto;
-    padding: 15px 24px;
+    min-height: 192px;
+    padding: 30px 30px;
+    box-sizing: border-box;
   }
 
   .row::after {
-    left: 24px;
-    right: 24px;
+    left: 0;
+    right: 0;
   }
 
-  .row img {
-    width: 18px;
-    height: 18px;
+  .productImage {
+    grid-area: image;
+    width: 98px;
+    height: 98px;
+    align-self: center;
+    justify-self: center;
   }
-
 
   .info {
+    grid-area: info;
     width: auto;
     min-width: 0;
+    gap: 0;
+  }
+
+  .brand {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 10px;
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  .price {
+    grid-area: price;
+    font-size: 20px;
+    line-height: 1;
+    text-align: left;
+  }
+
+  .qty {
+    grid-area: qty;
+    width: auto;
+    gap: 8px;
+    justify-self: end;
+    align-self: end;
+    font-size: 20px;
+    width: 80px;
+  }
+
+  .qty button {
+    width: 23px;
+    height: 23px;
+    padding: 0;
+  }
+
+  .qty button img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .remove {
+    grid-area: remove;
+    align-self: start;
+    justify-self: end;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transform: translate(10px, -10px);
+  }
+
+  .remove img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.4;
   }
 
   .footer {
-    flex-wrap: wrap;
+    margin-top: 0;
+    padding: 30px 30px 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 30px;
+  }
+
+  .total {
+    width: 100%;
+    justify-content: space-between;
+    font-size: 24px;
+    gap: 24px;
+    line-height: 32px;
+  }
+
+  .checkout {
+    width: 286px;
+    height: 50px;
+    align-self: flex-end;
+    font-size: 20px;
   }
 }

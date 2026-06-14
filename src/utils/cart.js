@@ -16,9 +16,10 @@ const saveCart = (cart) => {
 export const addToCart = (product) => {
   const cart = getCart();
   const existing = cart.find(item => item.id === product.id);
+  const quantity = Math.max(1, product.qty || 1);
 
   if (existing) {
-    existing.qty += 1;
+    existing.qty += quantity;
   } else {
     cart.push({
       id: product.id,
@@ -28,7 +29,7 @@ export const addToCart = (product) => {
       image: product.imageBase64,
       comment: product.comment || "",
       commentEn: product.commentEn || "",
-      qty: 1,
+      qty: quantity,
     });
   }
 

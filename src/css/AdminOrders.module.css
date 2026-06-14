@@ -44,28 +44,84 @@
   font-weight: 400;
   border: none;
   text-align: left;
-  padding: 12px 0px;
+  padding: 16px 0;
   font-size: 16px;
   font-family: var(--font-family-raleway);
 }
 
 .orders td {
   text-align: left;
-  padding: 10px 0px 0px 0px;
+  padding: 16px 0;
   font-size: 16px;
   font-family: var(--font-family-raleway);
+  vertical-align: middle;
 }
 
-.orders tbody tr:hover {
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.statusNew {
+  background-color: #e8f1ff;
+  color: #1f5fbf;
+}
+
+.statusProcessing {
+  background-color: #fff3dd;
+  color: #b26b00;
+}
+
+.statusDone {
+  background-color: #e7f8ef;
+  color: #0f8a53;
+}
+
+.statusCancelled {
+  background-color: #fdeaea;
+  color: #c73b3b;
+}
+
+.clickableRow {
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.orders tbody tr:hover,
+.clickableRow:focus-within {
   background-color: #f9f9f9;
+  cursor: pointer;
   border-bottom: 1px solid #e0e0e0;
+}
+
+.actionCell {
+  text-align: right;
+}
+
+.openBtn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: #212121;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: var(--font-family-raleway);
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
 }
 
-.tableWrapper table th:first-child,
-.tableWrapper table td:first-child {
-  width: 69px;
-  min-width: 69px;
-  max-width: 69px;
-  text-align: center;
+.openBtn:hover,
+.openBtn:focus-visible {
+  color: #7f5539;
+}
+
+.openBtn:focus-visible {
+  outline: none;
 }

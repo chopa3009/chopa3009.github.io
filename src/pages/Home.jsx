@@ -7,6 +7,7 @@ import Ticker from "../components/Ticker";
 
 import bigLogo from "../assets/BOVE-big-LOGO.png";
 import bigLogoMobile from "../assets/BOVE-big-LOGO-mobile.svg";
+import boveLogo from "../assets/BOVElogo.svg";
 import photoCut from "../assets/photo-cut.png";
 import photoPaint from "../assets/photo-paint.png";
 import photoCare from "../assets/photo-care.png";
@@ -45,6 +46,11 @@ const Home = ({ openModal }) => {
         <div className={homeStyles["main-photo-container"]}></div>
 
         <div className={homeStyles["main_-logo-action"]}>
+          <img
+            className={homeStyles["bove-logo-mobile-hero"]}
+            src={boveLogo}
+            alt="BOVE logo"
+          />
           <picture>
             <source srcSet={bigLogoMobile} media="(max-width: 767px)" />
             <img

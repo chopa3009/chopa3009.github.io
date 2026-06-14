@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../css/AdminOrders.module.css";
 import OrderModal from "./AdminOrderModal";
 
@@ -18,8 +18,31 @@ const formatDate = (ts) => {
   }
 };
 
-const AdminOrders = ({ orders = [] }) => {
+const statusMap = {
+  new: "Нове",
+  processing: "В обробці",
+  done: "Виконано",
+  cancelled: "Скасовано",
+};
+
+const statusClassMap = {
+  new: "statusNew",
+  processing: "statusProcessing",
+  done: "statusDone",
+  cancelled: "statusCancelled",
+};
+
+const AdminOrders = ({ orders = [], onUpdateOrderStatus }) => {
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    if (!selected) {
+      return;
+    }
+
+    const nextSelected = orders.find((order) => order.id === selected.id) || null;
+    setSelected(nextSelected);
+  }, [orders, selected]);
 
   return (
     <div className={styles.orders}>
@@ -31,14 +54,15 @@ const AdminOrders = ({ orders = [] }) => {
         <table>
           <thead>
             <tr>
-              <th>Id</th>
               <th>Клієнт</th>
+              <th>Статус</th>
               <th>Телефон</th>
               <th>Доставка</th>
               <th>Оплата</th>
               <th>Товарів</th>
               <th>Сума</th>
               <th>Дата</th>
+              <th>Деталі</th>
             </tr>
           </thead>
           <tbody>
@@ -66,17 +90,40 @@ const AdminOrders = ({ orders = [] }) => {
                   ? `${order.total} ₴`
                   : "Договірна");
               const date = formatDate(order.createdAt);
+              const status = statusMap[order.status] || "Нове";
+              const statusClass =
+                styles[statusClassMap[order.status]] || styles.statusNew;
 
               return (
-                <tr key={order.id} onClick={() => setSelected(order)}>
-                  <td>{index + 1}</td>
+                <tr
+                  key={order.id}
+                  className={styles.clickableRow}
+                  onClick={() => setSelected(order)}
+                >
                   <td>{name}</td>
+                  <td>
+                    <span className={`${styles.statusBadge} ${statusClass}`}>
+                      {status}
+                    </span>
+                  </td>
                   <td>{phone}</td>
                   <td>{delivery}</td>
                   <td>{payment}</td>
                   <td>{itemsCount}</td>
                   <td>{totalLabel}</td>
                   <td>{date}</td>
+                  <td className={styles.actionCell}>
+                    <button
+                      type="button"
+                      className={styles.openBtn}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setSelected(order);
+                      }}
+                    >
+                      Відкрити
+                    </button>
+                  </td>
                 </tr>
               );
             })}
@@ -87,6 +134,7 @@ const AdminOrders = ({ orders = [] }) => {
       <OrderModal
         isOpen={Boolean(selected)}
         order={selected}
+        onUpdateOrderStatus={onUpdateOrderStatus}
         onClose={() => setSelected(null)}
       />
     </div>

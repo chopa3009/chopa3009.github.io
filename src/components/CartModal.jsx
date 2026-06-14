@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "../css/CartModal.module.css";
 import {
@@ -13,6 +13,8 @@ import removeMinusIcon from "../assets/Remove_Minus.svg";
 
 const CartModal = ({ isOpen, onClose }) => {
   const [items, setItems] = useState(getCart());
+  const [listHeight, setListHeight] = useState(null);
+  const listRef = useRef(null);
   const { i18n } = useTranslation();
   const isEn = i18n.language === "en";
 
@@ -37,6 +39,33 @@ const CartModal = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const measureListHeight = () => {
+      if (!listRef.current || items.length === 0) {
+        setListHeight(null);
+        return;
+      }
+
+      const rows = listRef.current.querySelectorAll("[data-cart-row='true']");
+      const visibleRows = Math.min(rows.length, 2);
+      const nextHeight = Array.from(rows)
+        .slice(0, visibleRows)
+        .reduce((sum, row) => sum + row.getBoundingClientRect().height, 0);
+
+      setListHeight(nextHeight || null);
+    };
+
+    const frameId = window.requestAnimationFrame(measureListHeight);
+    window.addEventListener("resize", measureListHeight);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", measureListHeight);
+    };
+  }, [isOpen, items, i18n.language]);
+
   if (!isOpen) return null;
 
   const hasUnknownPrice = items.some((item) => !item.price);
@@ -58,12 +87,16 @@ const CartModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        <div className={`${styles.list} ${items.length > 2 ? styles.listScroll : ""}`}>
+        <div
+          ref={listRef}
+          className={`${styles.list} ${items.length > 2 ? styles.listScroll : ""}`}
+          style={listHeight ? { height: `${listHeight}px` } : undefined}
+        >
           {items.length === 0 && (
             <div className={styles.empty}>Кошик порожній</div>
           )}
           {items.map((item) => (
-            <div key={item.id} className={styles.row}>
+            <div key={item.id} className={styles.row} data-cart-row="true">
               <img className={styles.productImage} src={item.image} alt={item.title} />
               <div className={styles.info}>
                 <div className={styles.brand}>{item.brand}</div>

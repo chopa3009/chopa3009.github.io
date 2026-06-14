@@ -85,7 +85,7 @@ const Header = ({ onCartOpen }) => {
             <Link to="/courses"><div className="text-navbar">{t('courses')}</div></Link>
             <Link to="/cosmetics"><div className="text-navbar">{t('cosmetics')}</div></Link>
             <Link to="/masters"><div className="text-navbar">{t('masters')}</div></Link>
-            <Link to="/#portfolio-desktop"><div className="text-navbar">{t('portfolio')}</div></Link>
+            <Link to="/?scrollTo=portfolio-desktop"><div className="text-navbar">{t('portfolio')}</div></Link>
             <Link to="#contacts-desktop"><div className="text-navbar">{t('contacts')}</div></Link>
           </nav>
 
@@ -119,11 +119,16 @@ const Header = ({ onCartOpen }) => {
             <img src={burger} alt="Burger" />
           </div>
 
-          <Link to="/">
+          <Link to="/" className="mobile-logo-link">
             <img className="bove-logo" src={logo} alt="Logo" />
           </Link>
 
-          <CartBadge onOpen={onCartOpen} />
+          <div className="mobile-header-actions">
+            <a href="tel:+380961744378" className="mobile-phone-link" aria-label="Call phone number">
+              <img className="phone-icon" src={phone1} alt="Phone" />
+            </a>
+            <CartBadge onOpen={onCartOpen} />
+          </div>
         </header>
       )}
 

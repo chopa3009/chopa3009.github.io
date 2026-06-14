@@ -107,7 +107,7 @@ const BurgerMenu = ({ isOpen, onClose }) => {
             </Link>
           ))}
 
-         <Link to="/#portfolio-desktop" onClick={onClose}>
+<Link to="/?scrollTo=portfolio-desktop" onClick={onClose}>
   <div className="list-text">{t("portfolio")}</div>
 </Link>
 

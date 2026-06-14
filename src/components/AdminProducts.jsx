@@ -29,8 +29,8 @@ const AdminProducts = ({
               <th>Фото</th>
               <th>Назва продукту</th>
               <th>Статус</th>
-              <th className={styles.iconCell}>Редагувати</th>
-              <th className={styles.iconCell}>Видалити</th>
+              <th>Ціна</th>
+              <th className={styles.iconCell}>Дії</th>
             </tr>
           </thead>
           <tbody>
@@ -64,15 +64,14 @@ const AdminProducts = ({
                   <td style={{ color: statusColor, fontSize: "16px"}}>
                     {statusText}
                   </td>
-                  <td className={styles.iconCell}>
+                  <td>{product.price ? `${product.price} грн.` : "Договірна"}</td>
+                  <td className={`${styles.iconCell} ${styles.actionsCell}`}>
                     <img
                       src={EditIcon}
                       alt="Edit"
                       className={styles.icon}
                       onClick={() => onEditProduct(product)}
                     />
-                  </td>
-                  <td className={styles.iconCell}>
                     <img
                       src={DeleteIcon}
                       alt="Delete"

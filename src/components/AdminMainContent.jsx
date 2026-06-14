@@ -19,7 +19,8 @@ portfolioItems,
   onEditPortfolio,
   onDeletePortfolio,
 orders,
-search}) => {
+search,
+onUpdateOrderStatus}) => {
 
    const filteredBrands = brands.filter((b) =>
     b.name.toLowerCase().includes(search.toLowerCase())
@@ -70,7 +71,9 @@ search}) => {
           onDeletePortfolio={onDeletePortfolio}
         />
       )}
-      {activeSection === "orders" && <Orders orders={filteredOrders} />}
+      {activeSection === "orders" && (
+        <Orders orders={filteredOrders} onUpdateOrderStatus={onUpdateOrderStatus} />
+      )}
     </>
   );
 };

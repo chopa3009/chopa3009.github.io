@@ -169,6 +169,26 @@ const AdminPanel = () => {
     setOrders(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
   };
 
+  const updateOrderStatus = async (orderId, status) => {
+    await updateDoc(doc(db, "orders", orderId), {
+      status,
+      statusUpdatedAt: serverTimestamp(),
+      statusUpdatedSource: "admin",
+    });
+
+    setOrders((current) =>
+      current.map((order) =>
+        order.id === orderId
+          ? {
+              ...order,
+              status,
+              statusUpdatedSource: "admin",
+            }
+          : order
+      )
+    );
+  };
+
   /* ================= Portfolio (cache + load) ================= */
   const getCachedPortfolio = () => {
     try {
@@ -558,6 +578,7 @@ console.log(brand);
               setPortfolioToDelete(id);
               setIsDeletePortfolioModalOpen(true);
             }}
+            onUpdateOrderStatus={updateOrderStatus}
           />
 
           <BrandModal

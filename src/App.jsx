@@ -30,7 +30,6 @@ function AppWrapper() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isAdminPage = location.pathname === "/admin";
-  const isShopPage = location.pathname === "/shop";
   const isProductPage = location.pathname.startsWith("/shop/");
   const isOrderPage = location.pathname === "/order";
 
@@ -70,7 +69,28 @@ function AppWrapper() {
 
   useEffect(() => {
     if (homeReady && !loading) {
-      if (location.hash) {
+      const scrollTarget = new URLSearchParams(location.search).get("scrollTo");
+
+      if (scrollTarget) {
+        let attempts = 0;
+        const maxAttempts = 20;
+
+        const scrollWhenReady = () => {
+          const el = document.getElementById(scrollTarget);
+
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+          }
+
+          if (attempts < maxAttempts) {
+            attempts += 1;
+            window.setTimeout(scrollWhenReady, 100);
+          }
+        };
+
+        window.setTimeout(scrollWhenReady, 50);
+      } else if (location.hash) {
         const el = document.querySelector(location.hash);
         if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 50);
       } else {
@@ -82,8 +102,6 @@ function AppWrapper() {
   const showHeaderFooter = !isAdminPage && (!isHomePage || (isHomePage && (hasVisited || (homeReady && !loading))));
 const showTitle =
   !isAdminPage &&
-  !isShopPage &&
-  !isProductPage &&
   !isOrderPage &&
   (!isHomePage || (isHomePage && loading && hasVisited));
 

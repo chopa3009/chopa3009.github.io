@@ -6,18 +6,21 @@ import { useTranslation } from "react-i18next";
 import styles from "../css/Shop.module.css";
 import CartIcon from "../assets/cart.svg";
 import ArrowRightIcon from "../assets/rightArrow.svg";
+import SearchIcon from "../assets/Search_Magnifying_Glass.svg";
 import { addToCart } from "../utils/cart";
+import { getShopProductsCache, setShopProductsCache } from "../utils/shopCache";
 import Toast from "../components/Toast";
 
-const CACHE_KEY = "shop_products_cache";
-const CACHE_TTL = 60 * 60 * 1000; // 1 година
+const isInStock = (product) =>
+  product?.status === "В наявності" || product?.status === "In stock";
 
 const RestorationPageSection = ({ openModal }) => {
   const { t, i18n } = useTranslation();
 
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
-const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
@@ -39,24 +42,6 @@ const [selectedBrands, setSelectedBrands] = useState([]);
     return () => document.body.classList.remove("shop-page");
   }, []);
 
-  // ===== Cache helpers =====
-  const getCachedProducts = () => {
-    try {
-      const cached = localStorage.getItem(CACHE_KEY);
-      if (!cached) return null;
-
-      const { data, timestamp } = JSON.parse(cached);
-      if (Date.now() - timestamp > CACHE_TTL) {
-        localStorage.removeItem(CACHE_KEY);
-        return null;
-      }
-
-      return data;
-    } catch {
-      return null;
-    }
-  };
-
   const handleBrandToggle = (brand) => {
   setSelectedBrands((prev) =>
     prev.includes(brand)
@@ -75,22 +60,20 @@ const [selectedBrands, setSelectedBrands] = useState([]);
     }
   }, [location.search]);
 
-  const setCachedProducts = (data) => {
-    localStorage.setItem(
-      CACHE_KEY,
-      JSON.stringify({ data, timestamp: Date.now() })
-    );
-  };
-
   // ===== Load products =====
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
 
-      const cached = getCachedProducts();
+      const cached = await getShopProductsCache();
       if (cached) {
-        setProducts(cached.products);
-        setBrands(cached.brands);
+        const availableProducts = (cached.products || []).filter(isInStock);
+        const availableBrands = Array.from(
+          new Set(availableProducts.map((product) => product.brand))
+        );
+
+        setProducts(availableProducts);
+        setBrands(availableBrands);
         setIsLoading(false);
         return;
       }
@@ -107,13 +90,17 @@ const [selectedBrands, setSelectedBrands] = useState([]);
           ...doc.data(),
         }));
 
-        const brandSet = new Set(allProducts.map((p) => p.brand));
+        const availableProducts = allProducts.filter(isInStock);
+        const brandSet = new Set(availableProducts.map((p) => p.brand));
         const brandsData = Array.from(brandSet);
 
-        setProducts(allProducts);
+        setProducts(availableProducts);
         setBrands(brandsData);
 
-        setCachedProducts({ products: allProducts, brands: brandsData });
+        await setShopProductsCache({
+          products: availableProducts,
+          brands: brandsData,
+        });
       } catch (error) {
         console.error("Error loading products:", error);
       } finally {
@@ -142,9 +129,30 @@ const filteredProducts =
         selectedBrands.includes(p.brand)
       );
 
+  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const visibleProducts = normalizedSearch
+    ? filteredProducts.filter((p) =>
+        [p.brand, p.title, p.comment, p.commentEn]
+          .filter(Boolean)
+          .some((value) => value.toLowerCase().includes(normalizedSearch))
+      )
+    : filteredProducts;
+
   // ===== Hit Products Scroll =====
   const hitProducts = products.filter((p) => p.isHit === true);
-  const CARD_WIDTH = 280 + 24; // ширина + gap
+
+  const getScrollStep = () => {
+    if (!hitRef.current) return 0;
+
+    const firstCard = hitRef.current.firstElementChild;
+    if (!firstCard) return 0;
+
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const styles = window.getComputedStyle(hitRef.current);
+    const gap = parseFloat(styles.columnGap || styles.gap || "0");
+
+    return cardWidth + gap;
+  };
 
   const checkScroll = () => {
     if (!hitRef.current) return;
@@ -165,11 +173,11 @@ const filteredProducts =
 
   const scrollLeft = () => {
     if (!hitRef.current) return;
-    hitRef.current.scrollBy({ left: -CARD_WIDTH, behavior: "smooth" });
+    hitRef.current.scrollBy({ left: -getScrollStep(), behavior: "smooth" });
   };
   const scrollRight = () => {
     if (!hitRef.current) return;
-    hitRef.current.scrollBy({ left: CARD_WIDTH, behavior: "smooth" });
+    hitRef.current.scrollBy({ left: getScrollStep(), behavior: "smooth" });
   };
 
   const lang = i18n.language === "en" ? "en" : "ua";
@@ -283,7 +291,25 @@ const filteredProducts =
       )}
 
       {/* ===== Brands & Products ===== */}
-      <h2 className={styles.h2HeaderCatalog}>{t("catalogTitle")}</h2>
+      <div className={styles.catalogHeader}>
+        <h2 className={styles.h2HeaderCatalog}>{t("catalogTitle")}</h2>
+        <div className={styles.catalogSearchWrap}>
+          <input
+            type="search"
+            className={styles.catalogSearch}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder=""
+            aria-label={lang === "en" ? "Search products" : "Пошук товарів"}
+          />
+          <img
+            src={SearchIcon}
+            alt=""
+            aria-hidden="true"
+            className={styles.catalogSearchIcon}
+          />
+        </div>
+      </div>
       <div className={styles["restoration-page-section-element-state"]}>
         <div className={styles["restoration-page-price-action-footnote"]}>
           <div className={styles["restoration-page-heading-price-action"]}>
@@ -320,12 +346,12 @@ const filteredProducts =
           ref={productsRef}
           className={`${styles["productsContainer"]} ${styles["products-section"]}`}
         >
-          {filteredProducts.length === 0 ? (
+          {visibleProducts.length === 0 ? (
             <p className={styles.noProducts}>
               {lang === "en" ? "No products." : "Немає продуктів."}
             </p>
           ) : (
-            filteredProducts.map((p) => {
+            visibleProducts.map((p) => {
               const description =
                 lang === "en"
                   ? p.commentEn || p.comment

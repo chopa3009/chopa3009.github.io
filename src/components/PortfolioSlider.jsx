@@ -69,27 +69,27 @@ const PortfolioSlider = () => {
 
   const isEn = i18n.language === "en";
   const title = isEn ? item.titleEn || item.title : item.title;
-  const text = isEn ? item.descriptionEn || item.description : item.description;
 
   return (
     <section className={homeStyles.portfolioBlock} id="portfolio-desktop">
-      <div className={homeStyles.portfolioCard}>
-        <div className={homeStyles.portfolioImages}>
-          <img
-            className={homeStyles.portfolioImage}
-            src={item.beforeBase64}
-            alt="Before"
-          />
-          <img
-            className={homeStyles.portfolioImage}
-            src={item.afterBase64}
-            alt="After"
-          />
-        </div>
+      <div className={homeStyles.portfolioContent}>
+        <div className={homeStyles.portfolioCard}>
+          <div className={homeStyles.portfolioImages}>
+            <img
+              className={homeStyles.portfolioImage}
+              src={item.beforeBase64}
+              alt="Before"
+            />
+            <img
+              className={homeStyles.portfolioImage}
+              src={item.afterBase64}
+              alt="After"
+            />
+          </div>
 
-        <div className={homeStyles.portfolioText}>
-          <div className={homeStyles.portfolioTitle}>{title}</div>
-          <p className={homeStyles.portfolioDescription}>{text}</p>
+          <div className={homeStyles.portfolioText}>
+            <div className={homeStyles.portfolioTitle}>{title}</div>
+          </div>
         </div>
 
         {items.length > 1 && (
