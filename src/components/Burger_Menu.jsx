@@ -85,7 +85,7 @@ const BurgerMenu = ({ isOpen, onClose }) => {
 
           {isServicesOpen && (
             <div id="services-submenu" className="submenu">
-              {["haircut", "coloring", "restoration", "shop"].map((item) => (
+              {["haircut", "coloring", "restoration"].map((item) => (
                 <Link
                   key={item}
                   to={`/${item}`}
@@ -97,13 +97,17 @@ const BurgerMenu = ({ isOpen, onClose }) => {
             </div>
           )}
 
+          <Link to="/shop" onClick={onClose}>
+            <div className="list-text">{t("shop")}</div>
+          </Link>
+
           {["about", "courses", "cosmetics", "masters"].map((item) => (
             <Link key={item} to={`/${item}`} onClick={onClose}>
               <div className="list-text">{t(item)}</div>
             </Link>
           ))}
 
-         <Link to="/#portfolio-desktop" onClick={onClose}>
+<Link to="/?scrollTo=portfolio-desktop" onClick={onClose}>
   <div className="list-text">{t("portfolio")}</div>
 </Link>
 

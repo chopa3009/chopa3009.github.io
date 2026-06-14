@@ -48,7 +48,7 @@ const ModalPopup = ({ isOpen, onClose, location }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="modal-overlay"
+          className="modal-popup-overlay"
           variants={backdropVariants}
           initial="hidden"
           animate="visible"
@@ -56,7 +56,7 @@ const ModalPopup = ({ isOpen, onClose, location }) => {
           onClick={closeOnOverlay}
         >
           <motion.div
-            className="modal-container"
+            className="modal-popup-container"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
@@ -64,28 +64,28 @@ const ModalPopup = ({ isOpen, onClose, location }) => {
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="close-button"
+              className="modal-popup-close-button"
               onClick={onClose}
               aria-label="Close modal"
             >
               <CloseIcon width={36} height={36} />
             </button>
 
-            <div className="modal-content">
-              <h2 className="modal-title">{modalTitle}</h2>
+            <div className="modal-popup-content">
+              <h2 className="modal-popup-title">{modalTitle}</h2>
 
               <a href="tel:+380961744378">
-                <div className="modal-phone">+380 96 174 43 78</div>
+                <div className="modal-popup-phone">+380 96 174 43 78</div>
               </a>
 
-              <div className="social-icons">
+              <div className="modal-popup-social-icons">
                 <a
                   href="https://instagram.com/_valentina_bodnaruk_"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Instagram"
                 >
-                  <InstagramIcon className="social-icon" />
+                  <InstagramIcon className="modal-popup-social-icon" />
                 </a>
 
                 <a
@@ -94,7 +94,7 @@ const ModalPopup = ({ isOpen, onClose, location }) => {
                   rel="noreferrer"
                   aria-label="WhatsApp"
                 >
-                  <WhatsAppIcon className="social-icon" />
+                  <WhatsAppIcon className="modal-popup-social-icon" />
                 </a>
 
                 <a
@@ -103,14 +103,14 @@ const ModalPopup = ({ isOpen, onClose, location }) => {
                   rel="noreferrer"
                   aria-label="Telegram"
                 >
-                  <TelegramIcon className="social-icon" />
+                  <TelegramIcon className="modal-popup-social-icon" />
                 </a>
 
                 <a
                   href="viber://chat?number=%2B380961744378"
                   aria-label="Viber"
                 >
-                  <ViberIcon className="social-icon" />
+                  <ViberIcon className="modal-popup-social-icon" />
                 </a>
               </div>
             </div>

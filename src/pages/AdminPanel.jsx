@@ -1,13 +1,24 @@
 // AdminPanel.jsx
 import React, { useState, useEffect, useRef } from "react";
+
+import EyeIcon from "../assets/open_eye.svg";
+import EyeOffIcon from "../assets/crossed_eye.svg";
+
 import styles from "../css/AdminPanel.module.css";
-import Ticker from "../components/Ticker";
-import { db } from "../js/firebase";
+import Sidebar from "../components/AdminSideBar";
+import Header from "../components/AdminHeader";
+import MainContent from "../components/AdminMainContent";
+import BrandModal from "../components/BrandModal";
+import ProductModal from "../components/ProductModal";
+import PortfolioModal from "../components/PortfolioModal";
+import ConfirmModal from "../components/ConfirmModal";
+import ErrorModal from "../components/ErrorModal";
+
+import { db} from "../js/firebase";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import {
   getAuth,
   signInWithEmailAndPassword,
-  signOut,
   onAuthStateChanged,
 } from "firebase/auth";
 import {
@@ -22,338 +33,609 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
+/* ================= Firebase ================= */
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
+/* ================= Component ================= */
 const AdminPanel = () => {
+  const [activeSection, setActiveSection] = useState("brands");
+  const [search, setSearch] = useState("");
   const [user, setUser] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [editingId, setEditingId] = useState(null);
 
+  const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [portfolioItems, setPortfolioItems] = useState([]);
+
+  /* ---------- Auth ---------- */
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [formData, setFormData] = useState({
+  const [loginError, setLoginError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  /* ---------- Brand modal ---------- */
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [brandName, setBrandName] = useState("");
+  const [editingBrandId, setEditingBrandId] = useState(null);
+  const [brandToDelete, setBrandToDelete] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  /* ---------- Product modal ---------- */
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [isDeleteProductModalOpen, setIsDeleteProductModalOpen] =
+    useState(false);
+
+  /* ---------- Portfolio modal ---------- */
+  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
+  const [editingPortfolioId, setEditingPortfolioId] = useState(null);
+  const [portfolioToDelete, setPortfolioToDelete] = useState(null);
+  const [isDeletePortfolioModalOpen, setIsDeletePortfolioModalOpen] =
+    useState(false);
+
+  /* ---------- Error modal ---------- */
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorText, setErrorText] = useState("");
+
+  /* ---------- Product form ---------- */
+  const [productForm, setProductForm] = useState({
     title: "",
+    price: "",
+    sku: "",
+    comment: "",
+    commentEn: "",
+    isHit: false,
     description: "",
     descriptionEn: "",
     brand: "",
-    image: null,
+    status: "",
+    imageBase64: "",
     imagePreview: null,
   });
 
-  const dropRef = useRef();
+  /* ---------- Portfolio form ---------- */
+  const [portfolioForm, setPortfolioForm] = useState({
+    beforeBase64: "",
+    afterBase64: "",
+    title: "",
+    titleEn: "",
+    description: "",
+    descriptionEn: "",
+  });
 
-  // ===== Auth listener =====
+  const PORTFOLIO_CACHE_KEY = "admin_portfolio_cache";
+  const PORTFOLIO_CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+  /* ================= Auth listener ================= */
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
+    const unsub = onAuthStateChanged(auth, (u) => {
       if (u) {
         setUser(u);
         loadProducts();
+        loadBrands();
+        loadPortfolio();
+        loadOrders();
       } else {
         setUser(null);
         setProducts([]);
+        setBrands([]);
+        setPortfolioItems([]);
+        setOrders([]);
       }
     });
-    return () => unsubscribe();
+    return () => unsub();
   }, []);
 
-  // ===== Handle login =====
+  /* ================= Auth ================= */
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoginError("");
+
     try {
-      await signInWithEmailAndPassword(auth, loginData.email, loginData.password);
+      await signInWithEmailAndPassword(
+        auth,
+        loginData.email,
+        loginData.password
+      );
       setLoginData({ email: "", password: "" });
     } catch (err) {
-      alert(err.message);
-    }
-  };
-
-  const handleLogout = () => signOut(auth);
-
-  // ===== Drag & Drop =====
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    dropRef.current.classList.add(styles.dragOver);
-  };
-  const handleDragLeave = () => {
-    dropRef.current.classList.remove(styles.dragOver);
-  };
-  const handleDrop = (e) => {
-    e.preventDefault();
-    dropRef.current.classList.remove(styles.dragOver);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) handleImageFile(file);
-  };
-
-  const handleImageFile = (file) => {
-    const maxSizeMB = 1;
-    if (file.size > maxSizeMB * 1024 * 1024) {
-      return alert(`Image size should not exceed ${maxSizeMB} MB`);
-    }
-    const reader = new FileReader();
-    reader.onload = () =>
-      setFormData((prev) => ({ ...prev, image: file, imagePreview: reader.result }));
-    reader.readAsDataURL(file);
-  };
-
-  const handleChange = (e) => {
-    const { id, value, files } = e.target;
-    if (id === "image" && files[0]) handleImageFile(files[0]);
-    else setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const imageToBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (err) => reject(err);
-      reader.readAsDataURL(file);
-    });
-
-  // ===== Add / Edit product =====
-  const handleProductSubmit = async (e) => {
-    e.preventDefault();
-    const { title, description, descriptionEn, brand, image } = formData;
-    if (!title || !description || !brand) return alert("Please fill required fields");
-
-    let imageBase64 = formData.imagePreview;
-    if (image && !imageBase64) imageBase64 = await imageToBase64(image);
-
-    try {
-      const productData = {
-        title: title.slice(0, 50),
-        brand: brand.slice(0, 30),
-        description: description.slice(0, 400),
-        descriptionEn: descriptionEn.slice(0, 400),
-        imageBase64,
+      const map = {
+        "auth/wrong-password": "Невірний пароль",
+        "auth/user-not-found": "Користувача не знайдено",
+        "auth/invalid-email": "Невірний email",
+        "auth/invalid-credential": "Невірні облікові дані",
       };
-
-      if (editingId) {
-        if (!window.confirm("Are you sure you want to update this product?")) return;
-        const docRef = doc(db, "products", editingId);
-        await updateDoc(docRef, productData);
-        setEditingId(null);
-      } else {
-        if (!imageBase64) return alert("Please select an image for new product");
-        await addDoc(collection(db, "products"), { ...productData, createdAt: serverTimestamp() });
-      }
-
-      setFormData({
-        title: "",
-        description: "",
-        descriptionEn: "",
-        brand: "",
-        image: null,
-        imagePreview: null,
-      });
-      loadProducts();
-    } catch (err) {
-      console.error(err);
-      alert("Error saving product");
+      setLoginError(map[err.code] || err.message);
     }
   };
 
-  // ===== Load Products =====
+  /* ================= Load data ================= */
+  const loadBrands = async () => {
+    const q = query(collection(db, "brands"), orderBy("createdAt", "asc"));
+    const snap = await getDocs(q);
+    setBrands(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+  };
+
   const loadProducts = async () => {
     const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
-    const grouped = {};
-    snapshot.forEach((docSnap) => {
-      const product = docSnap.data();
-      const brand = product.brand || "No Brand";
-      if (!grouped[brand]) grouped[brand] = [];
-      grouped[brand].push({ id: docSnap.id, ...product });
-    });
-    setProducts(grouped);
+    const snap = await getDocs(q);
+    setProducts(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
   };
 
-  // ===== Edit / Delete =====
-  const editProduct = (id, product) => {
-    if (!window.confirm("Are you sure you want to edit this product?")) return;
-    setEditingId(id);
-    setFormData({
-      title: product.title,
-      description: product.description,
-      descriptionEn: product.descriptionEn || "",
-      brand: product.brand,
-      image: null,
-      imagePreview: product.imageBase64,
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const loadOrders = async () => {
+    const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    setOrders(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
   };
 
-  const deleteProduct = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+  const updateOrderStatus = async (orderId, status) => {
+    await updateDoc(doc(db, "orders", orderId), {
+      status,
+      statusUpdatedAt: serverTimestamp(),
+      statusUpdatedSource: "admin",
+    });
+
+    setOrders((current) =>
+      current.map((order) =>
+        order.id === orderId
+          ? {
+              ...order,
+              status,
+              statusUpdatedSource: "admin",
+            }
+          : order
+      )
+    );
+  };
+
+  /* ================= Portfolio (cache + load) ================= */
+  const getCachedPortfolio = () => {
     try {
-      await deleteDoc(doc(db, "products", id));
-      loadProducts();
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting product");
+      const cached = localStorage.getItem(PORTFOLIO_CACHE_KEY);
+      if (!cached) return null;
+      const { data, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp > PORTFOLIO_CACHE_TTL) {
+        localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+        return null;
+      }
+      return data;
+    } catch {
+      return null;
     }
   };
 
+  const setCachedPortfolio = (data) => {
+    localStorage.setItem(
+      PORTFOLIO_CACHE_KEY,
+      JSON.stringify({ data, timestamp: Date.now() })
+    );
+  };
+
+  const loadPortfolio = async () => {
+    const cached = getCachedPortfolio();
+    if (cached) {
+      setPortfolioItems(cached);
+      return;
+    }
+
+    const q = query(collection(db, "portfolio"), orderBy("createdAt", "desc"));
+    const snap = await getDocs(q);
+    const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    setPortfolioItems(items);
+    setCachedPortfolio(items);
+  };
+
+  /* ================= Brands ================= */
+  const openAddBrandModal = () => {
+    setEditingBrandId(null);
+    setBrandName("");
+    setIsBrandModalOpen(true);
+  };
+
+  const openEditBrandModal = (brand) => {
+    setEditingBrandId(brand.id);
+    setBrandName(brand.name);
+    setIsBrandModalOpen(true);
+  };
+
+  const addBrand = async () => {
+    if (!brandName.trim()) {
+      setErrorText("Введіть назву бренду");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await addDoc(collection(db, "brands"), {
+      name: brandName.trim(),
+      createdAt: serverTimestamp(),
+    });
+
+    loadBrands();
+    setIsBrandModalOpen(false);
+  };
+
+  const updateBrand = async () => {
+    if (!brandName.trim()) {
+      setErrorText("Введіть назву бренду");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await updateDoc(doc(db, "brands", editingBrandId), {
+      name: brandName.trim(),
+    });
+
+    loadBrands();
+    setIsBrandModalOpen(false);
+  };
+
+  const confirmDeleteBrand = async () => {
+    await deleteDoc(doc(db, "brands", brandToDelete));
+    loadBrands();
+    setIsDeleteModalOpen(false);
+  };
+
+  /* ================= Products ================= */
+  const openAddProductModal = () => {
+    setEditingProductId(null);
+    setProductForm({
+      title: "",
+      price: "",
+      sku: "",
+      comment: "",
+      commentEn: "",
+      isHit: false,
+      description: "",
+      descriptionEn: "",
+      brand: "",
+      status: "",
+      imageBase64: "",
+      imagePreview: null,
+    });
+    setIsProductModalOpen(true);
+  };
+
+  const openEditProductModal = (product) => {
+    setEditingProductId(product.id);
+    setProductForm({
+      ...product,
+      price: product.price ?? "",
+      sku: product.sku ?? "",
+      comment: product.comment ?? "",
+      commentEn: product.commentEn ?? "",
+      isHit: product.isHit ?? false,
+      imagePreview: product.imageBase64,
+    });
+    setIsProductModalOpen(true);
+  };
+
+  const addProduct = async () => {
+    const {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64,
+      price,
+      sku,
+      comment,
+      commentEn,
+      isHit,
+    } = productForm;
+
+    if (!title || !brand || !description || !descriptionEn || !status || !imageBase64) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await addDoc(collection(db, "products"), {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64,
+      price: price ?? "",
+      sku: sku ?? "",
+      comment: comment ?? "",
+      commentEn: commentEn ?? "",
+      isHit: isHit ?? false,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+
+    loadProducts();
+    setIsProductModalOpen(false);
+  };
+
+  const updateProduct = async () => {
+    const {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64,
+      imagePreview,
+      price,
+      sku,
+      comment,
+      commentEn,
+      isHit,
+    } = productForm;
+
+    if (!title || !brand || !description || !descriptionEn || !status) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+console.log("editingProductId:", editingProductId);
+    await updateDoc(doc(db, "products", editingProductId), {
+      title,
+      description,
+      descriptionEn,
+      brand,
+      status,
+      imageBase64: imagePreview || imageBase64,
+      price: price ?? "",
+      sku: sku ?? "",
+      comment: comment ?? "",
+      commentEn: commentEn ?? "",
+      isHit: isHit ?? false,
+      updatedAt: serverTimestamp(),
+    });
+console.log(brand);
+    loadProducts();
+    setIsProductModalOpen(false);
+  };
+
+  const confirmDeleteProduct = async () => {
+    await deleteDoc(doc(db, "products", productToDelete));
+    loadProducts();
+    setIsDeleteProductModalOpen(false);
+  };
+
+  /* ================= Portfolio ================= */
+  const openAddPortfolioModal = () => {
+    setEditingPortfolioId(null);
+    setPortfolioForm({
+      beforeBase64: "",
+      afterBase64: "",
+      title: "",
+      titleEn: "",
+      description: "",
+      descriptionEn: "",
+    });
+    setIsPortfolioModalOpen(true);
+  };
+
+  const openEditPortfolioModal = (item) => {
+    setEditingPortfolioId(item.id);
+    setPortfolioForm({
+      beforeBase64: item.beforeBase64 || "",
+      afterBase64: item.afterBase64 || "",
+      title: item.title || "",
+      titleEn: item.titleEn || "",
+      description: item.description || "",
+      descriptionEn: item.descriptionEn || "",
+    });
+    setIsPortfolioModalOpen(true);
+  };
+
+  const addPortfolio = async () => {
+    const { beforeBase64, afterBase64, title, titleEn, description, descriptionEn } =
+      portfolioForm;
+
+    if (
+      !beforeBase64 ||
+      !afterBase64 ||
+      !title ||
+      !titleEn ||
+      !description ||
+      !descriptionEn
+    ) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await addDoc(collection(db, "portfolio"), {
+      beforeBase64,
+      afterBase64,
+      title,
+      titleEn,
+      description,
+      descriptionEn,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    });
+
+    localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+    loadPortfolio();
+    setIsPortfolioModalOpen(false);
+  };
+
+  const updatePortfolio = async () => {
+    const { beforeBase64, afterBase64, title, titleEn, description, descriptionEn } =
+      portfolioForm;
+
+    if (
+      !beforeBase64 ||
+      !afterBase64 ||
+      !title ||
+      !titleEn ||
+      !description ||
+      !descriptionEn
+    ) {
+      setErrorText("Заповніть всі обовʼязкові поля");
+      setErrorModalOpen(true);
+      return;
+    }
+
+    await updateDoc(doc(db, "portfolio", editingPortfolioId), {
+      beforeBase64,
+      afterBase64,
+      title,
+      titleEn,
+      description,
+      descriptionEn,
+      updatedAt: serverTimestamp(),
+    });
+
+    localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+    loadPortfolio();
+    setIsPortfolioModalOpen(false);
+  };
+
+  const confirmDeletePortfolio = async () => {
+    await deleteDoc(doc(db, "portfolio", portfolioToDelete));
+    localStorage.removeItem(PORTFOLIO_CACHE_KEY);
+    loadPortfolio();
+    setIsDeletePortfolioModalOpen(false);
+  };
+
+  /* ================= Render ================= */
   return (
-    <>
-      <h1>Admin Panel / Адмін панель</h1>
-      <div className={styles.adminPanel}>
-        {!user && (
-          <div id="loginDiv" className={styles.loginDiv}>
-            <form id="loginForm" onSubmit={handleLogin}>
+    <div className={styles.adminPanel}>
+      {!user && (
+        <div className={styles.loginDiv}>
+          <form onSubmit={handleLogin}>
+            <h1>Log in</h1>
+
+            <label className={styles.required}>
+              Email
               <input
                 type="email"
-                id="email"
                 placeholder="Email"
                 required
                 value={loginData.email}
-                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                onChange={(e) =>
+                  setLoginData({ ...loginData, email: e.target.value })
+                }
               />
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                required
-                value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-              />
-              <button type="submit">Login / Логін</button>
-            </form>
-          </div>
-        )}
+            </label>
 
-        {user && (
-          <div id="adminDiv" className={styles.adminDiv}>
-            <h2>Add / Edit Product / Додати / Відредагувати продукт</h2>
-            <form id="productForm" onSubmit={handleProductSubmit}>
-              <label>
-                Title (EN) / Назва: <small>*Max 50 characters</small>
+            <label className={styles.required}>
+              Password
+              <div className={styles.passwordWrapper}>
                 <input
-                  type="text"
-                  id="title"
-                  value={formData.title}
-                  onChange={handleChange}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
                   required
-                  maxLength={50}
+                  value={loginData.password}
+                  onChange={(e) =>
+                    setLoginData({ ...loginData, password: e.target.value })
+                  }
                 />
-              </label>
-
-              <label>
-                Description (UA) / Опис українською: <small>*Max 400 characters</small>
-                <textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  required
-                  maxLength={400}
+                <img
+                  className={styles.passwordToggle}
+                  src={showPassword ? EyeOffIcon : EyeIcon}
+                  onClick={() => setShowPassword(!showPassword)}
+                  alt=""
                 />
-              </label>
-
-              <label>
-                Description (EN) / Опис англійською: <small>*Max 400 characters</small>
-                <textarea
-                  id="descriptionEn"
-                  value={formData.descriptionEn}
-                  onChange={handleChange}
-                  required
-                  maxLength={400}
-                />
-              </label>
-
-              {/* --- Обгортка для бренду та прев'ю --- */}
-              <div className={styles.formGroup}>
-                <label>
-                  Brand / Бренд: <small>*Choose one brand</small>
-                  <select
-                    id="brand"
-                    value={formData.brand}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled>
-                      Select Brand
-                    </option>
-                    <option value="Brae">Brae</option>
-                    <option value="Dr. Sorbie">Dr. Sorbie</option>
-                    <option value="Kis">Kis</option>
-                    <option value="Tempting">Tempting</option>
-                    <option value="Viart">Viart</option>
-                    <option value="Viart">Tangle Teezer</option>
-                    <option value="Viart">Keune</option>
-                    <option value="Viart">Medavita</option>
-                  </select>
-                </label>
-
-                <label
-                  ref={dropRef}
-                  className={styles.dropZone}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                >
-                  {formData.imagePreview ? (
-                    <img
-                      src={formData.imagePreview}
-                      alt="Preview"
-                      className={styles.previewImg}
-                    />
-                  ) : (
-                    "Drag & Drop Image Here / або виберіть файл"
-                  )}
-                  <input
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                    onChange={handleChange}
-                  />
-                </label>
               </div>
+            </label>
 
-              <button type="submit">Save Product / Зберегти продукт</button>
-            </form>
+            <button type="submit">Login</button>
+            {loginError && <p>{loginError}</p>}
+          </form>
+        </div>
+      )}
 
-            <h2>Products / Продукти</h2>
-            <div id="productsContainer" className={styles.productsContainer}>
-              {Object.entries(products).map(([brand, items]) => (
-                <div key={brand} className={styles.brandGroup}>
-                  <h3>{brand}</h3>
-                  <div className={styles.productsGrid}>
-                    {items.map((p) => (
-                      <div key={p.id} className={styles.product}>
-                        {p.imageBase64 && (
-                          <img src={p.imageBase64} alt={p.title} width={100} />
-                        )}
-                        <h4>{p.title}</h4>
-                        <p className={styles.descUa}>
-                          <strong>UA:</strong> {p.description}
-                        </p>
-                        <p className={styles.descEn}>
-                          <strong>EN:</strong> {p.descriptionEn}
-                        </p>
-                        <button
-                          className={styles.editBtn}
-                          onClick={() => editProduct(p.id, p)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className={styles.deleteBtn}
-                          onClick={() => deleteProduct(p.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+      {user && (
+        <>
+          <Sidebar
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
+          <Header search={search} setSearch={setSearch} />
 
-            <button id="logoutBtn" onClick={handleLogout}>
-              Logout / Вийти
-            </button>
-          </div>
-        )}
-      </div>
-    </>
+          <MainContent
+            search={search}
+            brands={brands}
+            products={products}
+            portfolioItems={portfolioItems}
+            orders={orders}
+            activeSection={activeSection}
+            onAddBrand={openAddBrandModal}
+            onEditBrand={openEditBrandModal}
+            onDeleteBrand={(id) => {
+              setBrandToDelete(id);
+              setIsDeleteModalOpen(true);
+            }}
+            onAddProduct={openAddProductModal}
+            onEditProduct={openEditProductModal}
+            onDeleteProduct={(id) => {
+              setProductToDelete(id);
+              setIsDeleteProductModalOpen(true);
+            }}
+            onAddPortfolio={openAddPortfolioModal}
+            onEditPortfolio={openEditPortfolioModal}
+            onDeletePortfolio={(id) => {
+              setPortfolioToDelete(id);
+              setIsDeletePortfolioModalOpen(true);
+            }}
+            onUpdateOrderStatus={updateOrderStatus}
+          />
+
+          <BrandModal
+            isOpen={isBrandModalOpen}
+            brandName={brandName}
+            setBrandName={setBrandName}
+            onSave={editingBrandId ? updateBrand : addBrand}
+            onClose={() => setIsBrandModalOpen(false)}
+          />
+
+          <ProductModal
+            isOpen={isProductModalOpen}
+            productForm={productForm}
+            setProductForm={setProductForm}
+            onSave={editingProductId ? updateProduct : addProduct}
+            onClose={() => setIsProductModalOpen(false)}
+            brands={brands}
+          />
+
+          <PortfolioModal
+            isOpen={isPortfolioModalOpen}
+            portfolioForm={portfolioForm}
+            setPortfolioForm={setPortfolioForm}
+            onSave={editingPortfolioId ? updatePortfolio : addPortfolio}
+            onClose={() => setIsPortfolioModalOpen(false)}
+            isEditing={Boolean(editingPortfolioId)}
+          />
+
+          <ConfirmModal
+            isOpen={isDeleteModalOpen}
+            title="Видалити бренд?"
+            onConfirm={confirmDeleteBrand}
+            onCancel={() => setIsDeleteModalOpen(false)}
+          />
+
+          <ConfirmModal
+            isOpen={isDeleteProductModalOpen}
+            title="Видалити продукт?"
+            onConfirm={confirmDeleteProduct}
+            onCancel={() => setIsDeleteProductModalOpen(false)}
+          />
+
+          <ConfirmModal
+            isOpen={isDeletePortfolioModalOpen}
+            title="Видалити запис портфоліо?"
+            onConfirm={confirmDeletePortfolio}
+            onCancel={() => setIsDeletePortfolioModalOpen(false)}
+          />
+
+          <ErrorModal
+            isOpen={errorModalOpen}
+            text={errorText}
+            onClose={() => setErrorModalOpen(false)}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

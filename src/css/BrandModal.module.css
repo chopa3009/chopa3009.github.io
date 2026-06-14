@@ -1,0 +1,58 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 400px;
+  background: #fff;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.inputCenter {
+  width: 100%;
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+  padding: 0 12px;
+  height: 40px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  width: 100%;
+}
+
+.cancel,
+.save {
+  width: 187px;
+  height: 40px;
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+  cursor: pointer;
+}
+
+.cancel {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.save {
+  background: rgba(33, 33, 33, 0.9);
+  color: #fff;
+  border: none;
+}

@@ -1,0 +1,60 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 400px; /* можна підкоригувати */
+  background: #fff;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+  font-family: var(--font-family-raleway);
+}
+
+.modal h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.modal p {
+font-size: 16px;
+    color: #333;
+    margin: 0;
+    line-height: 25px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 16px;
+}
+
+.actions button {
+  width: 187px;
+  height: 40px;
+  font-size: 20px;
+  font-family: var(--font-family-raleway);
+  cursor: pointer;
+  border: 1px solid #ccc;
+      background: white;
+}
+
+.actions button:hover {
+  opacity: 0.9;
+}
+
+.actions .danger {
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+}

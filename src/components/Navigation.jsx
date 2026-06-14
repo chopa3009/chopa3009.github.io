@@ -26,7 +26,12 @@ const PageNavigation = () => {
       ? location.pathname.slice(0, -1)
       : location.pathname;
 
-  const currentKey = pageKeys[path] || "home";
+  const isProductPage = path.startsWith("/shop/");
+  const currentKey = pageKeys[path] || (isProductPage ? "shop" : "home");
+  const productTitle = location.state?.productTitle || "Товар";
+  const brandFromState = location.state?.brandName;
+  const brandFromQuery = new URLSearchParams(location.search).get("brand");
+  const brandName = brandFromState || brandFromQuery;
 
   // Framer Motion variants
   const fadeVariants = {
@@ -45,7 +50,7 @@ const PageNavigation = () => {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="page-navigation"
+          className={`page-navigation ${isProductPage ? "product-page-navigation" : ""}`}
         >
           {path !== "/" && (
             <>
@@ -55,7 +60,30 @@ const PageNavigation = () => {
               <div className="text-disabled mobtext16bove">/</div>
             </>
           )}
-          <div className="text-active bovecaption16mediumdark">{t(currentKey)}</div>
+
+          {isProductPage ? (
+            <>
+              <Link to="/shop">
+                <div className="text-disabled mobtext16bove">{t("shop")}</div>
+              </Link>
+              <div className="text-disabled mobtext16bove">/</div>
+              {brandName ? (
+                <>
+                  <Link to={`/shop?brand=${encodeURIComponent(brandName)}`}>
+                    <div className="text-disabled mobtext16bove">{brandName}</div>
+                  </Link>
+                  <div className="text-disabled mobtext16bove">/</div>
+                </>
+              ) : null}
+              <div className="text-active bovecaption16mediumdark">
+                {productTitle}
+              </div>
+            </>
+          ) : (
+            <div className="text-active bovecaption16mediumdark">
+              {t(currentKey)}
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>

@@ -15,10 +15,13 @@ import Masters from "./pages/Masters";
 import Haircut from "./pages/Haircut";
 import Coloring from "./pages/Coloring";
 import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
+import Order from "./pages/Order";
 import Restoration from "./pages/Restoration";
 import AdminPanel from "./pages/AdminPanel";
 import ModalPopup from "./components/ModalPopup";
 import LoadingSpinner from "./components/LoadingSpinner";
+import CartModal from "./components/CartModal";
 
 
 import "./js/i18n";
@@ -27,14 +30,19 @@ function AppWrapper() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isAdminPage = location.pathname === "/admin";
+  const isProductPage = location.pathname.startsWith("/shop/");
+  const isOrderPage = location.pathname === "/order";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(isHomePage);
   const [homeReady, setHomeReady] = useState(!isHomePage);
   const [hasVisited, setHasVisited] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   // Анімація появи сторінок
   const pageVariants = {
@@ -61,7 +69,28 @@ function AppWrapper() {
 
   useEffect(() => {
     if (homeReady && !loading) {
-      if (location.hash) {
+      const scrollTarget = new URLSearchParams(location.search).get("scrollTo");
+
+      if (scrollTarget) {
+        let attempts = 0;
+        const maxAttempts = 20;
+
+        const scrollWhenReady = () => {
+          const el = document.getElementById(scrollTarget);
+
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+          }
+
+          if (attempts < maxAttempts) {
+            attempts += 1;
+            window.setTimeout(scrollWhenReady, 100);
+          }
+        };
+
+        window.setTimeout(scrollWhenReady, 50);
+      } else if (location.hash) {
         const el = document.querySelector(location.hash);
         if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 50);
       } else {
@@ -71,13 +100,21 @@ function AppWrapper() {
   }, [location, homeReady, loading]);
 
   const showHeaderFooter = !isAdminPage && (!isHomePage || (isHomePage && (hasVisited || (homeReady && !loading))));
-  const showTitleNav = !isAdminPage && (!isHomePage || (isHomePage && loading && hasVisited));
+const showTitle =
+  !isAdminPage &&
+  !isOrderPage &&
+  (!isHomePage || (isHomePage && loading && hasVisited));
+
+const showNavigation =
+  !isAdminPage &&
+  !isOrderPage &&
+  (!isHomePage || (isHomePage && loading && hasVisited));
 
   return (
     <>
-      {showHeaderFooter && <Header />}
-      {showTitleNav && <Title />}
-      {showTitleNav && <Navigation />}
+      {showHeaderFooter && <Header onCartOpen={openCart} />}
+      {showTitle && <Title />}
+      {showNavigation && <Navigation />}
 
       {loading ? (
         <LoadingSpinner />
@@ -151,6 +188,22 @@ function AppWrapper() {
               </motion.div>
             }
           />
+          <Route
+            path="/shop/:id"
+            element={
+              <motion.div {...pageVariants}>
+                <ProductDetail openModal={openModal} />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/order"
+            element={
+              <motion.div {...pageVariants}>
+                <Order />
+              </motion.div>
+            }
+          />
  <Route
             path="/admin"
             element={
@@ -162,8 +215,9 @@ function AppWrapper() {
         </Routes>
       )}
 
-      {showHeaderFooter && <Footer />}
+      {showHeaderFooter && !isOrderPage && <Footer />}
       <ModalPopup isOpen={isModalOpen} onClose={closeModal} location={location}/>
+      <CartModal isOpen={isCartOpen} onClose={closeCart} />
     </>
   );
 }

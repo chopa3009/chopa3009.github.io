@@ -1,0 +1,184 @@
+.products {
+  background-color: var(--backgrounddefaultbeige);
+  padding: 55px 112px 30px 32px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  margin-left: 288px; /* space for sidebar */
+}
+
+/* Top section with title and button */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 30px;
+  font-family: var(--font-family-raleway);
+}
+
+/* Add Brand button */
+.top > button {
+  background-color: rgba(33, 33, 33, 0.9);  /* black background */
+  color: #fff;             /* white text */
+  border: 2px solid #000;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+      width: 176px;
+    height: 40px;
+  transition: all 0.2s ease;
+}
+
+.top > button:hover {
+  background-color: rgba(33, 33, 33, 0.9);
+  color: #fff;
+}
+
+/* Table */
+.products table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  padding: 30px;
+}
+
+.products .tableWrapper {
+  background-color: #fff; /* white border effect */
+  padding: 30px;          /* 30px on all sides */
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+/* Table headers */
+
+.products thead {
+  background-color: #fff;
+  border: 1px solid rgba(21, 21, 21, 0.4); /* border around thead */
+  width: 100%;
+}
+
+.products th {
+  background-color: #fff;                     /* white background */
+  color: #212121;                             /* dark text */
+  font-weight: 400;
+  border: none; /* border with 40% opacity */
+  text-align: left;
+  padding: 12px 0px;
+  font-size: 16px;
+  font-family: var(--font-family-raleway);
+}
+
+/* Table cells */
+.products td {
+  text-align: left;
+     padding: 10px 0px 0px 0px;
+ /* border-bottom: 1px solid #e0e0e0; */
+  font-size: 16px;
+  font-family: var(--font-family-raleway);
+}
+
+
+/* Table row hover */
+.products tbody tr:hover {
+ background-color: #f9f9f9; 
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Edit / Delete icons inside table (SVG) */
+.products td svg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: all 0.2s ease;
+  
+}
+
+.products td svg:hover {
+  transform: scale(1.2);
+  fill: #007bff; /* hover color */
+}
+
+/* Edit / Delete buttons inside table (if using <button>) */
+.products td button {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.products td.iconCell {
+  text-align: center;
+}
+
+.products th.iconCell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.actionsCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.tableWrapper table th:first-child,
+.tableWrapper table td:first-child {
+  width: 69px;
+  min-width: 69px;
+  max-width: 69px;
+  text-align: center;
+}
+
+.tableWrapper table th:nth-child(2),
+.tableWrapper table td:nth-child(2) {
+  width: 139px;
+  min-width: 139px;
+  max-width: 139px;
+
+}
+
+.tableWrapper table th:nth-child(3),
+.tableWrapper table td:nth-child(3) {
+  width: 99px;
+  min-width: 99px;
+  max-width: 99px;
+
+}
+
+.tableWrapper table th:nth-child(4),
+.tableWrapper table td:nth-child(4) {
+  width: 298px;
+  min-width: 298px;
+  max-width: 298px;
+
+}
+
+.tableWrapper table th:nth-child(5),
+.tableWrapper table td:nth-child(5) {
+  width: 129px;
+  min-width: 129px;
+  max-width: 129px;
+
+}
+
+.tableWrapper table th:nth-child(6),
+.tableWrapper table td:nth-child(6) {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+
+}
+
+.tableWrapper table th:nth-child(7),
+.tableWrapper table td:nth-child(7) {
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+}

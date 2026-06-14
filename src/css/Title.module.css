@@ -13,7 +13,7 @@
   margin: 0 auto;
   background-position: center;
   background-size: cover;
-  background-color: var(--backgrounddefaultdark);
+  background: rgb(33 33 33 / 90%);
 
   transition:
     padding 0.6s ease,
@@ -31,7 +31,6 @@
 .title-photo.restoration .title,
 .title-photo.shop .title {
   align-self: stretch;
-  background-color: var(--backgrounddefaultdark);
   display: inline-flex;
   flex: 0 0 auto;
   gap: 10px;
@@ -51,9 +50,12 @@
   color: var(--backgrounddefaultwhite);
   font-weight: 400;
   line-height: 60px;
-  margin-top: -1px;
   position: relative;
   width: 491px;
+}
+
+.title-photo.shop .title-text {
+  width: 592px;
 }
 
 .image {
@@ -86,8 +88,17 @@
 
   .title-text {
     font-size: 30px;
-    width: 100%;
+    width: 335px;
+    height: 150px;
+    white-space: normal;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
   }
+  .title-photo.shop .title-text {
+  width: 335px;
+}
+
 
   .image {
     width: 375px;
@@ -109,7 +120,6 @@
 
   .title-photo.about .title,
 .title-photo.cosmetics .title,
-.title-photo.masters .title,
 .title-photo.courses .title,
 .title-photo.haircut .title,
 .title-photo.coloring .title,
@@ -117,10 +127,17 @@
 .title-photo.shop .title  {
     padding: 70px 40px 70px 40px;
   }
+ .title-photo.masters .title {
+          padding: 70px 28px 70px 28px;
+    }
 
   .title-text {
     white-space: nowrap;
     width: 100%;
+  }
+
+  .title-photo.shop .title-text {
+    white-space: normal;
   }
 
   .title-photo .title-text br {

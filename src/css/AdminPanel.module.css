@@ -1,7 +1,152 @@
 
-form { margin-bottom: 20px; }
-input, textarea { display: block; margin-bottom: 10px; width: 300px; padding: 5px; }
-button { padding: 5px 10px; cursor: pointer; }
+/*input, textarea { display: block; margin-bottom: 10px; width: 300px; padding: 5px; } */
+/*button { padding: 5px 10px; cursor: pointer; } */
+
+.loginDiv{
+  min-height: 100vh;              /* вся висота екрану */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("../assets/mane-PHOTO.png"); /* твоя картинка */
+  background-size: cover;         /* головне */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.loginDiv form {
+  width: 800px;
+  height: 556px;
+  background: #ffffff;
+  padding: 50px 104px 76px 104px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.loginDiv h1{
+  font-family: var(--font-family-prata);
+    font-size: 40px;
+    line-height: 60px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    margin-bottom: 40px;
+}
+.required {
+  display: block;
+  font-size: 20px;
+  line-height: 30px;
+  margin-bottom: 30px;
+    font-family: var(--font-family-raleway);
+    
+}
+
+.required input {
+  margin-top: 10px;
+}
+
+.required::before {
+  content: "* ";
+  color: red;
+  font-weight: bold;
+}
+
+.loginDiv input {
+    width: 100%;
+    
+    height: 50px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #000;
+    border: 1px solid rgba(33, 33, 33, 0.4);
+    box-sizing: border-box;
+      padding: 0 14px;
+}
+
+.loginDiv button {
+  width: 100%;
+  max-width: 592px;  /* максимальна ширина */
+  height: 50px;      /* висота */
+  margin-top: 30px;
+  background-color: rgba(33, 33, 33, 0.9); /* чорний фон */
+  color: #fff;            /* білий текст */
+  
+  font-size: 24px;
+  font-weight: 600;
+  border: none;
+  line-height: 30px;
+  font-weight: 500;
+  font-family: var(--font-family-raleway);
+  
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 592px;
+}
+
+.passwordWrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for eye */
+  height: 50px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000;
+  border: 1px solid rgba(33,33,33,0.4);
+  box-sizing: border-box;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translateY(-50%);
+  margin-top: 5px;
+}
+
+.passwordWrapper img {
+  width: 24px;
+  height: 24px;
+  display: block; /* 🔥 прибирає baseline-зсув */
+}
+
+
+/* Hover ефект */
+.loginDiv button:hover {
+  background-color: #222;  /* трохи світліше чорного при наведенні */
+  transform: scale(1.02);
+}
+
+.loginError {
+  color: #f44336; /* red */
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+/* Для мобільних */
+@media (max-width: 600px) {
+  .loginDiv button {
+    max-width: 100%;  /* щоб не виходила за екран */
+  }
+}
+
+.passwordToggle svg {
+  width: 20px;
+  height: 20px;
+}
 
 /* ===== Products Grid ===== */
 .productsContainer {
@@ -120,4 +265,3 @@ button { padding: 5px 10px; cursor: pointer; }
 }
 .deleteBtn { right: 5px; background: red; }
 .editBtn { left: 5px; background: blue; }
-
