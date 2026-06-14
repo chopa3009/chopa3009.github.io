@@ -72,7 +72,7 @@ const Header = ({ onCartOpen }) => {
                 <img src={arrow} alt="arrow" className="dropdown-arrow" />
               </div>
               <div className="dropdown-content">
-                {['haircut', 'coloring', 'restoration', 'shop'].map((item) => (
+                {['haircut', 'coloring', 'restoration'].map((item) => (
                   <Link key={item} to={`/${item}`} onClick={() => setIsDropdownOpen(false)}>
                     {t(item)}
                   </Link>
