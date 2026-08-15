@@ -10,11 +10,13 @@ import SearchIcon from "../assets/Search_Magnifying_Glass.svg";
 import { addToCart } from "../utils/cart";
 import { getShopProductsCache, setShopProductsCache } from "../utils/shopCache";
 import Toast from "../components/Toast";
+import {
+  hasContractPrice,
+  isInStock,
+  isVisibleInShop,
+} from "../utils/productAvailability";
 
-const isInStock = (product) =>
-  product?.status === "В наявності" || product?.status === "In stock";
-
-const RestorationPageSection = ({ openModal }) => {
+const RestorationPageSection = () => {
   const { t, i18n } = useTranslation();
 
   const [products, setProducts] = useState([]);
@@ -67,7 +69,7 @@ const RestorationPageSection = ({ openModal }) => {
 
       const cached = await getShopProductsCache();
       if (cached) {
-        const availableProducts = (cached.products || []).filter(isInStock);
+        const availableProducts = (cached.products || []).filter(isVisibleInShop);
         const availableBrands = Array.from(
           new Set(availableProducts.map((product) => product.brand))
         );
@@ -90,7 +92,7 @@ const RestorationPageSection = ({ openModal }) => {
           ...doc.data(),
         }));
 
-        const availableProducts = allProducts.filter(isInStock);
+        const availableProducts = allProducts.filter(isVisibleInShop);
         const brandSet = new Set(availableProducts.map((p) => p.brand));
         const brandsData = Array.from(brandSet);
 
@@ -98,7 +100,7 @@ const RestorationPageSection = ({ openModal }) => {
         setBrands(brandsData);
 
         await setShopProductsCache({
-          products: availableProducts,
+          products: allProducts,
           brands: brandsData,
         });
       } catch (error) {
@@ -110,17 +112,6 @@ const RestorationPageSection = ({ openModal }) => {
 
     loadProducts();
   }, []);
-
-  // ===== Brand filter =====
-  const handleBrandClick = (brand) => {
-    setActiveBrand(brand);
-    if (productsRef.current && window.innerWidth >= 768) {
-      productsRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
 
 const filteredProducts =
   selectedBrands.length === 0
@@ -162,11 +153,12 @@ const filteredProducts =
   };
 
   useEffect(() => {
+    const hitTrack = hitRef.current;
     checkScroll();
-    hitRef.current?.addEventListener("scroll", checkScroll);
+    hitTrack?.addEventListener("scroll", checkScroll);
     window.addEventListener("resize", checkScroll);
     return () => {
-      hitRef.current?.removeEventListener("scroll", checkScroll);
+      hitTrack?.removeEventListener("scroll", checkScroll);
       window.removeEventListener("resize", checkScroll);
     };
   }, [hitProducts]);
@@ -242,7 +234,7 @@ const filteredProducts =
                     {/* статус */}
                     <p
                       className={`${styles.status} ${
-                        p.status === "В наявності"
+                        isInStock(p.status)
                           ? styles.inStock
                           : styles.preOrder
                       }`}
@@ -254,10 +246,10 @@ const filteredProducts =
                     <div className={styles.priceRow}>
                       <span
                         className={`${styles.price} ${
-                          !p.price ? styles.contractPrice : ""
+                          hasContractPrice(p) ? styles.contractPrice : ""
                         }`}
                       >
-                        {p.price ? `${p.price} ₴` : t("priceTitle")}
+                        {hasContractPrice(p) ? t("priceTitle") : `${p.price} ₴`}
                       </span>
 
                       <button
@@ -324,8 +316,8 @@ const filteredProducts =
               />
               <div className={`${styles.restoration1} bovebody20regularlight`}>
                 <div className={styles.restoration1}>
-{brands.map((brand, i) => (
-<label className={styles.checkbox}>
+{brands.map((brand) => (
+<label key={brand} className={styles.checkbox}>
   <input
     type="checkbox"
     checked={selectedBrands.includes(brand)}
@@ -382,7 +374,7 @@ const filteredProducts =
                     {/* статус */}
                     <p
                       className={`${styles.status} ${
-                        p.status === "В наявності"
+                        isInStock(p.status)
                           ? styles.inStock
                           : styles.preOrder
                       }`}
@@ -394,10 +386,10 @@ const filteredProducts =
                     <div className={styles.priceRow}>
                       <span
                         className={`${styles.price} ${
-                          !p.price ? styles.contractPrice : ""
+                          hasContractPrice(p) ? styles.contractPrice : ""
                         }`}
                       >
-                        {p.price ? `${p.price} ₴` : t("priceTitle")}
+                        {hasContractPrice(p) ? t("priceTitle") : `${p.price} ₴`}
                       </span>
 
                       <button

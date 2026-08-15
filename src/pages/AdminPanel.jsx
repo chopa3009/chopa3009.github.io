@@ -13,6 +13,7 @@ import ProductModal from "../components/ProductModal";
 import PortfolioModal from "../components/PortfolioModal";
 import ConfirmModal from "../components/ConfirmModal";
 import ErrorModal from "../components/ErrorModal";
+import { clearShopProductsCache } from "../utils/shopCache";
 
 import { db} from "../js/firebase";
 import { initializeApp, getApps, getApp } from "firebase/app";
@@ -347,6 +348,7 @@ const AdminPanel = () => {
       updatedAt: serverTimestamp(),
     });
 
+    await clearShopProductsCache();
     loadProducts();
     setIsProductModalOpen(false);
   };
@@ -388,12 +390,14 @@ console.log("editingProductId:", editingProductId);
       updatedAt: serverTimestamp(),
     });
 console.log(brand);
+    await clearShopProductsCache();
     loadProducts();
     setIsProductModalOpen(false);
   };
 
   const confirmDeleteProduct = async () => {
     await deleteDoc(doc(db, "products", productToDelete));
+    await clearShopProductsCache();
     loadProducts();
     setIsDeleteProductModalOpen(false);
   };

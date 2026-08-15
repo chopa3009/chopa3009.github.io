@@ -11,6 +11,11 @@ import rightArrow from "../assets/rightArrow.svg";
 import addPlus from "../assets/Add_Plus.svg";
 import removeMinus from "../assets/Remove_Minus.svg";
 import Toast from "../components/Toast";
+import {
+  hasContractPrice,
+  isInStock,
+  isVisibleInShop,
+} from "../utils/productAvailability";
 
 const ProductDetail = ({ openModal }) => {
   const { id } = useParams();
@@ -24,8 +29,6 @@ const ProductDetail = ({ openModal }) => {
   const [toast, setToast] = useState("");
   const [activeTab, setActiveTab] = useState("description");
   const [qty, setQty] = useState(1);
-  const isInStock = (status) => status === "В наявності" || status === "In stock";
-
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -64,7 +67,7 @@ const ProductDetail = ({ openModal }) => {
       if (cached) {
         const sameBrand = cached.filter(
           (p) => p.brand === product.brand && p.id !== product.id
-        ).filter((p) => isInStock(p.status));
+        ).filter(isVisibleInShop);
         setRecommended(sameBrand);
         return;
       }
@@ -77,7 +80,7 @@ const ProductDetail = ({ openModal }) => {
         const snap = await getDocs(q);
         const items = snap.docs
           .map((d) => ({ id: d.id, ...d.data() }))
-          .filter((p) => p.id !== product.id && isInStock(p.status));
+          .filter((p) => p.id !== product.id && isVisibleInShop(p));
         setRecommended(items);
       } catch (err) {
         console.error("Error loading recommended products:", err);
@@ -110,7 +113,7 @@ const ProductDetail = ({ openModal }) => {
   }, [id]);
 
   if (loading) return null;
-  if (!product) {
+  if (!product || !isVisibleInShop(product)) {
     return (
       <section className={styles.wrapper}>
         <div className={styles.notFound}>{t("productNotFound")}</div>
@@ -148,7 +151,7 @@ const ProductDetail = ({ openModal }) => {
           <p className={styles.subtitle}>{comment}</p>
 
           <div className={styles.purchaseMeta}>
-            {product.price ? (
+            {!hasContractPrice(product) ? (
               <div className={styles.priceValue}>
                 {product.price} {t("productCurrency")}
               </div>
@@ -157,7 +160,7 @@ const ProductDetail = ({ openModal }) => {
                 className={styles.priceBtn}
                 onClick={() => openModal && openModal()}
               >
-                {t("getPrice")}
+                {t("priceTitle")}
               </button>
             )}
 
@@ -170,7 +173,7 @@ const ProductDetail = ({ openModal }) => {
             </div>
           </div>
 
-          {product.price && (
+          {!hasContractPrice(product) && (
             <div className={styles.actions}>
               <div className={styles.qty}>
                 <button
@@ -285,12 +288,12 @@ const ProductDetail = ({ openModal }) => {
                 <div className={shopStyles.priceRow}>
                   <span
                     className={`${shopStyles.price} ${
-                      !p.price ? shopStyles.contractPrice : ""
+                      hasContractPrice(p) ? shopStyles.contractPrice : ""
                     }`}
                   >
-                    {p.price
-                      ? `${p.price} ${t("productCurrency")}`
-                      : t("priceTitle")}
+                    {hasContractPrice(p)
+                      ? t("priceTitle")
+                      : `${p.price} ${t("productCurrency")}`}
                   </span>
                   <button
                     className={shopStyles.cartBtn}

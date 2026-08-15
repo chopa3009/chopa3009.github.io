@@ -88,7 +88,7 @@ const AdminOrders = ({ orders = [], onUpdateOrderStatus }) => {
                 order.totalLabel ||
                 (order.total !== null && order.total !== undefined
                   ? `${order.total} ₴`
-                  : "Договірна");
+                  : "Ціну уточнюйте");
               const date = formatDate(order.createdAt);
               const status = statusMap[order.status] || "Нове";
               const statusClass =

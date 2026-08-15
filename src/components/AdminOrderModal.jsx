@@ -76,7 +76,7 @@ const AdminOrderModal = ({ isOpen, order, onClose, onUpdateOrderStatus }) => {
     order.totalLabel ||
     (order.total !== null && order.total !== undefined
       ? `${order.total} ₴`
-      : "Договірна");
+      : "Ціну уточнюйте");
   const displayOrderId = order.orderNumber || order.id;
   const status = statusMap[order.status] || "Нове";
   const statusClass =
@@ -213,12 +213,12 @@ const AdminOrderModal = ({ isOpen, order, onClose, onUpdateOrderStatus }) => {
                   <div className={styles.itemMetaRow}>
                     <div className={styles.itemQty}>К-сть: {item.qty}</div>
                     <div className={styles.itemUnitPrice}>
-                      {item.price ? `${item.price} ₴ / шт.` : "Договірна"}
+                      {item.price ? `${item.price} ₴ / шт.` : "Ціну уточнюйте"}
                     </div>
                   </div>
                 </div>
                 <div className={styles.itemPrice}>
-                  {item.price ? `${item.price * item.qty} ₴` : "Договірна"}
+                  {item.price ? `${item.price * item.qty} ₴` : "Ціну уточнюйте"}
                 </div>
               </div>
             ))}

@@ -1,3 +1,5 @@
+import { getEffectiveProductPrice } from "./productAvailability";
+
 const CART_KEY = "shop_cart";
 
 export const getCart = () => {
@@ -17,15 +19,19 @@ export const addToCart = (product) => {
   const cart = getCart();
   const existing = cart.find(item => item.id === product.id);
   const quantity = Math.max(1, product.qty || 1);
+  const effectivePrice = getEffectiveProductPrice(product);
 
   if (existing) {
     existing.qty += quantity;
+    existing.price = effectivePrice;
+    existing.status = product.status || existing.status || "";
   } else {
     cart.push({
       id: product.id,
       title: product.title,
       brand: product.brand,
-      price: product.price || null,
+      price: effectivePrice,
+      status: product.status || "",
       image: product.imageBase64,
       comment: product.comment || "",
       commentEn: product.commentEn || "",

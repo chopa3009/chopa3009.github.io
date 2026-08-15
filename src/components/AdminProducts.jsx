@@ -4,6 +4,11 @@ import styles from "../css/AdminProducts.module.css";
 // Import SVG icons for table actions
 import EditIcon from "../assets/EditIcon.svg";
 import DeleteIcon from "../assets/DeleteIcon.svg";
+import {
+  PRODUCT_STATUS,
+  isInStock,
+  isOutOfStock,
+} from "../utils/productAvailability";
 
 const AdminProducts = ({
   products = [],
@@ -36,10 +41,16 @@ const AdminProducts = ({
           <tbody>
             {products.map((product, index) => {
               // визначаємо статус текст та колір
-              const statusText =
-                product.status === "В наявності" ? "В наявності" : "Під замовлення";
-              const statusColor =
-                product.status === "В наявності" ? "green" : "orange";
+              const statusText = isInStock(product.status)
+                ? PRODUCT_STATUS.IN_STOCK
+                : isOutOfStock(product.status)
+                  ? PRODUCT_STATUS.OUT_OF_STOCK
+                  : PRODUCT_STATUS.PRE_ORDER;
+              const statusColor = isInStock(product.status)
+                ? "green"
+                : isOutOfStock(product.status)
+                  ? "#b00020"
+                  : "orange";
 
               return (
                 <tr key={product.id}>
@@ -64,7 +75,7 @@ const AdminProducts = ({
                   <td style={{ color: statusColor, fontSize: "16px"}}>
                     {statusText}
                   </td>
-                  <td>{product.price ? `${product.price} грн.` : "Договірна"}</td>
+                  <td>{product.price ? `${product.price} грн.` : "Ціну уточнюйте"}</td>
                   <td className={`${styles.iconCell} ${styles.actionsCell}`}>
                     <img
                       src={EditIcon}

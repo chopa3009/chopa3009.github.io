@@ -246,7 +246,7 @@ const Order = () => {
                       <div className={styles.price}>
                         {item.price
                           ? `${item.price * item.qty} ₴`
-                          : "Ціна договірна"}
+                          : "Ціну уточнюйте"}
                       </div>
                     </div>
                   </div>
@@ -260,7 +260,7 @@ const Order = () => {
               </div>
               <div className={styles.summaryTotal}>
                 <span>Разом</span>
-                <strong>{hasUnknownPrice ? "Договірна" : `${total} ₴`}</strong>
+                <strong>{hasUnknownPrice ? "Ціну уточнюйте" : `${total} ₴`}</strong>
               </div>
 
             <button
@@ -288,7 +288,7 @@ const Order = () => {
                     payment,
                     items: getCart(),
                     total: hasUnknownPrice ? null : total,
-                    totalLabel: hasUnknownPrice ? "Договірна" : `${total} ₴`,
+                    totalLabel: hasUnknownPrice ? "Ціну уточнюйте" : `${total} ₴`,
                     createdAt: serverTimestamp(),
                   };
                   await addDoc(collection(db, "orders"), order);

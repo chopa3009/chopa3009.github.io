@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import styles from "../css/ProductModal.module.css";
 import arrow from "../assets/image_arrow.svg";
+import { PRODUCT_STATUS } from "../utils/productAvailability";
 
 const ProductModal = ({
   isOpen,
@@ -11,9 +12,9 @@ const ProductModal = ({
   isEditing,
   brands,
 }) => {
-  if (!isOpen) return null;
-
   const fileInputRef = useRef(null);
+
+  if (!isOpen) return null;
 
   const handleImageClick = () => {
     fileInputRef.current?.click();
@@ -106,8 +107,9 @@ const ProductModal = ({
                 }
               >
                 <option value="" disabled hidden>*Статус</option>
-                <option value="В наявності">В наявності</option>
-                <option value="Під замовлення">Під замовлення</option>
+                <option value={PRODUCT_STATUS.IN_STOCK}>{PRODUCT_STATUS.IN_STOCK}</option>
+                <option value={PRODUCT_STATUS.PRE_ORDER}>{PRODUCT_STATUS.PRE_ORDER}</option>
+                <option value={PRODUCT_STATUS.OUT_OF_STOCK}>{PRODUCT_STATUS.OUT_OF_STOCK}</option>
               </select>
             </div>
 

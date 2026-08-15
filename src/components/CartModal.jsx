@@ -75,7 +75,7 @@ const CartModal = ({ isOpen, onClose }) => {
         const price = typeof item.price === "number" ? item.price : Number(item.price) || 0;
         return sum + price * item.qty;
       }, 0);
-  const totalLabel = hasUnknownPrice ? "Договірна" : `${total} ₴`;
+  const totalLabel = hasUnknownPrice ? "Ціну уточнюйте" : `${total} ₴`;
 
   return (
     <div className={styles.backdrop} onClick={onClose}>
@@ -123,7 +123,7 @@ const CartModal = ({ isOpen, onClose }) => {
               <div className={styles.price}>
                 {item.price
                   ? `${item.price * item.qty} ₴`
-                  : "Ціна договірна"}
+                  : "Ціну уточнюйте"}
               </div>
               <button
                 className={styles.remove}

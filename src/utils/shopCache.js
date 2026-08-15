@@ -1,7 +1,7 @@
 const DB_NAME = "bove-cache-db";
 const DB_VERSION = 1;
 const STORE_NAME = "app-cache";
-const SHOP_PRODUCTS_KEY = "shop_products_cache";
+const SHOP_PRODUCTS_KEY = "shop_products_cache_v2";
 export const SHOP_PRODUCTS_CACHE_TTL = 60 * 60 * 1000; // 1 hour
 
 const canUseIndexedDb = () =>
